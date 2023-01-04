@@ -12,6 +12,7 @@ import com.viaversion.viaversion.configuration.AbstractViaConfig;
 import com.viaversion.viaversion.libs.gson.JsonObject;
 import com.viaversion.viaversion.util.VersionInfo;
 import io.netty.channel.EventLoop;
+import net.raphimc.viaprotocolhack.ViaProtocolHack;
 import net.raphimc.viaprotocolhack.commands.UserCommandSender;
 import net.raphimc.viaprotocolhack.impl.viaversion.VPApiBase;
 import net.raphimc.viaprotocolhack.impl.viaversion.VPViaConfig;
@@ -57,7 +58,7 @@ public class ViaVersionPlatformImpl implements ViaPlatform<UUID> {
 
     @Override
     public String getPlatformVersion() {
-        return "1.3.3.7";
+        return ViaProtocolHack.VERSION;
     }
 
     @Override

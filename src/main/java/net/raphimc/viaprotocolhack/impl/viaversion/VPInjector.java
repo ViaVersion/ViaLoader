@@ -1,10 +1,10 @@
 package net.raphimc.viaprotocolhack.impl.viaversion;
 
 import com.viaversion.viaversion.api.platform.ViaInjector;
+import com.viaversion.viaversion.api.protocol.version.ProtocolVersion;
 import com.viaversion.viaversion.libs.fastutil.ints.IntLinkedOpenHashSet;
 import com.viaversion.viaversion.libs.fastutil.ints.IntSortedSet;
 import com.viaversion.viaversion.libs.gson.JsonObject;
-import net.raphimc.vialegacy.util.VersionEnum;
 import net.raphimc.viaprotocolhack.netty.ViaPipeline;
 
 public class VPInjector implements ViaInjector {
@@ -25,8 +25,10 @@ public class VPInjector implements ViaInjector {
     @Override
     public IntSortedSet getServerProtocolVersions() {
         final IntSortedSet versions = new IntLinkedOpenHashSet();
-        for (VersionEnum version : VersionEnum.OFFICIAL_SUPPORTED_PROTOCOLS) {
-            versions.add(version.getOriginalVersion());
+        for (ProtocolVersion protocol : ProtocolVersion.getProtocols()) {
+            if (protocol.getOriginalVersion() >= 4) { // >=1.7.2
+                versions.add(protocol.getOriginalVersion());
+            }
         }
         return versions;
     }

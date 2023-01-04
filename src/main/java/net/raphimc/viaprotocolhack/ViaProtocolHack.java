@@ -19,6 +19,8 @@ import java.util.logging.Logger;
 
 public class ViaProtocolHack {
 
+    public static final String VERSION = "${version}";
+
     private static final Logger LOGGER = new JLoggerToSLF4J(LoggerFactory.getLogger("ViaProtocolHack"));
 
     @SuppressWarnings("ReassignedVariable")
@@ -44,7 +46,7 @@ public class ViaProtocolHack {
                 try {
                     finalViaBackwardsPlatformSupplier.get();
                 } catch (Throwable e) {
-                    LOGGER.warning("ViaBackwards failed to load: " + e.getMessage());
+                    LOGGER.severe("ViaBackwards failed to load: " + e.getMessage());
                 }
             } else {
                 LOGGER.info("ViaBackwards is not loaded.");
@@ -53,7 +55,7 @@ public class ViaProtocolHack {
                 try {
                     finalViaRewindPlatformSupplier.get();
                 } catch (Throwable e) {
-                    LOGGER.warning("ViaRewind failed to load: " + e.getMessage());
+                    LOGGER.severe("ViaRewind failed to load: " + e.getMessage());
                 }
             } else {
                 LOGGER.info("ViaRewind is not loaded.");
@@ -62,7 +64,7 @@ public class ViaProtocolHack {
                 try {
                     finalViaLegacyPlatformSupplier.get();
                 } catch (Throwable e) {
-                    LOGGER.warning("ViaLegacy failed to load: " + e.getMessage());
+                    LOGGER.severe("ViaLegacy failed to load: " + e.getMessage());
                 }
             } else {
                 LOGGER.info("ViaLegacy is not loaded.");

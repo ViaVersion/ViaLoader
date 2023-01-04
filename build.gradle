@@ -1,6 +1,7 @@
 plugins {
     id "java-library"
     id "maven-publish"
+    id "net.kyori.blossom" version "1.2.0"
 }
 
 java.toolchain.languageVersion = JavaLanguageVersion.of(8)
@@ -34,9 +35,19 @@ dependencies {
     api "org.yaml:snakeyaml:1.33"
 }
 
+blossom {
+    replaceToken("\${version}", project.version, "src/main/java/net/raphimc/viaprotocolhack/ViaProtocolHack.java")
+}
+
 java {
     withSourcesJar()
     withJavadocJar()
+}
+
+jar {
+    from("LICENSE") {
+        rename { "${it}_${project.archivesBaseName}" }
+    }
 }
 
 publishing {
