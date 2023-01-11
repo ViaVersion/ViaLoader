@@ -2,49 +2,48 @@ package net.raphimc.viaprotocolhack.util;
 
 import com.viaversion.viaversion.api.connection.UserConnection;
 import com.viaversion.viaversion.api.protocol.version.ProtocolVersion;
-import net.raphimc.vialegacy.api.LegacyProtocolVersions;
 
 import java.util.*;
 
 public enum VersionEnum {
 
-    c0_0_15a_1(LegacyProtocolVersions.c0_0_15a_1),
-    c0_0_16a_02(LegacyProtocolVersions.c0_0_16a_02),
-    c0_0_18a_02(LegacyProtocolVersions.c0_0_18a_02),
-    c0_0_19a_06(LegacyProtocolVersions.c0_0_19a_06),
-    c0_0_20ac0_27(LegacyProtocolVersions.c0_0_20ac0_27),
-    c0_30cpe(LegacyProtocolVersions.c0_30cpe),
-    c0_28toc0_30(LegacyProtocolVersions.c0_28toc0_30),
-    a1_0_15(LegacyProtocolVersions.a1_0_15),
-    a1_0_16toa1_0_16_2(LegacyProtocolVersions.a1_0_16toa1_0_16_2),
-    a1_0_17toa1_0_17_4(LegacyProtocolVersions.a1_0_17toa1_0_17_4),
-    a1_1_0toa1_1_2_1(LegacyProtocolVersions.a1_1_0toa1_1_2_1),
-    a1_2_0toa1_2_1_1(LegacyProtocolVersions.a1_2_0toa1_2_1_1),
-    a1_2_2(LegacyProtocolVersions.a1_2_2),
-    a1_2_3toa1_2_3_4(LegacyProtocolVersions.a1_2_3toa1_2_3_4),
-    a1_2_3_5toa1_2_6(LegacyProtocolVersions.a1_2_3_5toa1_2_6),
-    b1_0tob1_1_1(LegacyProtocolVersions.b1_0tob1_1_1),
-    b1_1_2(LegacyProtocolVersions.b1_1_2),
-    b1_2_0tob1_2_2(LegacyProtocolVersions.b1_2_0tob1_2_2),
-    b1_3tob1_3_1(LegacyProtocolVersions.b1_3tob1_3_1),
-    b1_4tob1_4_1(LegacyProtocolVersions.b1_4tob1_4_1),
-    b1_5tob1_5_2(LegacyProtocolVersions.b1_5tob1_5_2),
-    b1_6tob1_6_6(LegacyProtocolVersions.b1_6tob1_6_6),
-    b1_7tob1_7_3(LegacyProtocolVersions.b1_7tob1_7_3),
-    b1_8tob1_8_1(LegacyProtocolVersions.b1_8tob1_8_1),
-    r1_0_0tor1_0_1(LegacyProtocolVersions.r1_0_0tor1_0_1),
-    r1_1(LegacyProtocolVersions.r1_1),
-    r1_2_1tor1_2_3(LegacyProtocolVersions.r1_2_1tor1_2_3),
-    r1_2_4tor1_2_5(LegacyProtocolVersions.r1_2_4tor1_2_5),
-    r1_3_1tor1_3_2(LegacyProtocolVersions.r1_3_1tor1_3_2),
-    r1_4_2(LegacyProtocolVersions.r1_4_2),
-    r1_4_4tor1_4_5(LegacyProtocolVersions.r1_4_4tor1_4_5),
-    r1_4_6tor1_4_7(LegacyProtocolVersions.r1_4_6tor1_4_7),
-    r1_5tor1_5_1(LegacyProtocolVersions.r1_5tor1_5_1),
-    r1_5_2(LegacyProtocolVersions.r1_5_2),
-    r1_6_1(LegacyProtocolVersions.r1_6_1),
-    r1_6_2(LegacyProtocolVersions.r1_6_2),
-    r1_6_4(LegacyProtocolVersions.r1_6_4),
+    c0_0_15a_1(getViaLegacyProtocol("c0_0_15a_1")),
+    c0_0_16a_02(getViaLegacyProtocol("c0_0_16a_02")),
+    c0_0_18a_02(getViaLegacyProtocol("c0_0_18a_02")),
+    c0_0_19a_06(getViaLegacyProtocol("c0_0_19a_06")),
+    c0_0_20ac0_27(getViaLegacyProtocol("c0_0_20ac0_27")),
+    c0_30cpe(getViaLegacyProtocol("c0_30cpe")),
+    c0_28toc0_30(getViaLegacyProtocol("c0_28toc0_30")),
+    a1_0_15(getViaLegacyProtocol("a1_0_15")),
+    a1_0_16toa1_0_16_2(getViaLegacyProtocol("a1_0_16toa1_0_16_2")),
+    a1_0_17toa1_0_17_4(getViaLegacyProtocol("a1_0_17toa1_0_17_4")),
+    a1_1_0toa1_1_2_1(getViaLegacyProtocol("a1_1_0toa1_1_2_1")),
+    a1_2_0toa1_2_1_1(getViaLegacyProtocol("a1_2_0toa1_2_1_1")),
+    a1_2_2(getViaLegacyProtocol("a1_2_2")),
+    a1_2_3toa1_2_3_4(getViaLegacyProtocol("a1_2_3toa1_2_3_4")),
+    a1_2_3_5toa1_2_6(getViaLegacyProtocol("a1_2_3_5toa1_2_6")),
+    b1_0tob1_1_1(getViaLegacyProtocol("b1_0tob1_1_1")),
+    b1_1_2(getViaLegacyProtocol("b1_1_2")),
+    b1_2_0tob1_2_2(getViaLegacyProtocol("b1_2_0tob1_2_2")),
+    b1_3tob1_3_1(getViaLegacyProtocol("b1_3tob1_3_1")),
+    b1_4tob1_4_1(getViaLegacyProtocol("b1_4tob1_4_1")),
+    b1_5tob1_5_2(getViaLegacyProtocol("b1_5tob1_5_2")),
+    b1_6tob1_6_6(getViaLegacyProtocol("b1_6tob1_6_6")),
+    b1_7tob1_7_3(getViaLegacyProtocol("b1_7tob1_7_3")),
+    b1_8tob1_8_1(getViaLegacyProtocol("b1_8tob1_8_1")),
+    r1_0_0tor1_0_1(getViaLegacyProtocol("r1_0_0tor1_0_1")),
+    r1_1(getViaLegacyProtocol("r1_1")),
+    r1_2_1tor1_2_3(getViaLegacyProtocol("r1_2_1tor1_2_3")),
+    r1_2_4tor1_2_5(getViaLegacyProtocol("r1_2_4tor1_2_5")),
+    r1_3_1tor1_3_2(getViaLegacyProtocol("r1_3_1tor1_3_2")),
+    r1_4_2(getViaLegacyProtocol("r1_4_2")),
+    r1_4_4tor1_4_5(getViaLegacyProtocol("r1_4_4tor1_4_5")),
+    r1_4_6tor1_4_7(getViaLegacyProtocol("r1_4_6tor1_4_7")),
+    r1_5tor1_5_1(getViaLegacyProtocol("r1_5tor1_5_1")),
+    r1_5_2(getViaLegacyProtocol("r1_5_2")),
+    r1_6_1(getViaLegacyProtocol("r1_6_1")),
+    r1_6_2(getViaLegacyProtocol("r1_6_2")),
+    r1_6_4(getViaLegacyProtocol("r1_6_4")),
     r1_7_2tor1_7_5(ProtocolVersion.v1_7_1),
     r1_7_6tor1_7_10(ProtocolVersion.v1_7_6),
     r1_8(ProtocolVersion.v1_8),
@@ -61,7 +60,7 @@ public enum VersionEnum {
     r1_13(ProtocolVersion.v1_13),
     r1_13_1(ProtocolVersion.v1_13_1),
     r1_13_2(ProtocolVersion.v1_13_2),
-    s3d_shareware(LegacyProtocolVersions.s3d_shareware),
+    s3d_shareware(getViaLegacyProtocol("s3d_shareware")),
     r1_14(ProtocolVersion.v1_14),
     r1_14_1(ProtocolVersion.v1_14_1),
     r1_14_2(ProtocolVersion.v1_14_2),
@@ -70,10 +69,10 @@ public enum VersionEnum {
     r1_15(ProtocolVersion.v1_15),
     r1_15_1(ProtocolVersion.v1_15_1),
     r1_15_2(ProtocolVersion.v1_15_2),
-    s20w14infinite(LegacyProtocolVersions.s20w14infinite),
+    s20w14infinite(getViaLegacyProtocol("s20w14infinite")),
     r1_16(ProtocolVersion.v1_16),
     r1_16_1(ProtocolVersion.v1_16_1),
-    sCombatTest8c(LegacyProtocolVersions.sCombatTest8c),
+    sCombatTest8c(getViaLegacyProtocol("sCombatTest8c")),
     r1_16_2(ProtocolVersion.v1_16_2),
     r1_16_3(ProtocolVersion.v1_16_3),
     r1_16_4tor1_16_5(ProtocolVersion.v1_16_4),
@@ -202,6 +201,14 @@ public enum VersionEnum {
 
     public static Collection<VersionEnum> getAllVersions() {
         return VERSION_REGISTRY.values();
+    }
+
+    private static ProtocolVersion getViaLegacyProtocol(final String name) {
+        try {
+            return (ProtocolVersion) Class.forName("net.raphimc.vialegacy.api.LegacyProtocolVersions").getField(name).get(null);
+        } catch (Throwable e) {
+            return ProtocolVersion.unknown;
+        }
     }
 
 
