@@ -77,7 +77,7 @@ public enum VersionEnum {
     r1_13(ProtocolVersion.v1_13),
     r1_13_1(ProtocolVersion.v1_13_1),
     r1_13_2(ProtocolVersion.v1_13_2),
-    s3d_shareware(getViaLegacyProtocol("s3d_shareware")),
+    s3d_shareware(getViaAprilFoolsProtocol("s3d_shareware")),
     r1_14(ProtocolVersion.v1_14),
     r1_14_1(ProtocolVersion.v1_14_1),
     r1_14_2(ProtocolVersion.v1_14_2),
@@ -86,10 +86,10 @@ public enum VersionEnum {
     r1_15(ProtocolVersion.v1_15),
     r1_15_1(ProtocolVersion.v1_15_1),
     r1_15_2(ProtocolVersion.v1_15_2),
-    s20w14infinite(getViaLegacyProtocol("s20w14infinite")),
+    s20w14infinite(getViaAprilFoolsProtocol("s20w14infinite")),
     r1_16(ProtocolVersion.v1_16),
     r1_16_1(ProtocolVersion.v1_16_1),
-    sCombatTest8c(getViaLegacyProtocol("sCombatTest8c")),
+    sCombatTest8c(getViaAprilFoolsProtocol("sCombatTest8c")),
     r1_16_2(ProtocolVersion.v1_16_2),
     r1_16_3(ProtocolVersion.v1_16_3),
     r1_16_4tor1_16_5(ProtocolVersion.v1_16_4),
@@ -222,7 +222,15 @@ public enum VersionEnum {
 
     private static ProtocolVersion getViaLegacyProtocol(final String name) {
         try {
-            return (ProtocolVersion) Class.forName("net.raphimc.vialegacy.api.LegacyProtocolVersions").getField(name).get(null);
+            return (ProtocolVersion) Class.forName("net.raphimc.vialegacy.api.LegacyProtocolVersion").getField(name).get(null);
+        } catch (Throwable e) {
+            return ProtocolVersion.unknown;
+        }
+    }
+
+    private static ProtocolVersion getViaAprilFoolsProtocol(final String name) {
+        try {
+            return (ProtocolVersion) Class.forName("net.raphimc.viaaprilfools.api.AprilFoolsProtocolVersion").getField(name).get(null);
         } catch (Throwable e) {
             return ProtocolVersion.unknown;
         }

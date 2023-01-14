@@ -36,6 +36,7 @@ import net.raphimc.viaprotocolhack.util.JLoggerToSLF4J;
 import org.slf4j.LoggerFactory;
 
 import java.util.function.Supplier;
+import java.util.logging.Level;
 import java.util.logging.Logger;
 
 public class ViaProtocolHack {
@@ -45,7 +46,7 @@ public class ViaProtocolHack {
     private static final Logger LOGGER = new JLoggerToSLF4J(LoggerFactory.getLogger("ViaProtocolHack"));
 
     @SuppressWarnings("ReassignedVariable")
-    public static void init(ViaPlatform<?> platform, ViaPlatformLoader loader, ViaInjector injector, ViaCommandHandler commandHandler, Supplier<ViaBackwardsPlatform> viaBackwardsPlatformSupplier, Supplier<ViaRewindPlatform> viaRewindPlatformSupplier, Supplier<ViaLegacyPlatform> viaLegacyPlatformSupplier) {
+    public static void init(ViaPlatform<?> platform, ViaPlatformLoader loader, ViaInjector injector, ViaCommandHandler commandHandler, Supplier<ViaBackwardsPlatform> viaBackwardsPlatformSupplier, Supplier<ViaRewindPlatform> viaRewindPlatformSupplier, Supplier<ViaLegacyPlatform> viaLegacyPlatformSupplier, final Supplier<?>... additionalPlatformSuppliers) {
         if (platform == null) platform = new ViaVersionPlatformImpl(null);
         if (loader == null) loader = new VPLoader();
         if (injector == null) injector = new VPInjector();
@@ -59,36 +60,42 @@ public class ViaProtocolHack {
                 .build());
         MappingDataLoader.enableMappingsCache();
 
-        final Supplier<ViaBackwardsPlatform> finalViaBackwardsPlatformSupplier = viaBackwardsPlatformSupplier;
-        final Supplier<ViaRewindPlatform> finalViaRewindPlatformSupplier = viaRewindPlatformSupplier;
-        final Supplier<ViaLegacyPlatform> finalViaLegacyPlatformSupplier = viaLegacyPlatformSupplier;
         Via.getManager().addEnableListener(() -> {
-            if (finalViaBackwardsPlatformSupplier != null) {
+            if (viaBackwardsPlatformSupplier != null) {
                 try {
-                    finalViaBackwardsPlatformSupplier.get();
+                    viaBackwardsPlatformSupplier.get();
                 } catch (Throwable e) {
-                    LOGGER.severe("ViaBackwards failed to load: " + e.getMessage());
+                    LOGGER.log(Level.SEVERE, "ViaBackwards failed to load", e);
                 }
             } else {
                 LOGGER.info("ViaBackwards is not loaded.");
             }
-            if (finalViaRewindPlatformSupplier != null) {
+            if (viaRewindPlatformSupplier != null) {
                 try {
-                    finalViaRewindPlatformSupplier.get();
+                    viaRewindPlatformSupplier.get();
                 } catch (Throwable e) {
-                    LOGGER.severe("ViaRewind failed to load: " + e.getMessage());
+                    LOGGER.log(Level.SEVERE, "ViaRewind failed to load", e);
                 }
             } else {
                 LOGGER.info("ViaRewind is not loaded.");
             }
-            if (finalViaLegacyPlatformSupplier != null) {
+            if (viaLegacyPlatformSupplier != null) {
                 try {
-                    finalViaLegacyPlatformSupplier.get();
+                    viaLegacyPlatformSupplier.get();
                 } catch (Throwable e) {
-                    LOGGER.severe("ViaLegacy failed to load: " + e.getMessage());
+                    LOGGER.log(Level.SEVERE, "ViaLegacy failed to load", e);
                 }
             } else {
                 LOGGER.info("ViaLegacy is not loaded.");
+            }
+            if (additionalPlatformSuppliers != null) {
+                for (Supplier<?> additionalPlatformSupplier : additionalPlatformSuppliers) {
+                    try {
+                        additionalPlatformSupplier.get();
+                    } catch (Throwable e) {
+                        LOGGER.log(Level.SEVERE, "Additional platform failed to load", e);
+                    }
+                }
             }
         });
 
