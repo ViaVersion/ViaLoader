@@ -100,6 +100,7 @@ public enum VersionEnum {
     r1_19(ProtocolVersion.v1_19),
     r1_19_1tor1_19_2(ProtocolVersion.v1_19_1),
     r1_19_3(ProtocolVersion.v1_19_3),
+    r1_19_4(ProtocolVersion.v1_19_4),
 
     //
     UNKNOWN(ProtocolVersion.unknown), // Not in Registry
@@ -121,6 +122,7 @@ public enum VersionEnum {
             }
         }
 
+        SORTED_VERSIONS.add(r1_19_4);
         SORTED_VERSIONS.add(r1_19_3);
         SORTED_VERSIONS.add(r1_19_1tor1_19_2);
         SORTED_VERSIONS.add(r1_19);
