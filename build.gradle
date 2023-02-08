@@ -24,8 +24,8 @@ repositories {
 }
 
 dependencies {
-    compileOnly "com.viaversion:viaversion:4.6.0-23w03a-SNAPSHOT"
-    compileOnly("com.viaversion:viabackwards-common:4.6.0-23w03a-SNAPSHOT") {
+    compileOnly "com.viaversion:viaversion:4.6.0-23w06a-SNAPSHOT"
+    compileOnly("com.viaversion:viabackwards-common:4.6.0-23w06a-SNAPSHOT") {
         exclude group: "com.viaversion", module: "viaversion"
     }
     compileOnly "com.viaversion:viarewind-core:2.0.3-SNAPSHOT"
