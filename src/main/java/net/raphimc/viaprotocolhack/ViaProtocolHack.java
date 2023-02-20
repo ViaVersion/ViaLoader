@@ -57,8 +57,8 @@ public class ViaProtocolHack {
                 .build());
         MappingDataLoader.enableMappingsCache();
 
-        Via.getManager().addEnableListener(() -> {
-            if (platformSuppliers != null) {
+        if (platformSuppliers != null) {
+            Via.getManager().addEnableListener(() -> {
                 for (Supplier<?> additionalPlatformSupplier : platformSuppliers) {
                     try {
                         additionalPlatformSupplier.get();
@@ -66,8 +66,8 @@ public class ViaProtocolHack {
                         LOGGER.log(Level.SEVERE, "Platform failed to load", e);
                     }
                 }
-            }
-        });
+            });
+        }
 
         ((ViaManagerImpl) Via.getManager()).init();
         Via.getManager().getProtocolManager().setMaxProtocolPathSize(Integer.MAX_VALUE);
