@@ -31,10 +31,9 @@ public class VPViaConfig extends AbstractViaConfig {
     protected final List<String> UNSUPPORTED = Lists.newArrayList(
             "checkforupdates", "bungee-ping-interval", "bungee-ping-save", "bungee-servers",
             "velocity-ping-interval", "velocity-ping-save", "velocity-servers",
-            "block-protocols", "block-disconnect-msg", "reload-disconnect-msg",
-            "max-pps", "max-pps-kick-msg", "tracking-period", "tracking-warning-pps", "tracking-max-warnings", "tracking-max-kick-msg",
-            "blockconnection-method", "anti-xray-patch", "quick-move-action-fix", "item-cache",
-            "change-1_9-hitbox", "change-1_14-hitbox",
+            "block-protocols", "block-disconnect-msg", "reload-disconnect-msg", "max-pps",
+            "max-pps-kick-msg", "tracking-period", "tracking-warning-pps", "tracking-max-warnings", "tracking-max-kick-msg",
+            "blockconnection-method", "quick-move-action-fix", "item-cache", "change-1_9-hitbox", "change-1_14-hitbox",
             "use-new-deathmessages", "nms-player-ticking"
     );
 
@@ -59,11 +58,6 @@ public class VPViaConfig extends AbstractViaConfig {
     @Override
     public String getBlockConnectionMethod() {
         return "packet";
-    }
-
-    @Override
-    public boolean isAntiXRay() {
-        return false;
     }
 
     @Override

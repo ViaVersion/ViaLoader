@@ -66,7 +66,7 @@ Then you have to create a new instance of your loader class and pass it to the `
 
 To do this you can call the ``ViaProtocolHack.init()`` method somewhere suitable in your project (You can do that async) with your desired argument values:
 ```java
-ViaProtocolHack.init(null/*ViaPlatform*/, new CustomVPLoaderImpl(), null/*ViaInjector*/, null/*ViaCommandHandler*/, ViaBackwardsPlatformImpl::new, null/*Supplier<ViaRewindPlatform>*/, ViaLegacyPlatformImpl::new);
+ViaProtocolHack.init(null/*ViaPlatform*/, new CustomVPLoaderImpl(), null/*ViaInjector*/, null/*ViaCommandHandler*/, ViaBackwardsPlatformImpl::new, ViaLegacyPlatformImpl::new);
 ```
 
 After you have initialized the Via* platforms you can start implementing ViaProtocolHack into your project.

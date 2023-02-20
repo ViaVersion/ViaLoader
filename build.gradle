@@ -24,12 +24,12 @@ repositories {
 }
 
 dependencies {
-    compileOnly "com.viaversion:viaversion:4.6.0-23w06a-SNAPSHOT"
-    compileOnly("com.viaversion:viabackwards-common:4.6.0-23w06a-SNAPSHOT") {
+    compileOnly "com.viaversion:viaversion:4.6.0-23w07a-SNAPSHOT"
+    compileOnly("com.viaversion:viabackwards-common:4.6.0-23w07a-SNAPSHOT") {
         exclude group: "com.viaversion", module: "viaversion"
     }
     compileOnly "com.viaversion:viarewind-core:2.0.3-SNAPSHOT"
-    compileOnly "net.raphimc:ViaLegacy:2.1.0"
+    compileOnly "net.raphimc:ViaLegacy:2.2.6"
 
     api "org.slf4j:slf4j-api:2.0.6"
     api "org.yaml:snakeyaml:1.33"
