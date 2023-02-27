@@ -32,7 +32,7 @@ dependencies {
     compileOnly "net.raphimc:ViaLegacy:2.2.6"
 
     api "org.slf4j:slf4j-api:2.0.6"
-    api "org.yaml:snakeyaml:1.33"
+    api "org.yaml:snakeyaml:2.0"
 }
 
 blossom {
