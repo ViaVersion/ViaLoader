@@ -24,15 +24,15 @@ repositories {
 }
 
 dependencies {
-    compileOnly "com.viaversion:viaversion:4.6.0-23w07a-SNAPSHOT"
-    compileOnly("com.viaversion:viabackwards-common:4.6.0-23w07a-SNAPSHOT") {
+    compileOnly "com.viaversion:viaversion:4.6.0-1.19.4-pre2-SNAPSHOT"
+    compileOnly("com.viaversion:viabackwards-common:4.6.0-1.19.4-pre1-SNAPSHOT") {
         exclude group: "com.viaversion", module: "viaversion"
     }
     compileOnly "com.viaversion:viarewind-core:2.0.3-SNAPSHOT"
     compileOnly "net.raphimc:ViaLegacy:2.2.6"
 
     api "org.slf4j:slf4j-api:2.0.6"
-    api "org.yaml:snakeyaml:1.33"
+    api "org.yaml:snakeyaml:2.0"
 }
 
 blossom {
