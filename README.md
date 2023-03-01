@@ -21,7 +21,7 @@ ViaProtocolHack is split into 4 different components:
 - ViaVersion (Is the base component of ViaProtocolHack [required])
 - ViaBackwards (Allows older clients to join to newer server versions [needs ViaVersion])
 - ViaRewind (Allows 1.8.x and 1.7.x clients to join to 1.9+ servers [needs ViaBackwards])
-- ViaLegacy (Allows clients to join to <= 1.7.10 servers [needs ViaBackwards])
+- ViaLegacy (Allows clients to join to <= 1.7.10 servers [needs ViaVersion])
 
 To include ViaVersion/ViaBackwards/ViaRewind you have to add the ViaVersion maven repository to your build script:
 ```groovy
