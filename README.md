@@ -17,11 +17,12 @@ If you just want the latest jar file you can download it from this [Jenkins](htt
 
 ## Usage
 To use ViaProtocolHack in your project you need to decide what components of Via* you want to use.
-ViaProtocolHack is split into 4 different components:
+ViaProtocolHack is split into 5 different components:
 - ViaVersion (Is the base component of ViaProtocolHack [required])
 - ViaBackwards (Allows older clients to join to newer server versions [needs ViaVersion])
 - ViaRewind (Allows 1.8.x and 1.7.x clients to join to 1.9+ servers [needs ViaBackwards])
-- ViaLegacy (Allows clients to join to <= 1.7.10 servers [needs ViaBackwards])
+- ViaLegacy (Allows clients to join to <= 1.7.10 servers [needs ViaVersion])
+- ViaAprilFools (Allows clients to join to some notable minecraft snapshots [needs ViaBackwards])
 
 To include ViaVersion/ViaBackwards/ViaRewind you have to add the ViaVersion maven repository to your build script:
 ```groovy
@@ -32,17 +33,18 @@ repositories {
     }
 }
 ```
-To include ViaLegacy you can check out the [README](https://github.com/RaphiMC/ViaLegacy/blob/main/README.md#releases) of ViaLegacy.
+To include ViaLegacy and ViaAprilFools, you can look at their READMEs: [ViaLegacy](https://github.com/RaphiMC/ViaLegacy/blob/main/README.md#releases) and [ViaAprilFools](https://github.com/RaphiMC/ViaAprilFools/blob/main/README.md#releases)
 
 Here is an example dependency configuration for all components:
 ```groovy
-implementation "com.viaversion:viaversion:4.5.2-SNAPSHOT"
-implementation("com.viaversion:viabackwards-common:4.5.2-SNAPSHOT") {
+implementation "com.viaversion:viaversion:4.6.0-1.19.4-pre3-SNAPSHOT"
+implementation("com.viaversion:viabackwards-common:4.6.0-1.19.4-pre3-SNAPSHOT") {
     exclude group: "com.viaversion", module: "viaversion" // Exclude transitive dependency. Include manually for more control
     exclude group: "io.netty", module: "netty-all" // Don't include the outdated netty version
 }
 implementation "com.viaversion:viarewind-core:2.0.3-SNAPSHOT"
-implementation "net.raphimc:ViaLegacy:2.0.2"
+implementation "net.raphimc:ViaLegacy:2.2.9"
+implementation "net.raphimc:ViaAprilFools:2.0.5"
 ```
 
 ## Implementation
@@ -66,7 +68,7 @@ Then you have to create a new instance of your loader class and pass it to the `
 
 To do this you can call the ``ViaProtocolHack.init()`` method somewhere suitable in your project (You can do that async) with your desired argument values:
 ```java
-ViaProtocolHack.init(null/*ViaPlatform*/, new CustomVPLoaderImpl(), null/*ViaInjector*/, null/*ViaCommandHandler*/, ViaBackwardsPlatformImpl::new, ViaLegacyPlatformImpl::new);
+ViaProtocolHack.init(null/*ViaPlatform*/, new CustomVPLoaderImpl(), null/*ViaInjector*/, null/*ViaCommandHandler*/, ViaBackwardsPlatformImpl::new, ViaLegacyPlatformImpl::new, ViaAprilFoolsPlatformImpl::new);
 ```
 
 After you have initialized the Via* platforms you can start implementing ViaProtocolHack into your project.
