@@ -19,6 +19,7 @@ package net.raphimc.viaprotocolhack;
 
 import com.viaversion.viaversion.ViaManagerImpl;
 import com.viaversion.viaversion.api.Via;
+import com.viaversion.viaversion.api.data.MappingDataLoader;
 import com.viaversion.viaversion.api.platform.ViaInjector;
 import com.viaversion.viaversion.api.platform.ViaPlatform;
 import com.viaversion.viaversion.api.platform.ViaPlatformLoader;
@@ -54,6 +55,7 @@ public class ViaProtocolHack {
                 .injector(injector)
                 .commandHandler(commandHandler)
                 .build());
+        MappingDataLoader.enableMappingsCache();
 
         if (platformSuppliers != null) {
             Via.getManager().addEnableListener(() -> {
