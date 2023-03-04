@@ -99,6 +99,7 @@ public enum VersionEnum {
     r1_18_2(ProtocolVersion.v1_18_2),
     r1_19(ProtocolVersion.v1_19),
     r1_19_1tor1_19_2(ProtocolVersion.v1_19_1),
+    latestBedrock(getViaBedrockProtocol("latestBedrock")),
     r1_19_3(ProtocolVersion.v1_19_3),
     r1_19_4(ProtocolVersion.v1_19_4),
 
@@ -114,10 +115,11 @@ public enum VersionEnum {
     static {
         for (VersionEnum version : VersionEnum.values()) {
             if (version == UNKNOWN) continue;
-            VERSION_REGISTRY.put(version.getProtocol(), version);
+            if (!version.protocolVersion.isKnown()) continue;
+            VERSION_REGISTRY.put(version.protocolVersion, version);
         }
         for (VersionEnum version : VersionEnum.getAllVersions()) {
-            if (version.isNewerThan(VersionEnum.r1_6_4) && version != VersionEnum.s3d_shareware && version != VersionEnum.s20w14infinite && version != VersionEnum.sCombatTest8c) {
+            if (version.isNewerThan(VersionEnum.r1_6_4) && version != VersionEnum.s3d_shareware && version != VersionEnum.s20w14infinite && version != VersionEnum.sCombatTest8c && version != VersionEnum.latestBedrock) {
                 OFFICIAL_SUPPORTED_PROTOCOLS.add(version);
             }
         }
@@ -195,10 +197,13 @@ public enum VersionEnum {
         SORTED_VERSIONS.add(c0_0_18a_02);
         SORTED_VERSIONS.add(c0_0_16a_02);
         SORTED_VERSIONS.add(c0_0_15a_1);
+        SORTED_VERSIONS.add(latestBedrock);
         SORTED_VERSIONS.add(sCombatTest8c);
         SORTED_VERSIONS.add(s20w14infinite);
         SORTED_VERSIONS.add(s3d_shareware);
         SORTED_VERSIONS.add(c0_30cpe);
+
+        SORTED_VERSIONS.removeIf(v -> !v.protocolVersion.isKnown());
     }
 
     public static VersionEnum fromProtocolVersion(final ProtocolVersion protocolVersion) {
@@ -233,6 +238,14 @@ public enum VersionEnum {
     private static ProtocolVersion getViaAprilFoolsProtocol(final String name) {
         try {
             return (ProtocolVersion) Class.forName("net.raphimc.viaaprilfools.api.AprilFoolsProtocolVersion").getField(name).get(null);
+        } catch (Throwable e) {
+            return ProtocolVersion.unknown;
+        }
+    }
+
+    private static ProtocolVersion getViaBedrockProtocol(final String name) {
+        try {
+            return (ProtocolVersion) Class.forName("net.raphimc.viabedrock.api.BedrockProtocolVersion").getField(name).get(null);
         } catch (Throwable e) {
             return ProtocolVersion.unknown;
         }
