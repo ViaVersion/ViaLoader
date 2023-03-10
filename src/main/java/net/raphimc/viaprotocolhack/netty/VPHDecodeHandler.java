@@ -27,11 +27,11 @@ import io.netty.handler.codec.MessageToMessageDecoder;
 
 import java.util.List;
 
-public class ViaDecodeHandler extends MessageToMessageDecoder<ByteBuf> {
+public class VPHDecodeHandler extends MessageToMessageDecoder<ByteBuf> {
 
     protected final UserConnection user;
 
-    public ViaDecodeHandler(final UserConnection user) {
+    public VPHDecodeHandler(final UserConnection user) {
         this.user = user;
     }
 

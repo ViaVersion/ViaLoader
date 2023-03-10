@@ -18,25 +18,29 @@
 package net.raphimc.viaprotocolhack.util;
 
 import com.viaversion.viaversion.api.platform.PlatformTask;
+import com.viaversion.viaversion.api.scheduler.Task;
+import com.viaversion.viaversion.api.scheduler.TaskStatus;
 
-import java.util.concurrent.Future;
+public class VPHTask implements PlatformTask<Task> {
 
-public class FutureTaskId implements PlatformTask<Future<?>> {
+    private final Task task;
 
-    private final Future<?> object;
-
-    public FutureTaskId(Future<?> object) {
-        this.object = object;
+    public VPHTask(final Task task) {
+        this.task = task;
     }
 
     @Override
-    public Future<?> getObject() {
-        return object;
+    public Task getObject() {
+        return this.task;
     }
 
     @Override
     public void cancel() {
-        object.cancel(false);
+        this.task.cancel();
+    }
+
+    public TaskStatus getStatus() {
+        return this.task.status();
     }
 
 }

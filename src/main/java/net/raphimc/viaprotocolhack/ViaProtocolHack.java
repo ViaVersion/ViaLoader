@@ -19,16 +19,15 @@ package net.raphimc.viaprotocolhack;
 
 import com.viaversion.viaversion.ViaManagerImpl;
 import com.viaversion.viaversion.api.Via;
-import com.viaversion.viaversion.api.data.MappingDataLoader;
 import com.viaversion.viaversion.api.platform.ViaInjector;
 import com.viaversion.viaversion.api.platform.ViaPlatform;
 import com.viaversion.viaversion.api.platform.ViaPlatformLoader;
 import com.viaversion.viaversion.commands.ViaCommandHandler;
 import com.viaversion.viaversion.protocol.ProtocolManagerImpl;
 import net.raphimc.viaprotocolhack.impl.platform.ViaVersionPlatformImpl;
-import net.raphimc.viaprotocolhack.impl.viaversion.VPCommandHandler;
-import net.raphimc.viaprotocolhack.impl.viaversion.VPInjector;
-import net.raphimc.viaprotocolhack.impl.viaversion.VPLoader;
+import net.raphimc.viaprotocolhack.impl.viaversion.VPHCommandHandler;
+import net.raphimc.viaprotocolhack.impl.viaversion.VPHInjector;
+import net.raphimc.viaprotocolhack.impl.viaversion.VPHLoader;
 import net.raphimc.viaprotocolhack.util.JLoggerToSLF4J;
 import org.slf4j.LoggerFactory;
 
@@ -45,9 +44,9 @@ public class ViaProtocolHack {
     @SuppressWarnings("ReassignedVariable")
     public static void init(ViaPlatform<?> platform, ViaPlatformLoader loader, ViaInjector injector, ViaCommandHandler commandHandler, final Supplier<?>... platformSuppliers) {
         if (platform == null) platform = new ViaVersionPlatformImpl(null);
-        if (loader == null) loader = new VPLoader();
-        if (injector == null) injector = new VPInjector();
-        if (commandHandler == null) commandHandler = new VPCommandHandler();
+        if (loader == null) loader = new VPHLoader();
+        if (injector == null) injector = new VPHInjector();
+        if (commandHandler == null) commandHandler = new VPHCommandHandler();
 
         Via.init(ViaManagerImpl.builder()
                 .platform(platform)
@@ -55,7 +54,6 @@ public class ViaProtocolHack {
                 .injector(injector)
                 .commandHandler(commandHandler)
                 .build());
-        MappingDataLoader.enableMappingsCache();
 
         if (platformSuppliers != null) {
             Via.getManager().addEnableListener(() -> {
@@ -69,7 +67,10 @@ public class ViaProtocolHack {
             });
         }
 
-        ((ViaManagerImpl) Via.getManager()).init();
+        final ViaManagerImpl viaManager = (ViaManagerImpl) Via.getManager();
+        viaManager.init();
+        viaManager.onServerLoaded();
+
         Via.getManager().getProtocolManager().setMaxProtocolPathSize(Integer.MAX_VALUE);
         Via.getManager().getProtocolManager().setMaxPathDeltaIncrease(-1);
         ((ProtocolManagerImpl) Via.getManager().getProtocolManager()).refreshVersions();

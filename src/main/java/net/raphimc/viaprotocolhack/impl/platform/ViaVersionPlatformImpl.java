@@ -17,47 +17,35 @@
  */
 package net.raphimc.viaprotocolhack.impl.platform;
 
-import com.google.common.util.concurrent.ThreadFactoryBuilder;
 import com.viaversion.viaversion.api.Via;
 import com.viaversion.viaversion.api.ViaAPI;
 import com.viaversion.viaversion.api.command.ViaCommandSender;
 import com.viaversion.viaversion.api.configuration.ConfigurationProvider;
 import com.viaversion.viaversion.api.configuration.ViaVersionConfig;
-import com.viaversion.viaversion.api.platform.PlatformTask;
 import com.viaversion.viaversion.api.platform.ViaPlatform;
 import com.viaversion.viaversion.configuration.AbstractViaConfig;
 import com.viaversion.viaversion.libs.gson.JsonObject;
 import com.viaversion.viaversion.util.VersionInfo;
-import io.netty.channel.EventLoop;
 import net.raphimc.viaprotocolhack.ViaProtocolHack;
 import net.raphimc.viaprotocolhack.commands.UserCommandSender;
-import net.raphimc.viaprotocolhack.impl.viaversion.VPApiBase;
-import net.raphimc.viaprotocolhack.impl.viaversion.VPViaConfig;
-import net.raphimc.viaprotocolhack.util.DefaultEventLoop;
-import net.raphimc.viaprotocolhack.util.FutureTaskId;
+import net.raphimc.viaprotocolhack.impl.viaversion.VPHApiBase;
+import net.raphimc.viaprotocolhack.impl.viaversion.VPHViaConfig;
 import net.raphimc.viaprotocolhack.util.JLoggerToSLF4J;
+import net.raphimc.viaprotocolhack.util.VPHTask;
 import org.slf4j.LoggerFactory;
 
 import java.io.File;
 import java.util.UUID;
-import java.util.concurrent.*;
+import java.util.concurrent.TimeUnit;
 import java.util.logging.Logger;
 
 public class ViaVersionPlatformImpl implements ViaPlatform<UUID> {
 
-    private static final ExecutorService ASYNC_EXECUTOR;
-    private static final EventLoop EVENT_LOOP;
     private static final Logger LOGGER = new JLoggerToSLF4J(LoggerFactory.getLogger("ViaVersion"));
 
     private final File dataFolder;
     private final AbstractViaConfig config;
     private final ViaAPI<UUID> api;
-
-    static {
-        final ThreadFactory factory = new ThreadFactoryBuilder().setNameFormat("ViaProtocolHack-#%d").setDaemon(true).build();
-        ASYNC_EXECUTOR = Executors.newFixedThreadPool(Runtime.getRuntime().availableProcessors(), factory);
-        EVENT_LOOP = new DefaultEventLoop(factory);
-    }
 
     public ViaVersionPlatformImpl(final File rootFolder) {
         this.dataFolder = new File(rootFolder, "ViaProtocolHack");
@@ -86,52 +74,28 @@ public class ViaVersionPlatformImpl implements ViaPlatform<UUID> {
     }
 
     @Override
-    public FutureTaskId runAsync(Runnable runnable) {
-        return new FutureTaskId(CompletableFuture
-                .runAsync(runnable, ASYNC_EXECUTOR)
-                .exceptionally(throwable -> {
-                    if (!(throwable instanceof CancellationException)) {
-                        throwable.printStackTrace();
-                    }
-                    return null;
-                })
-        );
+    public VPHTask runAsync(Runnable runnable) {
+        return new VPHTask(Via.getManager().getScheduler().execute(runnable));
     }
 
     @Override
-    public FutureTaskId runSync(Runnable runnable) {
-        return new FutureTaskId(EVENT_LOOP
-                .submit(runnable)
-                .addListener(future -> {
-                    if (!future.isCancelled() && future.cause() != null) {
-                        future.cause().printStackTrace();
-                    }
-                })
-        );
+    public VPHTask runRepeatingAsync(Runnable runnable, long ticks) {
+        return new VPHTask(Via.getManager().getScheduler().scheduleRepeating(runnable, 0, ticks * 50, TimeUnit.MILLISECONDS));
     }
 
     @Override
-    public PlatformTask<Future<?>> runSync(Runnable runnable, long ticks) {
-        return new FutureTaskId(EVENT_LOOP
-                .schedule(() -> runSync(runnable), ticks * 50, TimeUnit.MILLISECONDS)
-                .addListener(future -> {
-                    if (!future.isCancelled() && future.cause() != null) {
-                        future.cause().printStackTrace();
-                    }
-                })
-        );
+    public VPHTask runSync(Runnable runnable) {
+        return this.runAsync(runnable);
     }
 
     @Override
-    public PlatformTask<Future<?>> runRepeatingSync(Runnable runnable, long ticks) {
-        return new FutureTaskId(EVENT_LOOP
-                .scheduleAtFixedRate(runnable, 0, ticks * 50, TimeUnit.MILLISECONDS)
-                .addListener(future -> {
-                    if (!future.isCancelled() && future.cause() != null) {
-                        future.cause().printStackTrace();
-                    }
-                })
-        );
+    public VPHTask runSync(Runnable runnable, long ticks) {
+        return new VPHTask(Via.getManager().getScheduler().schedule(runnable, ticks * 50, TimeUnit.MILLISECONDS));
+    }
+
+    @Override
+    public VPHTask runRepeatingSync(Runnable runnable, long ticks) {
+        return this.runRepeatingAsync(runnable, ticks);
     }
 
     @Override
@@ -203,13 +167,13 @@ public class ViaVersionPlatformImpl implements ViaPlatform<UUID> {
     }
 
     protected AbstractViaConfig createConfig() {
-        final AbstractViaConfig config = new VPViaConfig(new File(this.dataFolder, "viaversion.yml"));
+        final AbstractViaConfig config = new VPHViaConfig(new File(this.dataFolder, "viaversion.yml"));
         config.reloadConfig();
         return config;
     }
 
     protected ViaAPI<UUID> createApi() {
-        return new VPApiBase();
+        return new VPHApiBase();
     }
 
 }

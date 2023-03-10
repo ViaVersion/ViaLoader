@@ -17,15 +17,20 @@
  */
 package net.raphimc.viaprotocolhack.impl.viaversion;
 
-import com.viaversion.viaversion.commands.ViaCommandHandler;
-import net.raphimc.viaprotocolhack.commands.subs.ConnectionsSubCommand;
-import net.raphimc.viaprotocolhack.commands.subs.LeakDetectSubCommand;
+import com.viaversion.viaversion.api.Via;
+import com.viaversion.viaversion.api.platform.ViaPlatformLoader;
+import com.viaversion.viaversion.protocols.protocol1_9to1_8.providers.MovementTransmitterProvider;
+import net.raphimc.viaprotocolhack.impl.providers.VPHMovementTransmitterProvider;
 
-public class VPCommandHandler extends ViaCommandHandler {
+public class VPHLoader implements ViaPlatformLoader {
 
-    public VPCommandHandler() {
-        this.registerSubCommand(new LeakDetectSubCommand());
-        this.registerSubCommand(new ConnectionsSubCommand());
+    @Override
+    public void load() {
+        Via.getManager().getProviders().use(MovementTransmitterProvider.class, new VPHMovementTransmitterProvider());
+    }
+
+    @Override
+    public void unload() {
     }
 
 }

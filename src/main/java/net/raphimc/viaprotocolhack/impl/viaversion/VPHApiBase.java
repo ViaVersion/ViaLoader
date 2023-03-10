@@ -15,13 +15,12 @@
  * You should have received a copy of the GNU General Public License
  * along with this program.  If not, see <http://www.gnu.org/licenses/>.
  */
-package net.raphimc.viaprotocolhack.netty;
+package net.raphimc.viaprotocolhack.impl.viaversion;
 
-public class ViaPipeline {
+import com.viaversion.viaversion.ViaAPIBase;
 
-    public static final String HANDLER_DECODER_NAME = "via-decoder";
-    public static final String HANDLER_ENCODER_NAME = "via-encoder";
-    public static final String HANDLER_PRE_NETTY_ENCODER_NAME = "via-pre-netty-encoder";
-    public static final String HANDLER_PRE_NETTY_DECODER_NAME = "via-pre-netty-decoder";
+import java.util.UUID;
+
+public class VPHApiBase extends ViaAPIBase<UUID> {
 
 }

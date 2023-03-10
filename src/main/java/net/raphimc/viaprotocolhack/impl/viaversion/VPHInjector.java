@@ -21,10 +21,10 @@ import com.viaversion.viaversion.api.platform.ViaInjector;
 import com.viaversion.viaversion.libs.fastutil.ints.IntLinkedOpenHashSet;
 import com.viaversion.viaversion.libs.fastutil.ints.IntSortedSet;
 import com.viaversion.viaversion.libs.gson.JsonObject;
-import net.raphimc.viaprotocolhack.netty.ViaPipeline;
+import net.raphimc.viaprotocolhack.netty.VPHPipeline;
 import net.raphimc.viaprotocolhack.util.VersionEnum;
 
-public class VPInjector implements ViaInjector {
+public class VPHInjector implements ViaInjector {
 
     @Override
     public void inject() {
@@ -50,12 +50,12 @@ public class VPInjector implements ViaInjector {
 
     @Override
     public String getEncoderName() {
-        return ViaPipeline.HANDLER_ENCODER_NAME;
+        return VPHPipeline.ENCODER_HANDLER_NAME;
     }
 
     @Override
     public String getDecoderName() {
-        return ViaPipeline.HANDLER_DECODER_NAME;
+        return VPHPipeline.DECODER_HANDLER_NAME;
     }
 
     @Override

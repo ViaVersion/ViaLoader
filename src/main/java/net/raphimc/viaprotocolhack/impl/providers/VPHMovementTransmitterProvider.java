@@ -26,7 +26,7 @@ import com.viaversion.viaversion.protocols.protocol1_9to1_8.Protocol1_9To1_8;
 import com.viaversion.viaversion.protocols.protocol1_9to1_8.providers.MovementTransmitterProvider;
 import com.viaversion.viaversion.protocols.protocol1_9to1_8.storage.MovementTracker;
 
-public class VPMovementTransmitterProvider extends MovementTransmitterProvider {
+public class VPHMovementTransmitterProvider extends MovementTransmitterProvider {
 
     @Override
     public Object getFlyingPacket() {

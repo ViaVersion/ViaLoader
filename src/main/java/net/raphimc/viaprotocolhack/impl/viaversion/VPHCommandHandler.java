@@ -17,10 +17,15 @@
  */
 package net.raphimc.viaprotocolhack.impl.viaversion;
 
-import com.viaversion.viaversion.ViaAPIBase;
+import com.viaversion.viaversion.commands.ViaCommandHandler;
+import net.raphimc.viaprotocolhack.commands.subs.ConnectionsSubCommand;
+import net.raphimc.viaprotocolhack.commands.subs.LeakDetectSubCommand;
 
-import java.util.UUID;
+public class VPHCommandHandler extends ViaCommandHandler {
 
-public class VPApiBase extends ViaAPIBase<UUID> {
+    public VPHCommandHandler() {
+        this.registerSubCommand(new LeakDetectSubCommand());
+        this.registerSubCommand(new ConnectionsSubCommand());
+    }
 
 }

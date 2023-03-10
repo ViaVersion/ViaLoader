@@ -15,22 +15,13 @@
  * You should have received a copy of the GNU General Public License
  * along with this program.  If not, see <http://www.gnu.org/licenses/>.
  */
-package net.raphimc.viaprotocolhack.impl.viaversion;
+package net.raphimc.viaprotocolhack.netty;
 
-import com.viaversion.viaversion.api.Via;
-import com.viaversion.viaversion.api.platform.ViaPlatformLoader;
-import com.viaversion.viaversion.protocols.protocol1_9to1_8.providers.MovementTransmitterProvider;
-import net.raphimc.viaprotocolhack.impl.providers.VPMovementTransmitterProvider;
+public class VPHPipeline {
 
-public class VPLoader implements ViaPlatformLoader {
-
-    @Override
-    public void load() {
-        Via.getManager().getProviders().use(MovementTransmitterProvider.class, new VPMovementTransmitterProvider());
-    }
-
-    @Override
-    public void unload() {
-    }
+    public static final String DECODER_HANDLER_NAME = "via_decoder";
+    public static final String ENCODER_HANDLER_NAME = "via_encoder";
+    public static final String PRE_NETTY_ENCODER_HANDLER_NAME = "via-pre-netty_encoder";
+    public static final String PRE_NETTY_DECODER_HANDLER_NAME = "via-pre-netty_decoder";
 
 }

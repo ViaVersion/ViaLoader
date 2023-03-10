@@ -37,8 +37,8 @@ To include ViaLegacy and ViaAprilFools, you can look at their READMEs: [ViaLegac
 
 Here is an example dependency configuration for all components:
 ```groovy
-implementation "com.viaversion:viaversion:4.6.0-1.19.4-pre3-SNAPSHOT"
-implementation("com.viaversion:viabackwards-common:4.6.0-1.19.4-pre3-SNAPSHOT") {
+implementation "com.viaversion:viaversion:4.6.0-1.19.4-rc2-SNAPSHOT"
+implementation("com.viaversion:viabackwards-common:4.6.0-1.19.4-pre4-SNAPSHOT") {
     exclude group: "com.viaversion", module: "viaversion" // Exclude transitive dependency. Include manually for more control
     exclude group: "io.netty", module: "netty-all" // Don't include the outdated netty version
 }
@@ -52,8 +52,8 @@ To implement ViaProtocolHack into your project you need to initialize the Via* p
 ViaProtocolHack provides a wrapper class with default values for that. To use a default value you can just pass ``null`` to that argument.
 If you want to change the default value you should create your own class which extends the base class and overrides the methods you want to change.
 
-The only default value you have to change is the ``VPLoader`` argument. The loader is used to register all the providers for the Via* platforms.  
-To override the default you first create a new class which extends ``VPLoader`` and overrides the ``load`` method (Make sure to call the super method).  
+The only default value you have to change is the ``VPHLoader`` argument. The loader is used to register all the providers for the Via* platforms.  
+To override the default you first create a new class which extends ``VPHLoader`` and overrides the ``load`` method (Make sure to call the super method).  
 Within the ``load`` method you have to register a ``VersionProvider`` implementation which will be used to determine the target server version of a given connection.
 Here is an example implementation:
 ```java
@@ -68,7 +68,7 @@ Then you have to create a new instance of your loader class and pass it to the `
 
 To do this you can call the ``ViaProtocolHack.init()`` method somewhere suitable in your project (You can do that async) with your desired argument values:
 ```java
-ViaProtocolHack.init(null/*ViaPlatform*/, new CustomVPLoaderImpl(), null/*ViaInjector*/, null/*ViaCommandHandler*/, ViaBackwardsPlatformImpl::new, ViaLegacyPlatformImpl::new, ViaAprilFoolsPlatformImpl::new);
+ViaProtocolHack.init(null/*ViaPlatform*/, new CustomVPHLoaderImpl(), null/*ViaInjector*/, null/*ViaCommandHandler*/, ViaBackwardsPlatformImpl::new, ViaLegacyPlatformImpl::new, ViaAprilFoolsPlatformImpl::new);
 ```
 
 After you have initialized the Via* platforms you can start implementing ViaProtocolHack into your project.
@@ -79,8 +79,8 @@ Here is an example implementation:
 final UserConnection user = new UserConnectionImpl(channel, true);
 new ProtocolPipelineImpl(user);
 
-channel.pipeline().addBefore("encoder", ViaPipeline.HANDLER_ENCODER_NAME, new ViaEncodeHandler(user));
-channel.pipeline().addBefore("decoder", ViaPipeline.HANDLER_DECODER_NAME, new ViaDecodeHandler(user));
+channel.pipeline().addBefore("encoder", VPHPipeline.ENCODER_HANDLER_NAME, new VPHEncodeHandler(user));
+channel.pipeline().addBefore("decoder", VPHPipeline.DECODER_HANDLER_NAME, new VPHDecodeHandler(user));
 ```
 If you are using ViaLegacy, you should read its README to see what changes you need to make to the netty pipeline for it to work.
 Depending on where you are implementing ViaProtocolHack you might need to ensure that the pipeline is held in the correct order.

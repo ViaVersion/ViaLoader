@@ -26,7 +26,7 @@ import java.util.Collections;
 import java.util.List;
 import java.util.Map;
 
-public class VPViaConfig extends AbstractViaConfig {
+public class VPHViaConfig extends AbstractViaConfig {
 
     protected final List<String> UNSUPPORTED = Lists.newArrayList(
             "checkforupdates", "bungee-ping-interval", "bungee-ping-save", "bungee-servers",
@@ -37,7 +37,7 @@ public class VPViaConfig extends AbstractViaConfig {
             "use-new-deathmessages", "nms-player-ticking"
     );
 
-    public VPViaConfig(final File configFile) {
+    public VPHViaConfig(final File configFile) {
         super(configFile);
     }
 
