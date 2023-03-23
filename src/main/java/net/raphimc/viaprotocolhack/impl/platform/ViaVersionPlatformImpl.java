@@ -79,8 +79,8 @@ public class ViaVersionPlatformImpl implements ViaPlatform<UUID> {
     }
 
     @Override
-    public VPHTask runRepeatingAsync(Runnable runnable, long ticks) {
-        return new VPHTask(Via.getManager().getScheduler().scheduleRepeating(runnable, 0, ticks * 50, TimeUnit.MILLISECONDS));
+    public VPHTask runRepeatingAsync(Runnable runnable, long period) {
+        return new VPHTask(Via.getManager().getScheduler().scheduleRepeating(runnable, 0, period * 50, TimeUnit.MILLISECONDS));
     }
 
     @Override
@@ -89,13 +89,13 @@ public class ViaVersionPlatformImpl implements ViaPlatform<UUID> {
     }
 
     @Override
-    public VPHTask runSync(Runnable runnable, long ticks) {
-        return new VPHTask(Via.getManager().getScheduler().schedule(runnable, ticks * 50, TimeUnit.MILLISECONDS));
+    public VPHTask runSync(Runnable runnable, long delay) {
+        return new VPHTask(Via.getManager().getScheduler().schedule(runnable, delay * 50, TimeUnit.MILLISECONDS));
     }
 
     @Override
-    public VPHTask runRepeatingSync(Runnable runnable, long ticks) {
-        return this.runRepeatingAsync(runnable, ticks);
+    public VPHTask runRepeatingSync(Runnable runnable, long period) {
+        return this.runRepeatingAsync(runnable, period);
     }
 
     @Override
