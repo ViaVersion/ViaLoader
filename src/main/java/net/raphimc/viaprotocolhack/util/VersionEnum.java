@@ -125,6 +125,7 @@ public enum VersionEnum {
             }
         }
 
+        SORTED_VERSIONS.add(r1_20);
         SORTED_VERSIONS.add(r1_19_4);
         SORTED_VERSIONS.add(r1_19_3);
         SORTED_VERSIONS.add(r1_19_1tor1_19_2);
