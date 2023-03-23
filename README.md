@@ -1,8 +1,7 @@
 # ViaProtocolHack
-Easy to use ViaVersion, (and optional ViaBackwards, ViaRewind and ViaLegacy) platform implementation.
+Easy to use ViaVersion, (and optional ViaBackwards, ViaRewind, ViaLegacy and ViaAprilFools) platform implementation.
 
 ViaProtocolHack is not usable by itself as a standalone software, as it is an implementation of a ViaVersion platform.
-ViaProtocolHack is intended to be implemented in a ViaVersion based protocol translator.
 
 ### Projects implementing ViaProtocolHack
 - [ViaProxy](https://github.com/RaphiMC/ViaProxy): Standalone proxy which uses ViaVersion to translate between minecraft versions. Allows Minecraft 1.7+ clients to join to any version server.
