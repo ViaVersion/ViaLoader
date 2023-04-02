@@ -50,12 +50,12 @@ public class VPHInjector implements ViaInjector {
 
     @Override
     public String getEncoderName() {
-        return VPHPipeline.ENCODER_HANDLER_NAME;
+        return VPHPipeline.VIA_CODEC_NAME;
     }
 
     @Override
     public String getDecoderName() {
-        return VPHPipeline.DECODER_HANDLER_NAME;
+        return VPHPipeline.VIA_CODEC_NAME;
     }
 
     @Override

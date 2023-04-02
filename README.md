@@ -36,14 +36,14 @@ To include ViaLegacy and ViaAprilFools, you can look at their READMEs: [ViaLegac
 
 Here is an example dependency configuration for all components:
 ```groovy
-implementation "com.viaversion:viaversion:4.7.0-23w12a-SNAPSHOT"
-implementation("com.viaversion:viabackwards-common:4.7.0-23w12a-SNAPSHOT") {
+implementation "com.viaversion:viaversion:4.7.0-23w13a-SNAPSHOT"
+implementation("com.viaversion:viabackwards-common:4.7.0-23w13a-SNAPSHOT") {
     exclude group: "com.viaversion", module: "viaversion" // Exclude transitive dependency. Include manually for more control
     exclude group: "io.netty", module: "netty-all" // Don't include the outdated netty version
 }
 implementation "com.viaversion:viarewind-core:2.0.4-SNAPSHOT"
-implementation "net.raphimc:ViaLegacy:2.2.9"
-implementation "net.raphimc:ViaAprilFools:2.0.5"
+implementation "net.raphimc:ViaLegacy:2.2.11"
+implementation "net.raphimc:ViaAprilFools:2.0.6"
 ```
 
 ## Implementation

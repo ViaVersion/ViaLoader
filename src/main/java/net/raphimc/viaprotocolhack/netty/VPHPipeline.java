@@ -17,11 +17,99 @@
  */
 package net.raphimc.viaprotocolhack.netty;
 
-public class VPHPipeline {
+import com.viaversion.viaversion.api.connection.UserConnection;
+import io.netty.channel.ChannelHandler;
+import io.netty.channel.ChannelHandlerContext;
+import io.netty.channel.ChannelInboundHandlerAdapter;
+import io.netty.channel.ChannelPipeline;
+import net.raphimc.viabedrock.netty.BatchLengthCodec;
+import net.raphimc.viabedrock.netty.PacketEncapsulationCodec;
+import net.raphimc.viabedrock.protocol.BedrockBaseProtocol;
+import net.raphimc.vialegacy.netty.PreNettyLengthCodec;
+import net.raphimc.vialegacy.protocols.release.protocol1_7_2_5to1_6_4.baseprotocols.PreNettyBaseProtocol;
+import net.raphimc.viaprotocolhack.netty.viabedrock.DisconnectHandler;
+import net.raphimc.viaprotocolhack.netty.viabedrock.RakMessageEncapsulationCodec;
+import net.raphimc.viaprotocolhack.util.VersionEnum;
 
-    public static final String DECODER_HANDLER_NAME = "via_decoder";
-    public static final String ENCODER_HANDLER_NAME = "via_encoder";
-    public static final String PRE_NETTY_ENCODER_HANDLER_NAME = "via-pre-netty_encoder";
-    public static final String PRE_NETTY_DECODER_HANDLER_NAME = "via-pre-netty_decoder";
+public abstract class VPHPipeline extends ChannelInboundHandlerAdapter {
+
+    public static final String VIA_CODEC_NAME = "via-codec";
+
+    public static final String VIALEGACY_PRE_NETTY_LENGTH_CODEC_NAME = "vialegacy-pre-netty-length-codec";
+
+    public static final String VIABEDROCK_DISCONNECT_HANDLER_NAME = "viabedrock-disconnect-handler";
+    public static final String VIABEDROCK_FRAME_ENCAPSULATION_HANDLER_NAME = "viabedrock-frame-encapsulation";
+    public static final String VIABEDROCK_PACKET_ENCAPSULATION_HANDLER_NAME = "viabedrock-packet-encapsulation";
+
+    protected final UserConnection user;
+    protected final VersionEnum version;
+
+    public VPHPipeline(final UserConnection user, final VersionEnum version) {
+        this.user = user;
+        this.version = version;
+    }
+
+    @Override
+    public void handlerAdded(ChannelHandlerContext ctx) {
+        ctx.pipeline().addBefore(this.packetCodecName(), VIA_CODEC_NAME, this.createViaCodec());
+
+        if (this.version.isOlderThanOrEqualTo(VersionEnum.r1_6_4)) {
+            this.user.getProtocolInfo().getPipeline().add(PreNettyBaseProtocol.INSTANCE);
+            ctx.pipeline().addBefore(this.lengthCodecName(), VIALEGACY_PRE_NETTY_LENGTH_CODEC_NAME, this.createViaLegacyPreNettyLengthCodec());
+        } else if (this.version.equals(VersionEnum.bedrockLatest)) {
+            this.user.getProtocolInfo().getPipeline().add(BedrockBaseProtocol.INSTANCE);
+            ctx.pipeline().addBefore(this.lengthCodecName(), VIABEDROCK_DISCONNECT_HANDLER_NAME, this.createViaBedrockDisconnectHandler());
+            ctx.pipeline().addBefore(this.lengthCodecName(), VIABEDROCK_FRAME_ENCAPSULATION_HANDLER_NAME, this.createViaBedrockFrameEncapsulationHandler());
+            this.replaceLengthCodec(ctx, this.createViaBedrockBatchLengthCodec());
+            ctx.pipeline().addBefore(VIA_CODEC_NAME, VIABEDROCK_PACKET_ENCAPSULATION_HANDLER_NAME, this.createViaBedrockPacketEncapsulationHandler());
+        }
+    }
+
+    @Override
+    public void userEventTriggered(ChannelHandlerContext ctx, Object evt) throws Exception {
+        if (CompressionReorderEvent.INSTANCE.equals(evt)) {
+            final ChannelPipeline pipeline = ctx.pipeline();
+
+            if (pipeline.names().indexOf(this.compressionCodecName()) > pipeline.names().indexOf(VIA_CODEC_NAME)) {
+                pipeline.addAfter(this.compressionCodecName(), VIA_CODEC_NAME, pipeline.remove(VIA_CODEC_NAME));
+            }
+        }
+
+        super.userEventTriggered(ctx, evt);
+    }
+
+    protected ChannelHandler createViaCodec() {
+        return new ViaCodec(this.user);
+    }
+
+    protected ChannelHandler createViaLegacyPreNettyLengthCodec() {
+        return new PreNettyLengthCodec(this.user);
+    }
+
+    protected ChannelHandler createViaBedrockDisconnectHandler() {
+        return new DisconnectHandler();
+    }
+
+    protected ChannelHandler createViaBedrockFrameEncapsulationHandler() {
+        return new RakMessageEncapsulationCodec();
+    }
+
+    protected ChannelHandler createViaBedrockBatchLengthCodec() {
+        return new BatchLengthCodec();
+    }
+
+    protected ChannelHandler createViaBedrockPacketEncapsulationHandler() {
+        return new PacketEncapsulationCodec();
+    }
+
+    protected void replaceLengthCodec(final ChannelHandlerContext ctx, final ChannelHandler handler) {
+        ctx.pipeline().replace(this.lengthCodecName(), this.lengthCodecName(), handler);
+    }
+
+    protected abstract String compressionCodecName();
+
+    protected abstract String packetCodecName();
+
+    protected abstract String lengthCodecName();
 
 }

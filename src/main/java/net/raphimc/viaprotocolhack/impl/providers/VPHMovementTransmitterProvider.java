@@ -46,12 +46,11 @@ public class VPHMovementTransmitterProvider extends MovementTransmitterProvider 
             final MovementTracker tracker = userConnection.get(MovementTracker.class);
             tracker.incrementIdlePacket();
 
-            final PacketWrapper wrapper = PacketWrapper.create(ServerboundPackets1_8.PLAYER_MOVEMENT, userConnection);
-            wrapper.write(Type.BOOLEAN, tracker.isGround());
-
             userConnection.getChannel().eventLoop().submit(() -> {
                 try {
-                    wrapper.sendToServer(Protocol1_9To1_8.class);
+                    final PacketWrapper playerMovement = PacketWrapper.create(ServerboundPackets1_8.PLAYER_MOVEMENT, userConnection);
+                    playerMovement.write(Type.BOOLEAN, tracker.isGround());
+                    playerMovement.sendToServer(Protocol1_9To1_8.class);
                 } catch (Throwable ignored) {
                 }
             });
