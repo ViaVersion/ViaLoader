@@ -78,8 +78,7 @@ Here is an example implementation:
 final UserConnection user = new UserConnectionImpl(channel, true);
 new ProtocolPipelineImpl(user);
 
-channel.pipeline().addBefore("encoder", VPHPipeline.ENCODER_HANDLER_NAME, new VPHEncodeHandler(user));
-channel.pipeline().addBefore("decoder", VPHPipeline.DECODER_HANDLER_NAME, new VPHDecodeHandler(user));
+channel.pipeline().addBefore("packet_codec", VPHPipeline.VIA_CODEC_NAME, new ViaCodec(user));
 ```
 If you are using ViaLegacy, you should read its README to see what changes you need to make to the netty pipeline for it to work.
 Depending on where you are implementing ViaProtocolHack you might need to ensure that the pipeline is held in the correct order.
