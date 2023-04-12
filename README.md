@@ -4,7 +4,7 @@ Easy to use ViaVersion, (and optional ViaBackwards, ViaRewind, ViaLegacy and Via
 ViaProtocolHack is not usable by itself as a standalone software, as it is an implementation of a ViaVersion platform.
 
 ### Projects implementing ViaProtocolHack
-- [ViaProxy](https://github.com/RaphiMC/ViaProxy): Standalone proxy which uses ViaVersion to translate between minecraft versions. Allows Minecraft 1.7+ clients to join to any version server.
+- [ViaProxy](https://github.com/RaphiMC/ViaProxy): Standalone proxy which uses ViaVersion to translate between Minecraft versions. Allows Minecraft 1.7+ clients to join to any version server.
 
 ## Releases
 ### Gradle/Maven
@@ -21,7 +21,7 @@ ViaProtocolHack is split into 5 different components:
 - ViaBackwards (Allows older clients to join to newer server versions [needs ViaVersion])
 - ViaRewind (Allows 1.8.x and 1.7.x clients to join to 1.9+ servers [needs ViaBackwards])
 - ViaLegacy (Allows clients to join to <= 1.7.10 servers [needs ViaVersion])
-- ViaAprilFools (Allows clients to join to some notable minecraft snapshots [needs ViaBackwards])
+- ViaAprilFools (Allows clients to join to some notable Minecraft snapshots [needs ViaBackwards])
 
 To include ViaVersion/ViaBackwards/ViaRewind you have to add the ViaVersion maven repository to your build script:
 ```groovy
