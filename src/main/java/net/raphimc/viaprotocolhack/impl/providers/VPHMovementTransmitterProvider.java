@@ -39,22 +39,26 @@ public class VPHMovementTransmitterProvider extends MovementTransmitterProvider 
     }
 
     @Override
-    public void sendPlayer(UserConnection userConnection) {
-        if (userConnection.getProtocolInfo().getState() == State.PLAY) {
-            if (userConnection.getEntityTracker(Protocol1_9To1_8.class).clientEntityId() == -1) return;
-
-            final MovementTracker tracker = userConnection.get(MovementTracker.class);
-            tracker.incrementIdlePacket();
-
-            userConnection.getChannel().eventLoop().submit(() -> {
-                try {
-                    final PacketWrapper playerMovement = PacketWrapper.create(ServerboundPackets1_8.PLAYER_MOVEMENT, userConnection);
-                    playerMovement.write(Type.BOOLEAN, tracker.isGround());
-                    playerMovement.sendToServer(Protocol1_9To1_8.class);
-                } catch (Throwable ignored) {
-                }
-            });
+    public void sendPlayer(UserConnection user) {
+        if (user.getProtocolInfo().getState() != State.PLAY) {
+            return;
         }
+        if (user.getEntityTracker(Protocol1_9To1_8.class).clientEntityId() == -1) {
+            return;
+        }
+
+        final MovementTracker movementTracker = user.get(MovementTracker.class);
+        movementTracker.incrementIdlePacket();
+        final boolean onGround = movementTracker.isGround();
+
+        user.getChannel().eventLoop().submit(() -> {
+            try {
+                final PacketWrapper playerMovement = PacketWrapper.create(ServerboundPackets1_8.PLAYER_MOVEMENT, user);
+                playerMovement.write(Type.BOOLEAN, onGround); // on ground
+                playerMovement.sendToServer(Protocol1_9To1_8.class);
+            } catch (Throwable ignored) {
+            }
+        });
     }
 
 }
