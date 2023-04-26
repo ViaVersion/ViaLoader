@@ -17,6 +17,7 @@
  */
 package net.raphimc.viaprotocolhack.impl.providers;
 
+import com.viaversion.viaversion.api.Via;
 import com.viaversion.viaversion.api.connection.UserConnection;
 import com.viaversion.viaversion.api.protocol.packet.PacketWrapper;
 import com.viaversion.viaversion.api.protocol.packet.State;
@@ -25,6 +26,8 @@ import com.viaversion.viaversion.protocols.protocol1_8.ServerboundPackets1_8;
 import com.viaversion.viaversion.protocols.protocol1_9to1_8.Protocol1_9To1_8;
 import com.viaversion.viaversion.protocols.protocol1_9to1_8.providers.MovementTransmitterProvider;
 import com.viaversion.viaversion.protocols.protocol1_9to1_8.storage.MovementTracker;
+
+import java.util.logging.Level;
 
 public class VPHMovementTransmitterProvider extends MovementTransmitterProvider {
 
@@ -49,16 +52,14 @@ public class VPHMovementTransmitterProvider extends MovementTransmitterProvider 
 
         final MovementTracker movementTracker = user.get(MovementTracker.class);
         movementTracker.incrementIdlePacket();
-        final boolean onGround = movementTracker.isGround();
 
-        user.getChannel().eventLoop().submit(() -> {
-            try {
-                final PacketWrapper playerMovement = PacketWrapper.create(ServerboundPackets1_8.PLAYER_MOVEMENT, user);
-                playerMovement.write(Type.BOOLEAN, onGround); // on ground
-                playerMovement.sendToServer(Protocol1_9To1_8.class);
-            } catch (Throwable ignored) {
-            }
-        });
+        try {
+            final PacketWrapper playerMovement = PacketWrapper.create(ServerboundPackets1_8.PLAYER_MOVEMENT, user);
+            playerMovement.write(Type.BOOLEAN, movementTracker.isGround()); // on ground
+            playerMovement.scheduleSendToServer(Protocol1_9To1_8.class);
+        } catch (Throwable e) {
+            Via.getPlatform().getLogger().log(Level.WARNING, "Failed to send player movement packet", e);
+        }
     }
 
 }
