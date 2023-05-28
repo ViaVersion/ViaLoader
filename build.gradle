@@ -45,7 +45,7 @@ dependencies {
     compileOnly "net.raphimc:ViaLegacy:2.2.16"
     compileOnly "net.raphimc:ViaAprilFools:2.0.6"
     compileOnly "net.raphimc:ViaBedrock:0.0.1-SNAPSHOT"
-    compileOnly "org.cloudburstmc.netty:netty-transport-raknet:1.0.0.CR1-SNAPSHOT"
+    compileOnly "org.cloudburstmc.netty:netty-transport-raknet:4.1.51.Final"
 
     api "org.slf4j:slf4j-api:2.0.7"
     api "org.yaml:snakeyaml:2.0"
