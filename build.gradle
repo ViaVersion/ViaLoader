@@ -43,7 +43,7 @@ dependencies {
     }
     compileOnly "com.viaversion:viarewind-core:2.0.4-SNAPSHOT"
     compileOnly "net.raphimc:ViaLegacy:2.2.16"
-    compileOnly "net.raphimc:ViaAprilFools:2.0.6"
+    compileOnly "net.raphimc:ViaAprilFools:2.0.7"
     compileOnly "net.raphimc:ViaBedrock:0.0.1-SNAPSHOT"
     compileOnly "org.cloudburstmc.netty:netty-transport-raknet:1.0.0.CR1-SNAPSHOT"
 
