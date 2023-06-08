@@ -33,7 +33,7 @@ dependencies {
     <dependency>
         <groupId>net.raphimc</groupId>
         <artifactId>ViaLoader</artifactId>
-        <version>2.2.5-SNAPSHOT</version> <!-- Get latest version from releases -->
+        <version>2.2.5</version> <!-- Get latest version from releases -->
     </dependency>
 </dependencies>
 ```
@@ -61,14 +61,14 @@ repositories {
 ```
 Here is an example dependency configuration for all components:
 ```groovy
-implementation "com.viaversion:viaversion:4.7.0-1.20-pre6-SNAPSHOT"
-implementation("com.viaversion:viabackwards-common:4.7.0-1.20-pre5-SNAPSHOT") {
+implementation "com.viaversion:viaversion:4.7.0"
+implementation("com.viaversion:viabackwards-common:4.7.0") {
     exclude group: "com.viaversion", module: "viaversion" // Exclude transitive dependency. Include manually for more control
     exclude group: "io.netty", module: "netty-all" // Don't include the outdated netty version
 }
 implementation "com.viaversion:viarewind-core:2.0.4-SNAPSHOT"
-implementation "net.raphimc:ViaLegacy:2.2.17-SNAPSHOT"
-implementation "net.raphimc:ViaAprilFools:2.0.7-SNAPSHOT"
+implementation "net.raphimc:ViaLegacy:2.2.17"
+implementation "net.raphimc:ViaAprilFools:2.0.7"
 ```
 
 ## Implementation
