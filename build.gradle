@@ -36,7 +36,7 @@ repositories {
 }
 
 dependencies {
-    compileOnly "com.viaversion:viaversion:4.7.0"
+    compileOnly "com.viaversion:viaversion:4.7.1-SNAPSHOT"
     compileOnly("com.viaversion:viabackwards-common:4.7.0") {
         exclude group: "com.viaversion", module: "viaversion"
         exclude group: "io.netty", module: "netty-all"

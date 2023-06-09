@@ -70,7 +70,7 @@ public class ViaVersionPlatformImpl implements ViaPlatform<UUID> {
 
     @Override
     public String getPluginVersion() {
-        return VersionInfo.VERSION;
+        return VersionInfo.getVersion();
     }
 
     @Override
