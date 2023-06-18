@@ -17,16 +17,12 @@
  */
 package net.raphimc.vialoader.impl.viaversion;
 
-import com.viaversion.viaversion.api.Via;
 import com.viaversion.viaversion.api.platform.ViaPlatformLoader;
-import com.viaversion.viaversion.protocols.protocol1_9to1_8.providers.MovementTransmitterProvider;
-import net.raphimc.vialoader.impl.providers.VLMovementTransmitterProvider;
 
 public class VLLoader implements ViaPlatformLoader {
 
     @Override
     public void load() {
-        Via.getManager().getProviders().use(MovementTransmitterProvider.class, new VLMovementTransmitterProvider());
     }
 
     @Override
