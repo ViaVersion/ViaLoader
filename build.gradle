@@ -33,6 +33,10 @@ repositories {
         name = "ViaVersion"
         url "https://repo.viaversion.com"
     }
+    maven {
+        name = "Minecraft Libraries"
+        url "https://libraries.minecraft.net"
+    }
 }
 
 dependencies {
