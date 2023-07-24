@@ -17,44 +17,75 @@
  */
 package net.raphimc.vialoader.util;
 
+import java.util.ArrayList;
+import java.util.List;
+import java.util.Objects;
+
 public class VersionRange {
 
-    private final VersionEnum lowerBound;
-    private final VersionEnum upperBound;
+    private final VersionEnum min;
+    private final VersionEnum max;
+    private final List<VersionRange> ranges;
 
-    public VersionRange(VersionEnum lowerBound, VersionEnum upperBound) {
-        if (lowerBound == null && upperBound == null) {
-            throw new RuntimeException("Invalid protocol range");
-        }
-        this.lowerBound = lowerBound;
-        this.upperBound = upperBound;
+    private VersionRange(final VersionEnum min, final VersionEnum max) {
+        this.min = min;
+        this.max = max;
+        this.ranges = new ArrayList<>();
     }
 
     public static VersionRange andNewer(final VersionEnum version) {
-        return new VersionRange(null, version);
+        return new VersionRange(version, null);
     }
 
-    public static VersionRange singleton(final VersionEnum version) {
+    public static VersionRange single(final VersionEnum version) {
         return new VersionRange(version, version);
     }
 
     public static VersionRange andOlder(final VersionEnum version) {
-        return new VersionRange(version, null);
+        return new VersionRange(null, version);
     }
 
-    public boolean contains(final VersionEnum protocolVersion) {
-        if (this.lowerBound != null && lowerBound.isOlderThan(protocolVersion)) return false;
+    public static VersionRange of(final VersionEnum min, final VersionEnum max) {
+        return new VersionRange(min, max);
+    }
 
-        return this.upperBound == null || upperBound.isOlderThanOrEqualTo(protocolVersion);
+    public static VersionRange all() {
+        return new VersionRange(null, null);
+    }
+
+    public VersionRange add(final VersionRange range) {
+        this.ranges.add(range);
+        return this;
+    }
+
+    public boolean contains(final VersionEnum version) {
+        if (this.ranges.stream().anyMatch(range -> range.contains(version))) return true;
+        if (this.min == null && this.max == null) return true;
+        else if (this.min == null) return version.isOlderThanOrEqualTo(this.max);
+        else if (this.max == null) return version.isNewerThanOrEqualTo(this.min);
+        return version.ordinal() >= this.min.ordinal() && version.ordinal() <= this.max.ordinal();
+    }
+
+    public VersionEnum getMin() {
+        return this.min;
+    }
+
+    public VersionEnum getMax() {
+        return this.max;
     }
 
     @Override
     public String toString() {
-        if (lowerBound == null) return upperBound.getName() + "+";
-        if (upperBound == null) return lowerBound.getName() + "-";
-        if (lowerBound == upperBound) return lowerBound.getName();
+        if (this.min == null && this.max == null) return "*";
+        else if (this.min == null) return "<= " + this.max.getName();
+        else if (this.max == null) return ">= " + this.min.getName();
+        else if (Objects.equals(this.min, this.max)) return this.min.getName();
 
-        return lowerBound.getName() + " - " + upperBound.getName();
+        final StringBuilder thisName = new StringBuilder(this.min.getName() + " - " + this.max.getName());
+        if (!this.ranges.isEmpty()) {
+            for (VersionRange range : this.ranges) thisName.append(", ").append(range.toString());
+        }
+        return thisName.toString();
     }
 
 }
