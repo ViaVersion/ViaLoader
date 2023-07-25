@@ -122,6 +122,6 @@ You can find 5 config files there depending on the platforms loaded:
 
 ## Contact
 If you encounter any issues, please report them on the
-[issue tracker](https://github.com/RaphiMC/ViaLoader/issues).  
+[issue tracker](https://github.com/ViaVersion/ViaLoader/issues).  
 If you just want to talk or need help implementing ViaLoader feel free to join the ViaVersion
 [Discord](https://discord.gg/viaversion).
