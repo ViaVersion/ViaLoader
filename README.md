@@ -17,7 +17,7 @@ repositories {
 }
 
 dependencies {
-    implementation("net.raphimc:ViaLoader:2.2.5-SNAPSHOT") // Get latest version from releases
+    implementation("net.raphimc:ViaLoader:2.2.8-SNAPSHOT") // Get latest version from releases
 }
 ```
 
@@ -33,7 +33,7 @@ dependencies {
     <dependency>
         <groupId>net.raphimc</groupId>
         <artifactId>ViaLoader</artifactId>
-        <version>2.2.5</version> <!-- Get latest version from releases -->
+        <version>2.2.8-SNAPSHOT</version> <!-- Get latest version from releases -->
     </dependency>
 </dependencies>
 ```
@@ -43,32 +43,34 @@ If you just want the latest jar file you can download it from this [Jenkins](htt
 
 ## Usage
 To use ViaLoader in your project you need to decide what components of Via* you want to use.
-ViaLoader is split into 5 different components:
+ViaLoader is split into 6 different components:
 - ViaVersion (Is the base component of ViaLoader [required])
 - ViaBackwards (Allows older clients to join to newer server versions [needs ViaVersion])
 - ViaRewind (Allows 1.8.x and 1.7.x clients to join to 1.9+ servers [needs ViaBackwards])
 - ViaLegacy (Allows clients to join to <= 1.7.10 servers [needs ViaVersion])
 - ViaAprilFools (Allows clients to join to some notable Minecraft snapshots [needs ViaBackwards])
+- ViaBedrock (Allows clients to join to Bedrock edition servers [needs ViaVersion])
 
-To include the subcomponents you have to add the ViaVersion maven repository to your build script:
+In case you want to include ViaBedrock, you have to add the Lenni0451 maven repository to your build script:
 ```groovy
 repositories {
     maven {
-        name = "ViaVersion"
-        url "https://repo.viaversion.com"
+        name = "Lenni0451 snapshots"
+        url = "https://maven.lenni0451.net/snapshots"
     }
 }
 ```
 Here is an example dependency configuration for all components:
 ```groovy
-implementation "com.viaversion:viaversion:4.7.1-SNAPSHOT"
-implementation("com.viaversion:viabackwards-common:4.7.0") {
+implementation "com.viaversion:viaversion:4.8.0-23w31a-SNAPSHOT"
+implementation("com.viaversion:viabackwards-common:4.7.1-SNAPSHOT") {
     exclude group: "com.viaversion", module: "viaversion" // Exclude transitive dependency. Include manually for more control
     exclude group: "io.netty", module: "netty-all" // Don't include the outdated netty version
 }
 implementation "com.viaversion:viarewind-core:2.0.4-SNAPSHOT"
-implementation "net.raphimc:ViaLegacy:2.2.17"
-implementation "net.raphimc:ViaAprilFools:2.0.7"
+implementation "net.raphimc:ViaLegacy:2.2.18-SNAPSHOT"
+implementation "net.raphimc:ViaAprilFools:2.0.8-SNAPSHOT"
+implementation "net.raphimc:ViaBedrock:0.0.2-SNAPSHOT"
 ```
 
 ## Implementation
