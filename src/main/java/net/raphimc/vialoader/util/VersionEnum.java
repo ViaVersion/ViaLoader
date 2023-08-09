@@ -103,6 +103,7 @@ public enum VersionEnum {
     r1_19_4(ProtocolVersion.v1_19_4),
     bedrockLatest(getViaBedrockProtocol("bedrockLatest")),
     r1_20tor1_20_1(ProtocolVersion.v1_20),
+    r1_20_2(ProtocolVersion.v1_20_2),
 
     //
     UNKNOWN(ProtocolVersion.unknown), // Not in Registry
@@ -115,7 +116,6 @@ public enum VersionEnum {
 
     static {
         for (VersionEnum version : VersionEnum.values()) {
-            if (version == UNKNOWN) continue;
             if (!version.protocolVersion.isKnown()) continue;
             VERSION_REGISTRY.put(version.protocolVersion, version);
         }
@@ -125,6 +125,7 @@ public enum VersionEnum {
             }
         }
 
+        SORTED_VERSIONS.add(r1_20_2);
         SORTED_VERSIONS.add(r1_20tor1_20_1);
         SORTED_VERSIONS.add(r1_19_4);
         SORTED_VERSIONS.add(r1_19_3);
