@@ -17,7 +17,7 @@ repositories {
 }
 
 dependencies {
-    implementation("net.raphimc:ViaLoader:2.2.8-SNAPSHOT") // Get latest version from releases
+    implementation("net.raphimc:ViaLoader:2.2.8") // Get latest version from releases
 }
 ```
 
@@ -33,7 +33,7 @@ dependencies {
     <dependency>
         <groupId>net.raphimc</groupId>
         <artifactId>ViaLoader</artifactId>
-        <version>2.2.8-SNAPSHOT</version> <!-- Get latest version from releases -->
+        <version>2.2.8</version> <!-- Get latest version from releases -->
     </dependency>
 </dependencies>
 ```
@@ -55,21 +55,21 @@ In case you want to include ViaBedrock, you have to add the Lenni0451 maven repo
 ```groovy
 repositories {
     maven {
-        name = "Lenni0451 snapshots"
+        name = "Lenni0451 Snapshots"
         url = "https://maven.lenni0451.net/snapshots"
     }
 }
 ```
 Here is an example dependency configuration for all components:
 ```groovy
-implementation "com.viaversion:viaversion:4.8.0-23w31a-SNAPSHOT"
+implementation "com.viaversion:viaversion:4.7.1-SNAPSHOT"
 implementation("com.viaversion:viabackwards-common:4.7.1-SNAPSHOT") {
     exclude group: "com.viaversion", module: "viaversion" // Exclude transitive dependency. Include manually for more control
     exclude group: "io.netty", module: "netty-all" // Don't include the outdated netty version
 }
 implementation "com.viaversion:viarewind-core:2.0.4-SNAPSHOT"
-implementation "net.raphimc:ViaLegacy:2.2.18-SNAPSHOT"
-implementation "net.raphimc:ViaAprilFools:2.0.8-SNAPSHOT"
+implementation "net.raphimc:ViaLegacy:2.2.18"
+implementation "net.raphimc:ViaAprilFools:2.0.8"
 implementation "net.raphimc:ViaBedrock:0.0.2-SNAPSHOT"
 ```
 
