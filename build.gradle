@@ -52,7 +52,7 @@ dependencies {
     compileOnly "org.cloudburstmc.netty:netty-transport-raknet:1.0.0.CR1-SNAPSHOT"
 
     api "org.slf4j:slf4j-api:2.0.7"
-    api "org.yaml:snakeyaml:2.1"
+    api "org.yaml:snakeyaml:2.2"
 }
 
 blossom {
