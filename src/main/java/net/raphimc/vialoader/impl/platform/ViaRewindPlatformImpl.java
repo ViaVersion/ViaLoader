@@ -17,9 +17,9 @@
  */
 package net.raphimc.vialoader.impl.platform;
 
+import com.viaversion.viarewind.api.ViaRewindConfigImpl;
+import com.viaversion.viarewind.api.ViaRewindPlatform;
 import com.viaversion.viaversion.api.Via;
-import de.gerrygames.viarewind.api.ViaRewindConfigImpl;
-import de.gerrygames.viarewind.api.ViaRewindPlatform;
 import net.raphimc.vialoader.util.JLoggerToSLF4J;
 import org.slf4j.LoggerFactory;
 
