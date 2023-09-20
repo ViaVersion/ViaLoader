@@ -46,7 +46,7 @@ dependencies {
     compileOnly "com.viaversion:viarewind-core:3.0.0-SNAPSHOT"
     compileOnly "net.raphimc:ViaLegacy:2.2.19-SNAPSHOT"
     compileOnly "net.raphimc:ViaAprilFools:2.0.9-SNAPSHOT"
-    compileOnly "net.raphimc:ViaBedrock:0.0.2-SNAPSHOT"
+    compileOnly "net.raphimc:ViaBedrock:0.0.3-SNAPSHOT"
     compileOnly "org.cloudburstmc.netty:netty-transport-raknet:1.0.0.CR1-SNAPSHOT"
 
     api "org.slf4j:slf4j-api:2.0.9"
