@@ -38,14 +38,14 @@ repositories {
 }
 
 dependencies {
-    compileOnly "com.viaversion:viaversion:4.8.0-23w32a-SNAPSHOT"
-    compileOnly("com.viaversion:viabackwards-common:4.8.0-23w32a-SNAPSHOT") {
+    compileOnly "com.viaversion:viaversion:4.8.0"
+    compileOnly("com.viaversion:viabackwards-common:4.8.0") {
         exclude group: "com.viaversion", module: "viaversion"
         exclude group: "io.netty", module: "netty-all"
     }
-    compileOnly "com.viaversion:viarewind-core:3.0.0-SNAPSHOT"
-    compileOnly "net.raphimc:ViaLegacy:2.2.19-SNAPSHOT"
-    compileOnly "net.raphimc:ViaAprilFools:2.0.9-SNAPSHOT"
+    compileOnly "com.viaversion:viarewind-common:3.0.0"
+    compileOnly "net.raphimc:ViaLegacy:2.2.19"
+    compileOnly "net.raphimc:ViaAprilFools:2.0.9"
     compileOnly "net.raphimc:ViaBedrock:0.0.3-SNAPSHOT"
     compileOnly "org.cloudburstmc.netty:netty-transport-raknet:1.0.0.CR1-SNAPSHOT"
 
