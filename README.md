@@ -1,11 +1,11 @@
 # ViaLoader
-Easy to use ViaVersion, (and optional ViaBackwards, ViaRewind, ViaLegacy and ViaAprilFools) platform implementation.
+Easy to use ViaVersion, (and optional ViaBackwards, ViaRewind, ViaLegacy, ViaAprilFools and ViaBedrock) platform implementation.
 
 ViaLoader is not usable by itself as a standalone software, as it is an implementation of a ViaVersion platform.
 
 ### Projects implementing ViaLoader
 - [ViaProxy](https://github.com/ViaVersion/ViaProxy): Standalone proxy which allows players to join EVERY Minecraft server version (Classic, Alpha, Beta, Release, Bedrock).
-- [ViaForge](https://github.com/ViaVersion/ViaForge): Clientside ViaVersion, ViaBackwards and ViaRewind implementation for Forge.
+- [ViaForge](https://github.com/ViaVersion/ViaForge): Client-side Implementation of ViaVersion, ViaBackwards and ViaRewind for Legacy Minecraft Forge
 - [ViaFabricPlus](https://github.com/ViaVersion/ViaFabricPlus): Fabric mod to connect to EVERY Minecraft server version (Release, Beta, Alpha, Classic, Snapshots, Bedrock) with QoL fixes to the gameplay.
 
 ## Releases
