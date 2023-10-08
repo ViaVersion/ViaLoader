@@ -117,7 +117,7 @@ Now you should have a working protocol translator implementation in your project
 To change the protocol translation settings/features you can look into the ViaLoader folder.
 You can find 5 config files there depending on the platforms loaded:
 - viaversion.yml (ViaVersion)
-- config.yml (ViaBackwards)
+- viabackwards.yml (ViaBackwards)
 - viarewind.yml (ViaRewind)
 - vialegacy.yml (ViaLegacy)
 - viabedrock.yml (ViaBedrock)
