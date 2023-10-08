@@ -148,11 +148,6 @@ public class ViaVersionPlatformImpl implements ViaPlatform<UUID> {
     }
 
     @Override
-    public ConfigurationProvider getConfigurationProvider() {
-        return this.config;
-    }
-
-    @Override
     public File getDataFolder() {
         return this.dataFolder;
     }
@@ -168,7 +163,7 @@ public class ViaVersionPlatformImpl implements ViaPlatform<UUID> {
 
     protected AbstractViaConfig createConfig() {
         final AbstractViaConfig config = new VLViaConfig(new File(this.dataFolder, "viaversion.yml"));
-        config.reloadConfig();
+        config.reload();
         return config;
     }
 
