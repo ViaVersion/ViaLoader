@@ -17,7 +17,6 @@
  */
 package net.raphimc.vialoader.impl.platform;
 
-import com.viaversion.viarewind.ViaRewindConfig;
 import com.viaversion.viarewind.api.ViaRewindPlatform;
 import com.viaversion.viaversion.api.Via;
 import net.raphimc.vialoader.util.JLoggerToSLF4J;
@@ -31,9 +30,7 @@ public class ViaRewindPlatformImpl implements ViaRewindPlatform {
     private static final Logger LOGGER = new JLoggerToSLF4J(LoggerFactory.getLogger("ViaRewind"));
 
     public ViaRewindPlatformImpl() {
-        final ViaRewindConfig config = new ViaRewindConfig(new File(Via.getPlatform().getDataFolder(), "viarewind.yml"));
-        config.reloadConfig();
-        this.init(config);
+        this.init(new File(Via.getPlatform().getDataFolder(), "viarewind.yml"));
     }
 
     @Override

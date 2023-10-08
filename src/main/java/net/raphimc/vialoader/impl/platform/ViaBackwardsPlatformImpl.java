@@ -30,7 +30,7 @@ public class ViaBackwardsPlatformImpl implements ViaBackwardsPlatform {
     private static final Logger LOGGER = new JLoggerToSLF4J(LoggerFactory.getLogger("ViaBackwards"));
 
     public ViaBackwardsPlatformImpl() {
-        this.init(this.getDataFolder());
+        this.init(new File(this.getDataFolder(), "viabackwards.yml"));
     }
 
     @Override
