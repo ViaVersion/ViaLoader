@@ -30,7 +30,7 @@ public class ViaBedrockPlatformImpl implements ViaBedrockPlatform {
     private static final Logger LOGGER = new JLoggerToSLF4J(LoggerFactory.getLogger("ViaBedrock"));
 
     public ViaBedrockPlatformImpl() {
-        this.init(this.getDataFolder());
+        this.init(new File(this.getDataFolder(), "viabedrock.yml"));
     }
 
     @Override

@@ -30,7 +30,7 @@ public class ViaAprilFoolsPlatformImpl implements ViaAprilFoolsPlatform {
     private static final Logger LOGGER = new JLoggerToSLF4J(LoggerFactory.getLogger("ViaAprilFools"));
 
     public ViaAprilFoolsPlatformImpl() {
-        this.init(this.getDataFolder());
+        this.init(new File(this.getDataFolder(), "viaaprilfools.yml"));
     }
 
     @Override

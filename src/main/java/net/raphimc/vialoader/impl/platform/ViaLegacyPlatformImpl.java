@@ -30,7 +30,7 @@ public class ViaLegacyPlatformImpl implements ViaLegacyPlatform {
     private static final Logger LOGGER = new JLoggerToSLF4J(LoggerFactory.getLogger("ViaLegacy"));
 
     public ViaLegacyPlatformImpl() {
-        this.init(this.getDataFolder());
+        this.init(new File(this.getDataFolder(), "vialegacy.yml"));
     }
 
     @Override
