@@ -20,7 +20,6 @@ package net.raphimc.vialoader.impl.platform;
 import com.viaversion.viaversion.api.Via;
 import com.viaversion.viaversion.api.ViaAPI;
 import com.viaversion.viaversion.api.command.ViaCommandSender;
-import com.viaversion.viaversion.api.configuration.ConfigurationProvider;
 import com.viaversion.viaversion.api.configuration.ViaVersionConfig;
 import com.viaversion.viaversion.api.platform.ViaPlatform;
 import com.viaversion.viaversion.configuration.AbstractViaConfig;
@@ -119,11 +118,6 @@ public class ViaVersionPlatformImpl implements ViaPlatform<UUID> {
 
     @Override
     public boolean isPluginEnabled() {
-        return true;
-    }
-
-    @Override
-    public boolean isOldClientsAllowed() {
         return true;
     }
 
