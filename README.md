@@ -17,7 +17,7 @@ repositories {
 }
 
 dependencies {
-    implementation("net.raphimc:ViaLoader:2.2.10") // Get latest version from releases
+    implementation("net.raphimc:ViaLoader:x.x.x") // Get latest version from releases
 }
 ```
 
@@ -33,13 +33,13 @@ dependencies {
     <dependency>
         <groupId>net.raphimc</groupId>
         <artifactId>ViaLoader</artifactId>
-        <version>2.2.10</version> <!-- Get latest version from releases -->
+        <version>x.x.x</version> <!-- Get latest version from releases -->
     </dependency>
 </dependencies>
 ```
 
 ### Jar File
-If you just want the latest jar file you can download it from this [Jenkins](https://ci.viaversion.com/view/All/job/ViaLoader/).
+If you just want the latest jar file you can download it from [GitHub Actions](https://github.com/RaphiMC/ViaLoader/actions/workflows/build.yml) or [Lenni0451's Jenkins](https://build.lenni0451.net/job/ViaLoader/).
 
 ## Usage
 To use ViaLoader in your project you need to decide what components of Via* you want to use.
