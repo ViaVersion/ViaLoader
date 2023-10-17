@@ -39,7 +39,7 @@ dependencies {
 ```
 
 ### Jar File
-If you just want the latest jar file you can download it from [GitHub Actions](https://github.com/RaphiMC/ViaLoader/actions/workflows/build.yml) or [Lenni0451's Jenkins](https://build.lenni0451.net/job/ViaLoader/).
+If you just want the latest jar file you can download it from [GitHub Actions](https://github.com/RaphiMC/ViaLoader/actions/workflows/build.yml) or the [ViaVersion Jenkins](https://ci.viaversion.com/view/All/job/ViaLoader/).
 
 ## Usage
 To use ViaLoader in your project you need to decide what components of Via* you want to use.
