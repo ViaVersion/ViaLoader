@@ -39,11 +39,7 @@ repositories {
 
 dependencies {
     compileOnly "com.viaversion:viaversion-common:4.9.0-23w44a-SNAPSHOT"
-    compileOnly("com.viaversion:viabackwards-common:4.9.0-23w44a-SNAPSHOT") {
-        exclude group: "com.viaversion"
-        exclude group: "io.netty"
-        exclude group: "com.google.guava"
-    }
+    compileOnly "com.viaversion:viabackwards-common:4.9.0-23w44a-SNAPSHOT"
     compileOnly "com.viaversion:viarewind-common:3.0.2-SNAPSHOT"
     compileOnly "net.raphimc:ViaLegacy:2.2.21-SNAPSHOT"
     compileOnly "net.raphimc:ViaAprilFools:2.0.10-SNAPSHOT"

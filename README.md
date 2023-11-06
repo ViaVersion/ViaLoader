@@ -63,10 +63,7 @@ repositories {
 Here is an example dependency configuration for all components:
 ```groovy
 implementation "com.viaversion:viaversion:4.8.1"
-implementation("com.viaversion:viabackwards-common:4.8.1") {
-    exclude group: "com.viaversion", module: "viaversion" // Exclude transitive dependency. Include manually for more control
-    exclude group: "io.netty", module: "netty-all" // Don't include the outdated netty version
-}
+implementation "com.viaversion:viabackwards-common:4.8.1"
 implementation "com.viaversion:viarewind-common:3.0.0"
 implementation "net.raphimc:ViaLegacy:2.2.20"
 implementation "net.raphimc:ViaAprilFools:2.0.9"
