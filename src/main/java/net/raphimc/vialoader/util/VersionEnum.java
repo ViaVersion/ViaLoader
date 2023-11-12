@@ -111,7 +111,7 @@ public enum VersionEnum {
     ;
 
 
-    private static final Map<ProtocolVersion, VersionEnum> VERSION_REGISTRY = new HashMap<>();
+    private static final Map<ProtocolVersion, VersionEnum> VERSION_REGISTRY = new LinkedHashMap<>();
     public static final List<VersionEnum> SORTED_VERSIONS = new ArrayList<>();
     public static final List<VersionEnum> OFFICIAL_SUPPORTED_PROTOCOLS = new ArrayList<>();
 
