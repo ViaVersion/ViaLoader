@@ -99,7 +99,7 @@ After you have initialized the Via* platforms you can start implementing ViaLoad
 The most important part is the modification of your netty pipeline. This is needed for ViaVersion to translate the packets in both ways.
 Here is an example implementation:
 ```java
-final UserConnection user = new UserConnectionImpl(channel, true);
+final UserConnection user = new UserConnectionImpl(channel, true/*clientside or serverside*/);
 new ProtocolPipelineImpl(user);
 
 channel.pipeline().addBefore("packet_codec", VLPipeline.VIA_CODEC_NAME, new ViaCodec(user));
