@@ -89,6 +89,19 @@ public class VersionRange {
         }
     }
 
+    @Override
+    public boolean equals(Object object) {
+        if (this == object) return true;
+        if (object == null || getClass() != object.getClass()) return false;
+        VersionRange that = (VersionRange) object;
+        return min == that.min && max == that.max && Objects.equals(ranges, that.ranges);
+    }
+
+    @Override
+    public int hashCode() {
+        return Objects.hash(min, max, ranges);
+    }
+
     public static VersionRange fromString(String str) {
         if ("*".equals(str)) return all();
         else if (str.contains(",")) {
