@@ -77,15 +77,16 @@ public class VersionRange {
     @Override
     public String toString() {
         if (this.min == null && this.max == null) return "*";
-        else if (this.min == null) return "<= " + this.max.getName();
-        else if (this.max == null) return ">= " + this.min.getName();
-        else if (Objects.equals(this.min, this.max)) return this.min.getName();
-
-        final StringBuilder thisName = new StringBuilder(this.min.getName() + " - " + this.max.getName());
-        if (!this.ranges.isEmpty()) {
-            for (VersionRange range : this.ranges) thisName.append(", ").append(range.toString());
+        else {
+            StringBuilder rangeString = new StringBuilder();
+            if (!this.ranges.isEmpty()) {
+                for (VersionRange range : this.ranges) rangeString.append(", ").append(range.toString());
+            }
+            if (this.min == null) return "<= " + this.max.getName() + rangeString;
+            else if (this.max == null) return ">= " + this.min.getName() + rangeString;
+            else if (Objects.equals(this.min, this.max)) return this.min.getName();
+            else return this.min.getName() + " - " + this.max.getName() + rangeString;
         }
-        return thisName.toString();
     }
 
 }
