@@ -89,4 +89,31 @@ public class VersionRange {
         }
     }
 
+    public static VersionRange fromString(String str) {
+        if ("*".equals(str)) return all();
+        else if (str.contains(",")) {
+            String[] rangeParts = str.split(", ");
+            VersionRange versionRange = null;
+
+            for (String part : rangeParts) {
+                if (versionRange == null) versionRange = parseSinglePart(part);
+                else versionRange.add(parseSinglePart(part));
+            }
+            return versionRange;
+        } else {
+            return parseSinglePart(str);
+        }
+    }
+
+    private static VersionRange parseSinglePart(String part) {
+        if (part.startsWith("<= ")) return andOlder(VersionEnum.fromProtocolName(part.substring(3)));
+        else if (part.startsWith(">= ")) return andNewer(VersionEnum.fromProtocolName(part.substring(3)));
+        else if (part.contains(" - ")) {
+            String[] rangeParts = part.split(" - ");
+            VersionEnum min = VersionEnum.fromProtocolName(rangeParts[0]);
+            VersionEnum max = VersionEnum.fromProtocolName(rangeParts[1]);
+            return of(min, max);
+        } else return single(VersionEnum.fromProtocolName(part));
+    }
+
 }
