@@ -77,15 +77,56 @@ public class VersionRange {
     @Override
     public String toString() {
         if (this.min == null && this.max == null) return "*";
-        else if (this.min == null) return "<= " + this.max.getName();
-        else if (this.max == null) return ">= " + this.min.getName();
-        else if (Objects.equals(this.min, this.max)) return this.min.getName();
-
-        final StringBuilder thisName = new StringBuilder(this.min.getName() + " - " + this.max.getName());
-        if (!this.ranges.isEmpty()) {
-            for (VersionRange range : this.ranges) thisName.append(", ").append(range.toString());
+        else {
+            StringBuilder rangeString = new StringBuilder();
+            if (!this.ranges.isEmpty()) {
+                for (VersionRange range : this.ranges) rangeString.append(", ").append(range.toString());
+            }
+            if (this.min == null) return "<= " + this.max.getName() + rangeString;
+            else if (this.max == null) return ">= " + this.min.getName() + rangeString;
+            else if (Objects.equals(this.min, this.max)) return this.min.getName();
+            else return this.min.getName() + " - " + this.max.getName() + rangeString;
         }
-        return thisName.toString();
+    }
+
+    @Override
+    public boolean equals(Object object) {
+        if (this == object) return true;
+        if (object == null || getClass() != object.getClass()) return false;
+        VersionRange that = (VersionRange) object;
+        return min == that.min && max == that.max && Objects.equals(ranges, that.ranges);
+    }
+
+    @Override
+    public int hashCode() {
+        return Objects.hash(min, max, ranges);
+    }
+
+    public static VersionRange fromString(String str) {
+        if ("*".equals(str)) return all();
+        else if (str.contains(",")) {
+            String[] rangeParts = str.split(", ");
+            VersionRange versionRange = null;
+
+            for (String part : rangeParts) {
+                if (versionRange == null) versionRange = parseSinglePart(part);
+                else versionRange.add(parseSinglePart(part));
+            }
+            return versionRange;
+        } else {
+            return parseSinglePart(str);
+        }
+    }
+
+    private static VersionRange parseSinglePart(String part) {
+        if (part.startsWith("<= ")) return andOlder(VersionEnum.fromProtocolName(part.substring(3)));
+        else if (part.startsWith(">= ")) return andNewer(VersionEnum.fromProtocolName(part.substring(3)));
+        else if (part.contains(" - ")) {
+            String[] rangeParts = part.split(" - ");
+            VersionEnum min = VersionEnum.fromProtocolName(rangeParts[0]);
+            VersionEnum max = VersionEnum.fromProtocolName(rangeParts[1]);
+            return of(min, max);
+        } else return single(VersionEnum.fromProtocolName(part));
     }
 
 }

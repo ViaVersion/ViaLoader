@@ -220,6 +220,12 @@ public enum VersionEnum {
         return fromProtocolVersion(ProtocolVersion.getProtocol(protocolId));
     }
 
+    public static VersionEnum fromProtocolName(final String protocolName) {
+        final ProtocolVersion protocolVersion = ProtocolVersion.getClosest(protocolName);
+        if (protocolVersion == null) return UNKNOWN;
+        return fromProtocolVersion(protocolVersion);
+    }
+
     public static VersionEnum fromUserConnection(final UserConnection userConnection) {
         return fromUserConnection(userConnection, true);
     }
