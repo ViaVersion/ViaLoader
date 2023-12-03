@@ -21,6 +21,7 @@ import io.netty.buffer.ByteBuf;
 import io.netty.buffer.CompositeByteBuf;
 import io.netty.channel.ChannelHandlerContext;
 import io.netty.handler.codec.MessageToMessageCodec;
+import net.raphimc.viabedrock.ViaBedrock;
 import org.cloudburstmc.netty.channel.raknet.RakReliability;
 import org.cloudburstmc.netty.channel.raknet.packet.RakMessage;
 
@@ -52,8 +53,9 @@ public class RakMessageEncapsulationCodec extends MessageToMessageCodec<RakMessa
             return;
         }
         final int id = in.readUnsignedByte();
-        if (id != FRAME_ID) {
-            throw new IllegalStateException("Invalid frame ID: " + id);
+        if (id != FRAME_ID) { // Mojang client seems to ignore invalid frames
+            ViaBedrock.getPlatform().getLogger().warning("Received invalid RakNet frame id: " + id);
+            return;
         }
         out.add(in.readRetainedSlice(in.readableBytes()));
     }
