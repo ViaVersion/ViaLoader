@@ -103,7 +103,7 @@ public enum VersionEnum {
     r1_19_4(ProtocolVersion.v1_19_4),
     r1_20tor1_20_1(ProtocolVersion.v1_20),
     r1_20_2(ProtocolVersion.v1_20_2),
-    r1_20_3(ProtocolVersion.v1_20_3),
+    r1_20_3tor1_20_4(ProtocolVersion.v1_20_3),
     bedrockLatest(getViaBedrockProtocol("bedrockLatest")),
 
     //
@@ -126,7 +126,7 @@ public enum VersionEnum {
             }
         }
 
-        SORTED_VERSIONS.add(r1_20_3);
+        SORTED_VERSIONS.add(r1_20_3tor1_20_4);
         SORTED_VERSIONS.add(r1_20_2);
         SORTED_VERSIONS.add(r1_20tor1_20_1);
         SORTED_VERSIONS.add(r1_19_4);

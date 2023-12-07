@@ -38,8 +38,8 @@ repositories {
 }
 
 dependencies {
-    compileOnly "com.viaversion:viaversion-common:4.9.1"
-    compileOnly "com.viaversion:viabackwards-common:4.9.0"
+    compileOnly "com.viaversion:viaversion-common:4.9.2"
+    compileOnly "com.viaversion:viabackwards-common:4.9.1"
     compileOnly "com.viaversion:viarewind-common:3.0.5"
     compileOnly "net.raphimc:ViaLegacy:2.2.21"
     compileOnly "net.raphimc:ViaAprilFools:2.0.10"
