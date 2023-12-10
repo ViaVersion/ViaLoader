@@ -37,7 +37,7 @@ public class RakMessageEncapsulationCodec extends MessageToMessageCodec<RakMessa
         try {
             buf.addComponent(true, ctx.alloc().ioBuffer(1).writeByte(FRAME_ID));
             buf.addComponent(true, msg.retainedSlice());
-            out.add(buf.retain());
+            out.add(new RakMessage(buf.retain()));
         } finally {
             buf.release();
         }
