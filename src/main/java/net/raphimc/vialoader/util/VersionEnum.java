@@ -105,6 +105,7 @@ public enum VersionEnum {
     r1_20_2(ProtocolVersion.v1_20_2),
     r1_20_3tor1_20_4(ProtocolVersion.v1_20_3),
     bedrockLatest(getViaBedrockProtocol("bedrockLatest")),
+    r1_20_5(ProtocolVersion.v1_20_5),
 
     //
     UNKNOWN(ProtocolVersion.unknown), // Not in Registry
