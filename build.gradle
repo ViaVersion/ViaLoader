@@ -47,7 +47,7 @@ dependencies {
     compileOnly "org.cloudburstmc.netty:netty-transport-raknet:1.0.0.CR1-SNAPSHOT"
 
     api "com.google.guava:guava:33.0.0-jre"
-    api "org.slf4j:slf4j-api:2.0.10"
+    api "org.slf4j:slf4j-api:2.0.11"
     api "org.yaml:snakeyaml:2.2"
 }
 
