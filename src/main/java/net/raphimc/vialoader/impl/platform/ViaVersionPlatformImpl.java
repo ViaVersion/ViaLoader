@@ -123,7 +123,7 @@ public class ViaVersionPlatformImpl implements ViaPlatform<UUID> {
 
     @Override
     public boolean hasPlugin(String s) {
-        return s.equalsIgnoreCase("ViaVersion") || s.equalsIgnoreCase("ViaBackwards") || s.equalsIgnoreCase("ViaRewind");
+        return false; // Used for ViaPlatform#getUnsupportedSoftwareClasses
     }
 
     @Override
