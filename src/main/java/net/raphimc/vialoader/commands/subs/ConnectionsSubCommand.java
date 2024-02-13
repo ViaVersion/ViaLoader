@@ -21,7 +21,6 @@ import com.viaversion.viaversion.api.Via;
 import com.viaversion.viaversion.api.command.ViaCommandSender;
 import com.viaversion.viaversion.api.command.ViaSubCommand;
 import com.viaversion.viaversion.api.connection.UserConnection;
-import com.viaversion.viaversion.api.protocol.version.ProtocolVersion;
 
 import java.util.Set;
 
@@ -42,7 +41,7 @@ public class ConnectionsSubCommand extends ViaSubCommand {
         final Set<UserConnection> users = Via.getManager().getConnectionManager().getConnections();
         sendMessage(viaCommandSender, "&a--- Connected users ---");
         for (UserConnection user : users) {
-            sendMessage(viaCommandSender, "&7[&6" + user.getProtocolInfo().getUsername() + "&7] UUID: &5" + user.getProtocolInfo().getUuid() + " &7Client-Protocol: &5" + ProtocolVersion.getProtocol(user.getProtocolInfo().getProtocolVersion()).getName() + " &7Server-Protocol: &5" + ProtocolVersion.getProtocol(user.getProtocolInfo().getServerProtocolVersion()).getName());
+            sendMessage(viaCommandSender, "&7[&6" + user.getProtocolInfo().getUsername() + "&7] UUID: &5" + user.getProtocolInfo().getUuid() + " &7Client-Protocol: &5" + user.getProtocolInfo().protocolVersion().getName() + " &7Server-Protocol: &5" + user.getProtocolInfo().serverProtocolVersion().getName());
         }
         return true;
     }

@@ -18,11 +18,12 @@
 package net.raphimc.vialoader.impl.viaversion;
 
 import com.viaversion.viaversion.api.platform.ViaInjector;
-import com.viaversion.viaversion.libs.fastutil.ints.IntLinkedOpenHashSet;
-import com.viaversion.viaversion.libs.fastutil.ints.IntSortedSet;
+import com.viaversion.viaversion.api.protocol.version.ProtocolVersion;
+import com.viaversion.viaversion.libs.fastutil.objects.ObjectLinkedOpenHashSet;
 import com.viaversion.viaversion.libs.gson.JsonObject;
 import net.raphimc.vialoader.netty.VLPipeline;
-import net.raphimc.vialoader.util.VersionEnum;
+
+import java.util.SortedSet;
 
 public class VLInjector implements ViaInjector {
 
@@ -35,16 +36,14 @@ public class VLInjector implements ViaInjector {
     }
 
     @Override
-    public int getServerProtocolVersion() {
-        return this.getServerProtocolVersions().firstInt();
+    public ProtocolVersion getServerProtocolVersion() {
+        return this.getServerProtocolVersions().first();
     }
 
     @Override
-    public IntSortedSet getServerProtocolVersions() {
-        final IntSortedSet versions = new IntLinkedOpenHashSet();
-        for (VersionEnum version : VersionEnum.OFFICIAL_SUPPORTED_PROTOCOLS) {
-            versions.add(version.getOriginalVersion());
-        }
+    public SortedSet<ProtocolVersion> getServerProtocolVersions() {
+        final SortedSet<ProtocolVersion> versions = new ObjectLinkedOpenHashSet<>();
+        versions.addAll(ProtocolVersion.getProtocols());
         return versions;
     }
 
