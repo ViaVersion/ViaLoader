@@ -18,18 +18,20 @@
 package net.raphimc.vialoader.netty;
 
 import com.viaversion.viaversion.api.connection.UserConnection;
+import com.viaversion.viaversion.api.protocol.version.ProtocolVersion;
 import io.netty.channel.ChannelHandler;
 import io.netty.channel.ChannelHandlerContext;
 import io.netty.channel.ChannelInboundHandlerAdapter;
 import io.netty.channel.ChannelPipeline;
+import net.raphimc.viabedrock.api.BedrockProtocolVersion;
 import net.raphimc.viabedrock.api.protocol.BedrockBaseProtocol;
 import net.raphimc.viabedrock.netty.BatchLengthCodec;
 import net.raphimc.viabedrock.netty.PacketEncapsulationCodec;
+import net.raphimc.vialegacy.api.LegacyProtocolVersion;
 import net.raphimc.vialegacy.api.protocol.PreNettyBaseProtocol;
 import net.raphimc.vialegacy.netty.PreNettyLengthCodec;
 import net.raphimc.vialoader.netty.viabedrock.DisconnectHandler;
 import net.raphimc.vialoader.netty.viabedrock.RakMessageEncapsulationCodec;
-import net.raphimc.vialoader.util.VersionEnum;
 
 public abstract class VLPipeline extends ChannelInboundHandlerAdapter {
 
@@ -42,9 +44,9 @@ public abstract class VLPipeline extends ChannelInboundHandlerAdapter {
     public static final String VIABEDROCK_PACKET_ENCAPSULATION_HANDLER_NAME = "viabedrock-packet-encapsulation";
 
     protected final UserConnection user;
-    protected final VersionEnum version;
+    protected final ProtocolVersion version;
 
-    public VLPipeline(final UserConnection user, final VersionEnum version) {
+    public VLPipeline(final UserConnection user, final ProtocolVersion version) {
         this.user = user;
         this.version = version;
     }
@@ -53,10 +55,10 @@ public abstract class VLPipeline extends ChannelInboundHandlerAdapter {
     public void handlerAdded(ChannelHandlerContext ctx) {
         ctx.pipeline().addBefore(this.packetCodecName(), VIA_CODEC_NAME, this.createViaCodec());
 
-        if (this.version.isOlderThanOrEqualTo(VersionEnum.r1_6_4)) {
+        if (this.version.lowerThanOrEquals(LegacyProtocolVersion.r1_6_4)) {
             this.user.getProtocolInfo().getPipeline().add(PreNettyBaseProtocol.INSTANCE);
             ctx.pipeline().addBefore(this.lengthCodecName(), VIALEGACY_PRE_NETTY_LENGTH_CODEC_NAME, this.createViaLegacyPreNettyLengthCodec());
-        } else if (this.version.equals(VersionEnum.bedrockLatest)) {
+        } else if (this.version.equals(BedrockProtocolVersion.bedrockLatest)) {
             this.user.getProtocolInfo().getPipeline().add(BedrockBaseProtocol.INSTANCE);
             ctx.pipeline().addBefore(this.lengthCodecName(), VIABEDROCK_DISCONNECT_HANDLER_NAME, this.createViaBedrockDisconnectHandler());
             ctx.pipeline().addBefore(this.lengthCodecName(), VIABEDROCK_FRAME_ENCAPSULATION_HANDLER_NAME, this.createViaBedrockFrameEncapsulationHandler());

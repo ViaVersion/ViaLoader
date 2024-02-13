@@ -17,35 +17,37 @@
  */
 package net.raphimc.vialoader.util;
 
+import com.viaversion.viaversion.api.protocol.version.ProtocolVersion;
+
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Objects;
 
 public class VersionRange {
 
-    private final VersionEnum min;
-    private final VersionEnum max;
+    private final ProtocolVersion min;
+    private final ProtocolVersion max;
     private final List<VersionRange> ranges;
 
-    private VersionRange(final VersionEnum min, final VersionEnum max) {
+    private VersionRange(final ProtocolVersion min, final ProtocolVersion max) {
         this.min = min;
         this.max = max;
         this.ranges = new ArrayList<>();
     }
 
-    public static VersionRange andNewer(final VersionEnum version) {
+    public static VersionRange andNewer(final ProtocolVersion version) {
         return new VersionRange(version, null);
     }
 
-    public static VersionRange single(final VersionEnum version) {
+    public static VersionRange single(final ProtocolVersion version) {
         return new VersionRange(version, version);
     }
 
-    public static VersionRange andOlder(final VersionEnum version) {
+    public static VersionRange andOlder(final ProtocolVersion version) {
         return new VersionRange(null, version);
     }
 
-    public static VersionRange of(final VersionEnum min, final VersionEnum max) {
+    public static VersionRange of(final ProtocolVersion min, final ProtocolVersion max) {
         return new VersionRange(min, max);
     }
 
@@ -58,19 +60,19 @@ public class VersionRange {
         return this;
     }
 
-    public boolean contains(final VersionEnum version) {
+    public boolean contains(final ProtocolVersion version) {
         if (this.ranges.stream().anyMatch(range -> range.contains(version))) return true;
         if (this.min == null && this.max == null) return true;
-        else if (this.min == null) return version.isOlderThanOrEqualTo(this.max);
-        else if (this.max == null) return version.isNewerThanOrEqualTo(this.min);
-        return version.ordinal() >= this.min.ordinal() && version.ordinal() <= this.max.ordinal();
+        else if (this.min == null) return version.lowerThanOrEquals(this.max);
+        else if (this.max == null) return version.higherThanOrEquals(this.min);
+        return version.higherThanOrEquals(this.min) && version.lowerThanOrEquals(this.max);
     }
 
-    public VersionEnum getMin() {
+    public ProtocolVersion getMin() {
         return this.min;
     }
 
-    public VersionEnum getMax() {
+    public ProtocolVersion getMax() {
         return this.max;
     }
 
@@ -119,14 +121,14 @@ public class VersionRange {
     }
 
     private static VersionRange parseSinglePart(String part) {
-        if (part.startsWith("<= ")) return andOlder(VersionEnum.fromProtocolName(part.substring(3)));
-        else if (part.startsWith(">= ")) return andNewer(VersionEnum.fromProtocolName(part.substring(3)));
+        if (part.startsWith("<= ")) return andOlder(ProtocolVersion.getClosest(part.substring(3)));
+        else if (part.startsWith(">= ")) return andNewer(ProtocolVersion.getClosest(part.substring(3)));
         else if (part.contains(" - ")) {
             String[] rangeParts = part.split(" - ");
-            VersionEnum min = VersionEnum.fromProtocolName(rangeParts[0]);
-            VersionEnum max = VersionEnum.fromProtocolName(rangeParts[1]);
+            ProtocolVersion min = ProtocolVersion.getClosest(rangeParts[0]);
+            ProtocolVersion max = ProtocolVersion.getClosest(rangeParts[1]);
             return of(min, max);
-        } else return single(VersionEnum.fromProtocolName(part));
+        } else return single(ProtocolVersion.getClosest(part));
     }
 
 }
