@@ -55,6 +55,8 @@ public class ViaLoader {
                 .commandHandler(commandHandler)
                 .build());
 
+        Via.getConfig().reload();
+
         if (platformSuppliers != null) {
             Via.getManager().addEnableListener(() -> {
                 for (Supplier<?> additionalPlatformSupplier : platformSuppliers) {

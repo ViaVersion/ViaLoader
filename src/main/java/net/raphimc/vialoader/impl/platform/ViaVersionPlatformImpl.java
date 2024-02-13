@@ -156,9 +156,7 @@ public class ViaVersionPlatformImpl implements ViaPlatform<UUID> {
     }
 
     protected AbstractViaConfig createConfig() {
-        final AbstractViaConfig config = new VLViaConfig(new File(this.dataFolder, "viaversion.yml"));
-        config.reload();
-        return config;
+        return new VLViaConfig(new File(this.dataFolder, "viaversion.yml"));
     }
 
     protected ViaAPI<UUID> createApi() {
