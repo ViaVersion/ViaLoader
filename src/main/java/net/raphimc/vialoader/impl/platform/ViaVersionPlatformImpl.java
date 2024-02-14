@@ -21,6 +21,7 @@ import com.viaversion.viaversion.api.Via;
 import com.viaversion.viaversion.api.ViaAPI;
 import com.viaversion.viaversion.api.command.ViaCommandSender;
 import com.viaversion.viaversion.api.configuration.ViaVersionConfig;
+import com.viaversion.viaversion.api.connection.UserConnection;
 import com.viaversion.viaversion.api.platform.ViaPlatform;
 import com.viaversion.viaversion.configuration.AbstractViaConfig;
 import com.viaversion.viaversion.libs.gson.JsonObject;
@@ -38,13 +39,13 @@ import java.util.UUID;
 import java.util.concurrent.TimeUnit;
 import java.util.logging.Logger;
 
-public class ViaVersionPlatformImpl implements ViaPlatform<UUID> {
+public class ViaVersionPlatformImpl implements ViaPlatform<UserConnection> {
 
     private static final Logger LOGGER = new JLoggerToSLF4J(LoggerFactory.getLogger("ViaVersion"));
 
     private final File dataFolder;
     private final AbstractViaConfig config;
-    private final ViaAPI<UUID> api;
+    private final ViaAPI<UserConnection> api;
 
     public ViaVersionPlatformImpl(final File rootFolder) {
         this.dataFolder = new File(rootFolder, "ViaLoader");
@@ -132,7 +133,7 @@ public class ViaVersionPlatformImpl implements ViaPlatform<UUID> {
     }
 
     @Override
-    public ViaAPI<UUID> getApi() {
+    public ViaAPI<UserConnection> getApi() {
         return this.api;
     }
 
@@ -159,7 +160,7 @@ public class ViaVersionPlatformImpl implements ViaPlatform<UUID> {
         return new VLViaConfig(new File(this.dataFolder, "viaversion.yml"));
     }
 
-    protected ViaAPI<UUID> createApi() {
+    protected ViaAPI<UserConnection> createApi() {
         return new VLApiBase();
     }
 

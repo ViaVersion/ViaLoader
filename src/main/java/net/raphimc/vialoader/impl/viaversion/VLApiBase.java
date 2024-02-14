@@ -18,9 +18,20 @@
 package net.raphimc.vialoader.impl.viaversion;
 
 import com.viaversion.viaversion.ViaAPIBase;
+import com.viaversion.viaversion.api.connection.UserConnection;
+import com.viaversion.viaversion.api.protocol.version.ProtocolVersion;
+import io.netty.buffer.ByteBuf;
 
-import java.util.UUID;
+public class VLApiBase extends ViaAPIBase<UserConnection> {
 
-public class VLApiBase extends ViaAPIBase<UUID> {
+    @Override
+    public ProtocolVersion getPlayerProtocolVersion(final UserConnection player) {
+        return player.getProtocolInfo().protocolVersion();
+    }
+
+    @Override
+    public void sendRawPacket(final UserConnection player, final ByteBuf packet) {
+        player.scheduleSendRawPacket(packet);
+    }
 
 }
