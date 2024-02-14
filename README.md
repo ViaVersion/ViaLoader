@@ -82,8 +82,8 @@ Here is an example implementation:
 ```java
 Via.getManager().getProviders().use(VersionProvider.class, new BaseVersionProvider() {
     @Override
-    public int getClosestServerProtocol(UserConnection connection) {
-            return ProtocolVersion.v1_8.getVersion(); // Change the logic here to select the target server version
+    public ProtocolVersion getClosestServerProtocol(UserConnection connection) {
+            return ProtocolVersion.v1_8; // Change the logic here to select the target server version
     }
 });
 ```
