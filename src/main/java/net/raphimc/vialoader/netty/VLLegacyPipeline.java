@@ -58,11 +58,11 @@ public abstract class VLLegacyPipeline extends ChannelInboundHandlerAdapter {
         ctx.pipeline().addBefore(this.packetDecoderName(), VIA_DECODER_NAME, this.createViaDecoder());
         ctx.pipeline().addBefore(this.packetEncoderName(), VIA_ENCODER_NAME, this.createViaEncoder());
 
-        if (this.version.lowerThanOrEquals(LegacyProtocolVersion.r1_6_4)) {
+        if (this.version.olderThanOrEquals(LegacyProtocolVersion.r1_6_4)) {
             this.user.getProtocolInfo().getPipeline().add(PreNettyBaseProtocol.INSTANCE);
             ctx.pipeline().addBefore(this.lengthSplitterName(), VIALEGACY_PRE_NETTY_LENGTH_PREPENDER_NAME, this.createViaLegacyPreNettyLengthPrepender());
             ctx.pipeline().addBefore(this.lengthPrependerName(), VIALEGACY_PRE_NETTY_LENGTH_REMOVER_NAME, this.createViaLegacyPreNettyLengthRemover());
-        } else if (this.version.equals(BedrockProtocolVersion.bedrockLatest)) {
+        } else if (this.version.equalTo(BedrockProtocolVersion.bedrockLatest)) {
             this.user.getProtocolInfo().getPipeline().add(BedrockBaseProtocol.INSTANCE);
             ctx.pipeline().addBefore(this.lengthSplitterName(), VIABEDROCK_DISCONNECT_HANDLER_NAME, this.createViaBedrockDisconnectHandler());
             ctx.pipeline().addBefore(this.lengthSplitterName(), VIABEDROCK_FRAME_ENCAPSULATION_HANDLER_NAME, this.createViaBedrockFrameEncapsulationHandler());

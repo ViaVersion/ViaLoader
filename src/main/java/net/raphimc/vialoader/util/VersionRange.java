@@ -63,9 +63,9 @@ public class VersionRange {
     public boolean contains(final ProtocolVersion version) {
         if (this.ranges.stream().anyMatch(range -> range.contains(version))) return true;
         if (this.min == null && this.max == null) return true;
-        else if (this.min == null) return version.lowerThanOrEquals(this.max);
-        else if (this.max == null) return version.higherThanOrEquals(this.min);
-        return version.higherThanOrEquals(this.min) && version.lowerThanOrEquals(this.max);
+        else if (this.min == null) return version.olderThanOrEquals(this.max);
+        else if (this.max == null) return version.newerThanOrEquals(this.min);
+        return version.newerThanOrEquals(this.min) && version.olderThanOrEquals(this.max);
     }
 
     public ProtocolVersion getMin() {
