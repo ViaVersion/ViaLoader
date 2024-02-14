@@ -62,7 +62,7 @@ public abstract class VLLegacyPipeline extends ChannelInboundHandlerAdapter {
             this.user.getProtocolInfo().getPipeline().add(PreNettyBaseProtocol.INSTANCE);
             ctx.pipeline().addBefore(this.lengthSplitterName(), VIALEGACY_PRE_NETTY_LENGTH_PREPENDER_NAME, this.createViaLegacyPreNettyLengthPrepender());
             ctx.pipeline().addBefore(this.lengthPrependerName(), VIALEGACY_PRE_NETTY_LENGTH_REMOVER_NAME, this.createViaLegacyPreNettyLengthRemover());
-        } else if (this.version.equalTo(BedrockProtocolVersion.bedrockLatest)) {
+        } else if (this.version.equals(BedrockProtocolVersion.bedrockLatest)) {
             this.user.getProtocolInfo().getPipeline().add(BedrockBaseProtocol.INSTANCE);
             ctx.pipeline().addBefore(this.lengthSplitterName(), VIABEDROCK_DISCONNECT_HANDLER_NAME, this.createViaBedrockDisconnectHandler());
             ctx.pipeline().addBefore(this.lengthSplitterName(), VIABEDROCK_FRAME_ENCAPSULATION_HANDLER_NAME, this.createViaBedrockFrameEncapsulationHandler());

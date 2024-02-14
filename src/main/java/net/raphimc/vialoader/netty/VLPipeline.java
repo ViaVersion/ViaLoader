@@ -58,7 +58,7 @@ public abstract class VLPipeline extends ChannelInboundHandlerAdapter {
         if (this.version.olderThanOrEquals(LegacyProtocolVersion.r1_6_4)) {
             this.user.getProtocolInfo().getPipeline().add(PreNettyBaseProtocol.INSTANCE);
             ctx.pipeline().addBefore(this.lengthCodecName(), VIALEGACY_PRE_NETTY_LENGTH_CODEC_NAME, this.createViaLegacyPreNettyLengthCodec());
-        } else if (this.version.equalTo(BedrockProtocolVersion.bedrockLatest)) {
+        } else if (this.version.equals(BedrockProtocolVersion.bedrockLatest)) {
             this.user.getProtocolInfo().getPipeline().add(BedrockBaseProtocol.INSTANCE);
             ctx.pipeline().addBefore(this.lengthCodecName(), VIABEDROCK_DISCONNECT_HANDLER_NAME, this.createViaBedrockDisconnectHandler());
             ctx.pipeline().addBefore(this.lengthCodecName(), VIABEDROCK_FRAME_ENCAPSULATION_HANDLER_NAME, this.createViaBedrockFrameEncapsulationHandler());
