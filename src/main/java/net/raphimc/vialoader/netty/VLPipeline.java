@@ -19,15 +19,14 @@ package net.raphimc.vialoader.netty;
 
 import com.viaversion.viaversion.api.connection.UserConnection;
 import com.viaversion.viaversion.api.protocol.version.ProtocolVersion;
+import com.viaversion.viaversion.api.protocol.version.VersionType;
 import io.netty.channel.ChannelHandler;
 import io.netty.channel.ChannelHandlerContext;
 import io.netty.channel.ChannelInboundHandlerAdapter;
 import io.netty.channel.ChannelPipeline;
-import net.raphimc.viabedrock.api.BedrockProtocolVersion;
 import net.raphimc.viabedrock.api.protocol.BedrockBaseProtocol;
 import net.raphimc.viabedrock.netty.BatchLengthCodec;
 import net.raphimc.viabedrock.netty.PacketEncapsulationCodec;
-import net.raphimc.vialegacy.api.LegacyProtocolVersion;
 import net.raphimc.vialegacy.api.protocol.PreNettyBaseProtocol;
 import net.raphimc.vialegacy.netty.PreNettyLengthCodec;
 import net.raphimc.vialoader.netty.viabedrock.DisconnectHandler;
@@ -55,10 +54,11 @@ public abstract class VLPipeline extends ChannelInboundHandlerAdapter {
     public void handlerAdded(ChannelHandlerContext ctx) {
         ctx.pipeline().addBefore(this.packetCodecName(), VIA_CODEC_NAME, this.createViaCodec());
 
-        if (this.version.olderThanOrEqualTo(LegacyProtocolVersion.r1_6_4)) {
+        final ProtocolVersion r1_6_4 = ProtocolVersion.getProtocol(VersionType.RELEASE_INITIAL, 78);
+        if (r1_6_4.isKnown() && this.version.olderThanOrEqualTo(r1_6_4)) {
             this.user.getProtocolInfo().getPipeline().add(PreNettyBaseProtocol.INSTANCE);
             ctx.pipeline().addBefore(this.lengthCodecName(), VIALEGACY_PRE_NETTY_LENGTH_CODEC_NAME, this.createViaLegacyPreNettyLengthCodec());
-        } else if (this.version.equals(BedrockProtocolVersion.bedrockLatest)) {
+        } else if (this.version.getName().startsWith("Bedrock")) {
             this.user.getProtocolInfo().getPipeline().add(BedrockBaseProtocol.INSTANCE);
             ctx.pipeline().addBefore(this.lengthCodecName(), VIABEDROCK_DISCONNECT_HANDLER_NAME, this.createViaBedrockDisconnectHandler());
             ctx.pipeline().addBefore(this.lengthCodecName(), VIABEDROCK_FRAME_ENCAPSULATION_HANDLER_NAME, this.createViaBedrockFrameEncapsulationHandler());
