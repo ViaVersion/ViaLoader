@@ -30,12 +30,17 @@ public class ViaRewindPlatformImpl implements ViaRewindPlatform {
     private static final Logger LOGGER = new JLoggerToSLF4J(LoggerFactory.getLogger("ViaRewind"));
 
     public ViaRewindPlatformImpl() {
-        this.init(new File(Via.getPlatform().getDataFolder(), "viarewind.yml"));
+        this.init(new File(getDataFolder(), "viarewind.yml"));
     }
 
     @Override
     public Logger getLogger() {
         return LOGGER;
+    }
+
+    @Override
+    public File getDataFolder() {
+        return Via.getPlatform().getDataFolder();
     }
 
 }

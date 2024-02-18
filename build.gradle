@@ -40,7 +40,7 @@ repositories {
 dependencies {
     compileOnly "com.viaversion:viaversion-common:4.10.0-24w07a-SNAPSHOT"
     compileOnly "com.viaversion:viabackwards-common:4.10.0-24w07a-SNAPSHOT"
-    compileOnly "com.viaversion:viarewind-common:3.0.5"
+    compileOnly "com.viaversion:viarewind-common:3.0.6-SNAPSHOT"
     compileOnly "net.raphimc:ViaLegacy:2.2.21"
     compileOnly "net.raphimc:ViaAprilFools:2.0.10"
     compileOnly "net.raphimc:ViaBedrock:0.0.5-SNAPSHOT"
