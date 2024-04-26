@@ -62,12 +62,12 @@ repositories {
 ```
 Here is an example dependency configuration for all components:
 ```groovy
-implementation "com.viaversion:viaversion:4.9.9"
-implementation "com.viaversion:viabackwards-common:4.9.1"
-implementation "com.viaversion:viarewind-common:3.0.5"
-implementation "net.raphimc:ViaLegacy:2.2.21"
-implementation "net.raphimc:ViaAprilFools:2.0.10"
-implementation "net.raphimc:ViaBedrock:0.0.3-SNAPSHOT"
+implementation "com.viaversion:viaversion:4.10.0"
+implementation "com.viaversion:viabackwards-common:4.10.0"
+implementation "com.viaversion:viarewind-common:3.1.0"
+implementation "net.raphimc:ViaLegacy:2.2.22"
+implementation "net.raphimc:ViaAprilFools:2.0.11"
+implementation "net.raphimc:ViaBedrock:0.0.6-SNAPSHOT"
 ```
 
 ## Implementation

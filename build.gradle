@@ -38,13 +38,13 @@ repositories {
 }
 
 dependencies {
-    compileOnly "com.viaversion:viaversion-common:4.10.0-24w09a-SNAPSHOT"
-    compileOnly "com.viaversion:viabackwards-common:4.10.0-24w09a-SNAPSHOT"
-    compileOnly "com.viaversion:viarewind-common:3.0.6-24w07a-SNAPSHOT"
-    compileOnly "net.raphimc:ViaLegacy:2.2.21"
-    compileOnly "net.raphimc:ViaAprilFools:2.0.10"
+    compileOnly "com.viaversion:viaversion-common:4.10.0"
+    compileOnly "com.viaversion:viabackwards-common:4.10.0"
+    compileOnly "com.viaversion:viarewind-common:3.1.0"
+    compileOnly "net.raphimc:ViaLegacy:2.2.22"
+    compileOnly "net.raphimc:ViaAprilFools:2.0.11"
     compileOnly "net.raphimc:ViaBedrock:0.0.6-SNAPSHOT"
-    compileOnly "org.cloudburstmc.netty:netty-transport-raknet:1.0.0.CR1-SNAPSHOT"
+    compileOnly "org.cloudburstmc.netty:netty-transport-raknet:1.0.0.CR3-SNAPSHOT"
 
     api "com.google.guava:guava:33.1.0-jre"
     api "org.slf4j:slf4j-api:2.0.13"
