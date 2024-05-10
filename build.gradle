@@ -38,9 +38,9 @@ repositories {
 }
 
 dependencies {
-    compileOnly "com.viaversion:viaversion-common:4.10.1"
-    compileOnly "com.viaversion:viabackwards-common:4.10.1"
-    compileOnly "com.viaversion:viarewind-common:3.1.1"
+    compileOnly "com.viaversion:viaversion-common:4.10.2"
+    compileOnly "com.viaversion:viabackwards-common:4.10.2"
+    compileOnly "com.viaversion:viarewind-common:3.1.2"
     compileOnly "net.raphimc:ViaLegacy:2.2.22"
     compileOnly "net.raphimc:ViaAprilFools:2.0.12"
     compileOnly "net.raphimc:ViaBedrock:0.0.7-SNAPSHOT"
