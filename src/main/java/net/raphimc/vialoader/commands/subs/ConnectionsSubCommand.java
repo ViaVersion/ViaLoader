@@ -24,7 +24,7 @@ import com.viaversion.viaversion.api.connection.UserConnection;
 
 import java.util.Set;
 
-public class ConnectionsSubCommand extends ViaSubCommand {
+public class ConnectionsSubCommand implements ViaSubCommand {
 
     @Override
     public String name() {

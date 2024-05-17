@@ -30,11 +30,6 @@ public class VLTask implements PlatformTask<Task> {
     }
 
     @Override
-    public Task getObject() {
-        return this.task;
-    }
-
-    @Override
     public void cancel() {
         this.task.cancel();
     }

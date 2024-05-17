@@ -157,7 +157,7 @@ public class ViaVersionPlatformImpl implements ViaPlatform<UserConnection> {
     }
 
     protected AbstractViaConfig createConfig() {
-        return new VLViaConfig(new File(this.dataFolder, "viaversion.yml"));
+        return new VLViaConfig(new File(this.dataFolder, "viaversion.yml"), this.getLogger());
     }
 
     protected ViaAPI<UserConnection> createApi() {

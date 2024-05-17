@@ -25,6 +25,7 @@ import java.io.File;
 import java.util.Collections;
 import java.util.List;
 import java.util.Map;
+import java.util.logging.Logger;
 
 public class VLViaConfig extends AbstractViaConfig {
 
@@ -37,8 +38,8 @@ public class VLViaConfig extends AbstractViaConfig {
             "use-new-deathmessages", "nms-player-ticking"
     );
 
-    public VLViaConfig(final File configFile) {
-        super(configFile);
+    public VLViaConfig(final File configFile, final Logger logger) {
+        super(configFile, logger);
     }
 
     @Override
