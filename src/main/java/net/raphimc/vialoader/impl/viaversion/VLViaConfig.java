@@ -30,8 +30,7 @@ import java.util.logging.Logger;
 public class VLViaConfig extends AbstractViaConfig {
 
     protected final List<String> UNSUPPORTED = Lists.newArrayList(
-            "checkforupdates", "bungee-ping-interval", "bungee-ping-save", "bungee-servers",
-            "velocity-ping-interval", "velocity-ping-save", "velocity-servers",
+            "check-for-updates", "velocity-ping-interval", "velocity-ping-save", "velocity-servers",
             "block-protocols", "block-disconnect-msg", "reload-disconnect-msg", "max-pps",
             "max-pps-kick-msg", "tracking-period", "tracking-warning-pps", "tracking-max-warnings", "tracking-max-kick-msg",
             "blockconnection-method", "quick-move-action-fix", "item-cache", "change-1_9-hitbox", "change-1_14-hitbox",
