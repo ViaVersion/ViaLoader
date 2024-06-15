@@ -18,14 +18,6 @@
 package net.raphimc.vialoader.impl.viaversion;
 
 import com.viaversion.viaversion.commands.ViaCommandHandler;
-import net.raphimc.vialoader.commands.subs.ConnectionsSubCommand;
-import net.raphimc.vialoader.commands.subs.LeakDetectSubCommand;
 
 public class VLCommandHandler extends ViaCommandHandler {
-
-    public VLCommandHandler() {
-        this.registerSubCommand(new LeakDetectSubCommand());
-        this.registerSubCommand(new ConnectionsSubCommand());
-    }
-
 }
