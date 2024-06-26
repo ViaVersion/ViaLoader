@@ -17,28 +17,22 @@
  */
 package net.raphimc.vialoader.impl.viaversion;
 
-
-import com.google.common.collect.Lists;
 import com.viaversion.viaversion.configuration.AbstractViaConfig;
 
 import java.io.File;
-import java.util.Collections;
-import java.util.List;
-import java.util.Map;
+import java.util.*;
 import java.util.logging.Logger;
 
 public class VLViaConfig extends AbstractViaConfig {
 
-    protected final List<String> UNSUPPORTED = Lists.newArrayList(
-            "check-for-updates", "velocity-ping-interval", "velocity-ping-save", "velocity-servers",
-            "block-protocols", "block-disconnect-msg", "reload-disconnect-msg", "max-pps",
-            "max-pps-kick-msg", "tracking-period", "tracking-warning-pps", "tracking-max-warnings", "tracking-max-kick-msg",
-            "blockconnection-method", "quick-move-action-fix", "item-cache", "change-1_9-hitbox", "change-1_14-hitbox",
-            "use-new-deathmessages", "nms-player-ticking"
-    );
+    protected final List<String> UNSUPPORTED = new ArrayList<>();
 
     public VLViaConfig(final File configFile, final Logger logger) {
         super(configFile, logger);
+
+        UNSUPPORTED.addAll(BUKKIT_ONLY_OPTIONS);
+        UNSUPPORTED.addAll(VELOCITY_ONLY_OPTIONS);
+        UNSUPPORTED.add("check-for-updates");
     }
 
     @Override
@@ -52,41 +46,6 @@ public class VLViaConfig extends AbstractViaConfig {
 
     @Override
     public boolean isCheckForUpdates() {
-        return false;
-    }
-
-    @Override
-    public String getBlockConnectionMethod() {
-        return "packet";
-    }
-
-    @Override
-    public boolean is1_12QuickMoveActionFix() {
-        return false;
-    }
-
-    @Override
-    public boolean isItemCache() {
-        return false;
-    }
-
-    @Override
-    public boolean is1_9HitboxFix() {
-        return false;
-    }
-
-    @Override
-    public boolean is1_14HitboxFix() {
-        return false;
-    }
-
-    @Override
-    public boolean isShowNewDeathMessages() {
-        return false;
-    }
-
-    @Override
-    public boolean isNMSPlayerTicking() {
         return false;
     }
 
