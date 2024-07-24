@@ -75,38 +75,99 @@ To implement ViaLoader into your project you need to initialize the Via* platfor
 ViaLoader provides a wrapper class with default values for that. To use a default value you can just pass ``null`` to that argument.
 If you want to change the default value you should create your own class which extends the base class and overrides the methods you want to change.
 
-The only default value you have to change is the ``VLLoader`` argument. The loader is used to register all the providers for the Via* platforms.  
-To override the default you first create a new class which extends ``VLLoader`` and overrides the ``load`` method (Make sure to call the super method).  
+The only default value you have to change is the ``VLLoader`` argument. The loader is used to register all the providers for the Via* platforms. 
+Providers are used to provide information about the platform to ViaVersion when it's (almost) impossible to get them ourselves. 
+
+To override the default you first create a new class which extends ``VLLoader`` and overrides the ``load`` method.  
 Within the ``load`` method you have to register a ``VersionProvider`` implementation which will be used to determine the target server version of a given connection.
 Here is an example implementation:
 ```java
-Via.getManager().getProviders().use(VersionProvider.class, new BaseVersionProvider() {
+public class CustomVLLoaderImpl extends VLLoader {
+
     @Override
-    public ProtocolVersion getClosestServerProtocol(UserConnection connection) {
-            return ProtocolVersion.v1_8; // Change the logic here to select the target server version
+    public void load() {
+        super.load();
+
+        Via.getManager().getProviders().use(VersionProvider.class, new BaseVersionProvider() {
+            @Override
+            public ProtocolVersion getClosestServerProtocol(UserConnection connection) {
+                // Change the logic here to select the target server version
+                return ProtocolVersion.v1_8;
+            }
+        });
     }
-});
+}
 ```
 Then you have to create a new instance of your loader class and pass it to the ``ViaLoader.init`` call.
 
 To do this you can call the ``ViaLoader.init()`` method somewhere suitable in your project (You can do that async) with your desired argument values:
 ```java
-ViaLoader.init(null/*ViaPlatform*/, new CustomVLLoaderImpl(), null/*ViaInjector*/, null/*ViaCommandHandler*/, ViaBackwardsPlatformImpl::new, ViaLegacyPlatformImpl::new, ViaAprilFoolsPlatformImpl::new);
+ViaLoader.init(null/*ViaPlatform*/, new CustomVLLoaderImpl(), null/*ViaInjector*/, null/*ViaCommandHandler*/, ViaBackwardsPlatformImpl::new, ViaRewindPlatforImpl::new, ViaLegacyPlatformImpl::new, ViaAprilFoolsPlatformImpl::new, ViaBedrockPlatformImpl::new);
 ```
+Make sure to have all platform impls you need added to the init call. Every platform added there needs to be in your dependencies.
 
 After you have initialized the Via* platforms you can start implementing ViaLoader into your project.
 
+### Netty modifications
+
 The most important part is the modification of your netty pipeline. This is needed for ViaVersion to translate the packets in both ways.
+
+Our recommended way is to use the `VLPipeline` (for codec based pipelines) or the `VLLegacyPipeline` (for decoder/encoder pipelines) as it 
+automatically handles the modifications required for all Via* platforms.
+
+Here is an example implementation:
+```java
+public class CustomVLPipeline extends VLPipeline {
+
+    public ViaProxyVLPipeline(UserConnection user) {
+        super(user);
+    }
+
+    // Replace these with the names of your pipeline components
+    @Override
+    protected String compressionCodecName() {
+        return "compression_codec";
+    }
+
+    @Override
+    protected String packetCodecName() {
+        return "packet_codec";
+    }
+
+    @Override
+    protected String lengthCodecName() {
+        return "length_codec";
+    }
+
+}
+```
+The same can be done for the `VLLegacyPipeline` with similar functions for the decoder/encoder pairs.
+
+Then you can add the Via* pipeline to your netty pipeline:
+```java
+final UserConnection user = new UserConnectionImpl(channel, true/*clientside or serverside*/);
+new ProtocolPipelineImpl(user);
+
+channel.pipeline().addLast(new CustomVLPipeline(user));
+```
+
+Both `VLPipeline` and `VLLegacyPipeline` contain various functions allowing you to modify/wrap the existing pipeline elements,
+if you need a more complex/dynamic pipeline setup you can also manually add the Via* handlers to the pipeline.
 Here is an example implementation:
 ```java
 final UserConnection user = new UserConnectionImpl(channel, true/*clientside or serverside*/);
 new ProtocolPipelineImpl(user);
 
+//channel.pipeline().addBefore("packet_decoder", VLLegacyPipeline.VIA_DECODER_NAME, new ViaDecoder(user));
+//channel.pipeline().addBefore("packet_encoder", VLLegacyPipeline.VIA_ENCODER_NAME, new ViaEncoder(user));
 channel.pipeline().addBefore("packet_codec", VLPipeline.VIA_CODEC_NAME, new ViaCodec(user));
 ```
-If you are using ViaLegacy, you should read its README to see what changes you need to make to the netty pipeline for it to work.
+If you are using ViaLegacy, you should read its [README](https://github.com/ViaVersion/ViaLegacy?tab=readme-ov-file#vialegacy) to see what changes you need to make to the netty pipeline for it to work.
+
 Depending on where you are implementing ViaLoader you might need to ensure that the pipeline is held in the correct order.
 Minecraft clients modify the pipeline order when adding the compression handlers. You have to ensure that the Via* handlers are always on their correct location.
+
+If you are using the `VLPipeline` or `VLLegacyPipeline` you can fire the `CompressionReorderEvent` once the compression handler is added to the pipeline.
 
 Now you should have a working protocol translator implementation in your project.
 
