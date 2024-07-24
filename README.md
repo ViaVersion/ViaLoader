@@ -76,9 +76,9 @@ ViaLoader provides a wrapper class with default values for that. To use a defaul
 If you want to change the default value you should create your own class which extends the base class and overrides the methods you want to change.
 
 The only default value you have to change is the ``VLLoader`` argument. The loader is used to register all the providers for the Via* platforms. 
-A provider is a class which provides information to the platform. There are other providers to give the protocol translation more data to work better.
+Providers are used to provide information about the platform to ViaVersion when it's (almost) impossible to get them ourselves. 
 
-To override the default you first create a new class which extends ``VLLoader`` and overrides the ``load`` method (Make sure to call the super method).  
+To override the default you first create a new class which extends ``VLLoader`` and overrides the ``load`` method.  
 Within the ``load`` method you have to register a ``VersionProvider`` implementation which will be used to determine the target server version of a given connection.
 Here is an example implementation:
 ```java
@@ -91,7 +91,8 @@ public class CustomVLLoaderImpl extends VLLoader {
         Via.getManager().getProviders().use(VersionProvider.class, new BaseVersionProvider() {
             @Override
             public ProtocolVersion getClosestServerProtocol(UserConnection connection) {
-                return ProtocolVersion.v1_8; // Change the logic here to select the target server version
+                // Change the logic here to select the target server version
+                return ProtocolVersion.v1_8;
             }
         });
     }
