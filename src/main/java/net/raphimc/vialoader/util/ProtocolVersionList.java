@@ -31,21 +31,4 @@ public class ProtocolVersionList {
         return Collections.unmodifiableList(protocolVersions);
     }
 
-    /**
-     * Returns true if first is closer to version than second
-     *
-     * @param version The version to compare to
-     * @param first   The first version
-     * @param second  The second version
-     * @return true if first is closer to version than second
-     */
-    public static boolean isCloserTo(final ProtocolVersion version, final ProtocolVersion first, final ProtocolVersion second) {
-        if (version.getVersionType() == first.getVersionType() || version.getVersionType() == second.getVersionType()) {
-            return Math.abs(version.getVersion() - first.getVersion()) < Math.abs(version.getVersion() - second.getVersion());
-        } else {
-            final int ordinal = version.getVersionType().ordinal();
-            return Math.abs(ordinal - first.getVersionType().ordinal()) < Math.abs(ordinal - second.getVersionType().ordinal());
-        }
-    }
-
 }

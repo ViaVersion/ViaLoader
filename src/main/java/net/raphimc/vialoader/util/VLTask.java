@@ -19,23 +19,12 @@ package net.raphimc.vialoader.util;
 
 import com.viaversion.viaversion.api.platform.PlatformTask;
 import com.viaversion.viaversion.api.scheduler.Task;
-import com.viaversion.viaversion.api.scheduler.TaskStatus;
 
-public class VLTask implements PlatformTask<Task> {
-
-    private final Task task;
-
-    public VLTask(final Task task) {
-        this.task = task;
-    }
+public record VLTask(Task task) implements PlatformTask<Task> {
 
     @Override
     public void cancel() {
         this.task.cancel();
-    }
-
-    public TaskStatus getStatus() {
-        return this.task.status();
     }
 
 }
