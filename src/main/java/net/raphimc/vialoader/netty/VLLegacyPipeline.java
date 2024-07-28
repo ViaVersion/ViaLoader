@@ -64,9 +64,6 @@ public abstract class VLLegacyPipeline extends ChannelInboundHandlerAdapter {
         ctx.pipeline().addBefore(this.packetDecoderName(), VIA_DECODER_NAME, this.createViaDecoder());
         ctx.pipeline().addBefore(this.packetEncoderName(), VIA_ENCODER_NAME, this.createViaEncoder());
 
-        if (this.version == null) {
-            return;
-        }
         final ProtocolVersion r1_6_4 = ProtocolVersion.getProtocol(VersionType.RELEASE_INITIAL, 78);
         if (r1_6_4.isKnown() && this.version.olderThanOrEqualTo(r1_6_4)) {
             this.user.getProtocolInfo().getPipeline().add(PreNettyBaseProtocol.INSTANCE);
