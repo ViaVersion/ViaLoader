@@ -40,9 +40,9 @@ repositories {
 dependencies {
     compileOnly "com.viaversion:viaversion-common:5.0.2"
     compileOnly "com.viaversion:viabackwards-common:5.0.2"
-    compileOnly "com.viaversion:viarewind-common:4.0.0"
-    compileOnly "net.raphimc:ViaLegacy:3.0.1"
-    compileOnly "net.raphimc:viaaprilfools-common:3.0.1-SNAPSHOT"
+    compileOnly "com.viaversion:viarewind-common:4.0.2"
+    compileOnly "net.raphimc:ViaLegacy:3.0.2"
+    compileOnly "net.raphimc:viaaprilfools-common:3.0.1"
     compileOnly "net.raphimc:ViaBedrock:0.0.10-SNAPSHOT"
     compileOnly "org.cloudburstmc.netty:netty-transport-raknet:1.0.0.CR3-SNAPSHOT"
 
