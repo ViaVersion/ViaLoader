@@ -128,6 +128,11 @@ public class ViaVersionPlatformImpl implements ViaPlatform<UserConnection> {
     }
 
     @Override
+    public boolean couldBeReloading() {
+        return false;
+    }
+
+    @Override
     public boolean isProxy() {
         return true;
     }
