@@ -119,7 +119,7 @@ Here is an example implementation:
 ```java
 public class CustomVLPipeline extends VLPipeline {
 
-    public ViaProxyVLPipeline(UserConnection user) {
+    public CustomVLPipeline(UserConnection user) {
         super(user);
     }
 
