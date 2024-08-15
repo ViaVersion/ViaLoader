@@ -43,7 +43,7 @@ dependencies {
     compileOnly "com.viaversion:viarewind-common:4.0.2"
     compileOnly "net.raphimc:ViaLegacy:3.0.3-SNAPSHOT"
     compileOnly "net.raphimc:viaaprilfools-common:3.0.2-SNAPSHOT"
-    compileOnly "net.raphimc:ViaBedrock:0.0.10-SNAPSHOT"
+    compileOnly "net.raphimc:ViaBedrock:0.0.11-SNAPSHOT"
     compileOnly "org.cloudburstmc.netty:netty-transport-raknet:1.0.0.CR3-SNAPSHOT"
 
     api "com.google.guava:guava:33.2.1-jre"
