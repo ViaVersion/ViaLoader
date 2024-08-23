@@ -25,10 +25,8 @@ import com.viaversion.viaversion.api.protocol.version.VersionType;
 import io.netty.channel.ChannelHandler;
 import io.netty.channel.ChannelHandlerContext;
 import io.netty.channel.ChannelInboundHandlerAdapter;
-import net.raphimc.viabedrock.api.protocol.BedrockBaseProtocol;
 import net.raphimc.viabedrock.netty.BatchLengthCodec;
 import net.raphimc.viabedrock.netty.PacketEncapsulationCodec;
-import net.raphimc.vialegacy.api.protocol.PreNettyBaseProtocol;
 import net.raphimc.vialegacy.netty.PreNettyLengthPrepender;
 import net.raphimc.vialegacy.netty.PreNettyLengthRemover;
 import net.raphimc.vialoader.netty.viabedrock.DisconnectHandler;
@@ -66,11 +64,9 @@ public abstract class VLLegacyPipeline extends ChannelInboundHandlerAdapter {
 
         final ProtocolVersion r1_6_4 = ProtocolVersion.getProtocol(VersionType.RELEASE_INITIAL, 78);
         if (r1_6_4.isKnown() && this.version.olderThanOrEqualTo(r1_6_4)) {
-            this.user.getProtocolInfo().getPipeline().add(PreNettyBaseProtocol.INSTANCE);
             ctx.pipeline().addBefore(this.lengthSplitterName(), VIALEGACY_PRE_NETTY_LENGTH_PREPENDER_NAME, this.createViaLegacyPreNettyLengthPrepender());
             ctx.pipeline().addBefore(this.lengthPrependerName(), VIALEGACY_PRE_NETTY_LENGTH_REMOVER_NAME, this.createViaLegacyPreNettyLengthRemover());
         } else if (this.version.getName().startsWith("Bedrock")) {
-            this.user.getProtocolInfo().getPipeline().add(BedrockBaseProtocol.INSTANCE);
             ctx.pipeline().addBefore(this.lengthSplitterName(), VIABEDROCK_DISCONNECT_HANDLER_NAME, this.createViaBedrockDisconnectHandler());
             ctx.pipeline().addBefore(this.lengthSplitterName(), VIABEDROCK_FRAME_ENCAPSULATION_HANDLER_NAME, this.createViaBedrockFrameEncapsulationHandler());
             this.replaceLengthSplitter(ctx, this.createViaBedrockBatchLengthCodec());
