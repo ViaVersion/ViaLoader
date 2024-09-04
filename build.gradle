@@ -16,8 +16,12 @@ base {
 repositories {
     mavenCentral()
     maven {
+        name = "ViaVersion"
+        url = "https://repo.viaversion.com"
+    }
+    maven {
         name = "Lenni0451"
-        url "https://maven.lenni0451.net/everything"
+        url = "https://maven.lenni0451.net/everything"
     }
     maven {
         name = "OpenCollab Releases"
@@ -28,12 +32,20 @@ repositories {
         url = "https://repo.opencollab.dev/maven-snapshots/"
     }
     maven {
-        name = "ViaVersion"
-        url "https://repo.viaversion.com"
+        name = "Minecraft Libraries"
+        url = "https://libraries.minecraft.net"
+
+        content {
+            includeGroup "com.mojang"
+        }
     }
     maven {
-        name = "Minecraft Libraries"
-        url "https://libraries.minecraft.net"
+        name = "Jitpack"
+        url = "https://jitpack.io"
+
+        content {
+            includeGroup "com.github.Oryxel"
+        }
     }
 }
 
