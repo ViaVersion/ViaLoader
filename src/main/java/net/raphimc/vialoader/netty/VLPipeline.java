@@ -60,7 +60,7 @@ public abstract class VLPipeline extends ChannelInboundHandlerAdapter {
 
         if (this.user.isClientSide()) {
             final ProtocolVersion r1_6_4 = ProtocolVersion.getProtocol(VersionType.RELEASE_INITIAL, 78);
-            if (r1_6_4.isKnown() && this.version.olderThanOrEqualTo(r1_6_4)) {
+            if (ProtocolVersion.isRegistered(r1_6_4.getVersionType(), r1_6_4.getOriginalVersion()) && this.version.olderThanOrEqualTo(r1_6_4)) {
                 ctx.pipeline().addBefore(this.lengthCodecName(), VIALEGACY_PRE_NETTY_LENGTH_CODEC_NAME, this.createViaLegacyPreNettyLengthCodec());
             } else if (this.version.getName().startsWith("Bedrock")) {
                 ctx.pipeline().addBefore(this.lengthCodecName(), VIABEDROCK_DISCONNECT_HANDLER_NAME, this.createViaBedrockDisconnectHandler());
