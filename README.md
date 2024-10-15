@@ -62,7 +62,7 @@ repositories {
 ```
 Here is an example dependency configuration for all components:
 ```groovy
-implementation "com.viaversion:viaversion:5.0.4"
+implementation "com.viaversion:viaversion:5.0.5"
 implementation "com.viaversion:viabackwards-common:5.0.4"
 implementation "com.viaversion:viarewind-common:4.0.3"
 implementation "net.raphimc:ViaLegacy:3.0.3"

@@ -51,7 +51,6 @@ public abstract class VLLegacyPipeline extends ChannelInboundHandlerAdapter {
         this(user, Via.getManager().getProviders().get(VersionProvider.class).getServerProtocol(user));
     }
 
-    @Deprecated
     public VLLegacyPipeline(final UserConnection user, final ProtocolVersion version) {
         this.user = user;
         this.version = version;
@@ -62,16 +61,18 @@ public abstract class VLLegacyPipeline extends ChannelInboundHandlerAdapter {
         ctx.pipeline().addBefore(this.packetDecoderName(), VIA_DECODER_NAME, this.createViaDecoder());
         ctx.pipeline().addBefore(this.packetEncoderName(), VIA_ENCODER_NAME, this.createViaEncoder());
 
-        final ProtocolVersion r1_6_4 = ProtocolVersion.getProtocol(VersionType.RELEASE_INITIAL, 78);
-        if (r1_6_4.isKnown() && this.version.olderThanOrEqualTo(r1_6_4)) {
-            ctx.pipeline().addBefore(this.lengthSplitterName(), VIALEGACY_PRE_NETTY_LENGTH_PREPENDER_NAME, this.createViaLegacyPreNettyLengthPrepender());
-            ctx.pipeline().addBefore(this.lengthPrependerName(), VIALEGACY_PRE_NETTY_LENGTH_REMOVER_NAME, this.createViaLegacyPreNettyLengthRemover());
-        } else if (this.version.getName().startsWith("Bedrock")) {
-            ctx.pipeline().addBefore(this.lengthSplitterName(), VIABEDROCK_DISCONNECT_HANDLER_NAME, this.createViaBedrockDisconnectHandler());
-            ctx.pipeline().addBefore(this.lengthSplitterName(), VIABEDROCK_FRAME_ENCAPSULATION_HANDLER_NAME, this.createViaBedrockFrameEncapsulationHandler());
-            this.replaceLengthSplitter(ctx, this.createViaBedrockBatchLengthCodec());
-            ctx.pipeline().remove(this.lengthPrependerName());
-            ctx.pipeline().addBefore(VIA_DECODER_NAME, VIABEDROCK_PACKET_ENCAPSULATION_HANDLER_NAME, this.createViaBedrockPacketEncapsulationHandler());
+        if (this.user.isClientSide()) {
+            final ProtocolVersion r1_6_4 = ProtocolVersion.getProtocol(VersionType.RELEASE_INITIAL, 78);
+            if (r1_6_4.isKnown() && this.version.olderThanOrEqualTo(r1_6_4)) {
+                ctx.pipeline().addBefore(this.lengthSplitterName(), VIALEGACY_PRE_NETTY_LENGTH_PREPENDER_NAME, this.createViaLegacyPreNettyLengthPrepender());
+                ctx.pipeline().addBefore(this.lengthPrependerName(), VIALEGACY_PRE_NETTY_LENGTH_REMOVER_NAME, this.createViaLegacyPreNettyLengthRemover());
+            } else if (this.version.getName().startsWith("Bedrock")) {
+                ctx.pipeline().addBefore(this.lengthSplitterName(), VIABEDROCK_DISCONNECT_HANDLER_NAME, this.createViaBedrockDisconnectHandler());
+                ctx.pipeline().addBefore(this.lengthSplitterName(), VIABEDROCK_FRAME_ENCAPSULATION_HANDLER_NAME, this.createViaBedrockFrameEncapsulationHandler());
+                this.replaceLengthSplitter(ctx, this.createViaBedrockBatchLengthCodec());
+                ctx.pipeline().remove(this.lengthPrependerName());
+                ctx.pipeline().addBefore(VIA_DECODER_NAME, VIABEDROCK_PACKET_ENCAPSULATION_HANDLER_NAME, this.createViaBedrockPacketEncapsulationHandler());
+            }
         }
     }
 

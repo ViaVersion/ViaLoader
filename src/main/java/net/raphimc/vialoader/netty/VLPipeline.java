@@ -49,7 +49,6 @@ public abstract class VLPipeline extends ChannelInboundHandlerAdapter {
         this(user, Via.getManager().getProviders().get(VersionProvider.class).getServerProtocol(user));
     }
 
-    @Deprecated
     public VLPipeline(final UserConnection user, final ProtocolVersion version) {
         this.user = user;
         this.version = version;
@@ -59,14 +58,16 @@ public abstract class VLPipeline extends ChannelInboundHandlerAdapter {
     public void handlerAdded(ChannelHandlerContext ctx) {
         ctx.pipeline().addBefore(this.packetCodecName(), VIA_CODEC_NAME, this.createViaCodec());
 
-        final ProtocolVersion r1_6_4 = ProtocolVersion.getProtocol(VersionType.RELEASE_INITIAL, 78);
-        if (r1_6_4.isKnown() && this.version.olderThanOrEqualTo(r1_6_4)) {
-            ctx.pipeline().addBefore(this.lengthCodecName(), VIALEGACY_PRE_NETTY_LENGTH_CODEC_NAME, this.createViaLegacyPreNettyLengthCodec());
-        } else if (this.version.getName().startsWith("Bedrock")) {
-            ctx.pipeline().addBefore(this.lengthCodecName(), VIABEDROCK_DISCONNECT_HANDLER_NAME, this.createViaBedrockDisconnectHandler());
-            ctx.pipeline().addBefore(this.lengthCodecName(), VIABEDROCK_FRAME_ENCAPSULATION_HANDLER_NAME, this.createViaBedrockFrameEncapsulationHandler());
-            this.replaceLengthCodec(ctx, this.createViaBedrockBatchLengthCodec());
-            ctx.pipeline().addBefore(VIA_CODEC_NAME, VIABEDROCK_PACKET_ENCAPSULATION_HANDLER_NAME, this.createViaBedrockPacketEncapsulationHandler());
+        if (this.user.isClientSide()) {
+            final ProtocolVersion r1_6_4 = ProtocolVersion.getProtocol(VersionType.RELEASE_INITIAL, 78);
+            if (r1_6_4.isKnown() && this.version.olderThanOrEqualTo(r1_6_4)) {
+                ctx.pipeline().addBefore(this.lengthCodecName(), VIALEGACY_PRE_NETTY_LENGTH_CODEC_NAME, this.createViaLegacyPreNettyLengthCodec());
+            } else if (this.version.getName().startsWith("Bedrock")) {
+                ctx.pipeline().addBefore(this.lengthCodecName(), VIABEDROCK_DISCONNECT_HANDLER_NAME, this.createViaBedrockDisconnectHandler());
+                ctx.pipeline().addBefore(this.lengthCodecName(), VIABEDROCK_FRAME_ENCAPSULATION_HANDLER_NAME, this.createViaBedrockFrameEncapsulationHandler());
+                this.replaceLengthCodec(ctx, this.createViaBedrockBatchLengthCodec());
+                ctx.pipeline().addBefore(VIA_CODEC_NAME, VIABEDROCK_PACKET_ENCAPSULATION_HANDLER_NAME, this.createViaBedrockPacketEncapsulationHandler());
+            }
         }
     }
 
