@@ -49,7 +49,7 @@ ViaLoader is split into 6 different components:
 - ViaRewind (Allows 1.8.x and 1.7.x clients to join to 1.9+ servers [needs ViaBackwards])
 - ViaLegacy (Allows clients to join to <= 1.7.10 servers [needs ViaVersion])
 - ViaAprilFools (Allows clients to join to some notable Minecraft snapshots [needs ViaBackwards])
-- ViaBedrock (Allows clients to join to Bedrock edition servers [needs ViaVersion])
+- ViaBedrock (Allows clients to join to Bedrock edition servers [needs latest ViaVersion and ViaLoader snapshot versions])
 
 In case you want to include ViaBedrock, you have to add the Lenni0451 maven repository to your build script:
 ```groovy
@@ -62,12 +62,12 @@ repositories {
 ```
 Here is an example dependency configuration for all components:
 ```groovy
-implementation "com.viaversion:viaversion:5.0.5"
-implementation "com.viaversion:viabackwards-common:5.0.4"
+implementation "com.viaversion:viaversion:5.1.0"
+implementation "com.viaversion:viabackwards-common:5.1.0"
 implementation "com.viaversion:viarewind-common:4.0.3"
-implementation "net.raphimc:ViaLegacy:3.0.3"
-implementation "net.raphimc:ViaAprilFools:3.0.2"
-implementation "net.raphimc:ViaBedrock:0.0.12-SNAPSHOT"
+implementation "net.raphimc:ViaLegacy:3.0.4"
+implementation "net.raphimc:viaaprilfools-common:3.0.3"
+implementation "net.raphimc:ViaBedrock:0.0.13-SNAPSHOT"
 ```
 
 ## Implementation
