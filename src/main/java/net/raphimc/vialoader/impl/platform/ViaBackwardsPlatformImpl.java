@@ -31,6 +31,7 @@ public class ViaBackwardsPlatformImpl implements ViaBackwardsPlatform {
 
     public ViaBackwardsPlatformImpl() {
         this.init(new File(this.getDataFolder(), "viabackwards.yml"));
+        this.enable();
     }
 
     @Override
