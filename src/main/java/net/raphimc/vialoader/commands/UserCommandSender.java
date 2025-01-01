@@ -1,6 +1,6 @@
 /*
  * This file is part of ViaLoader - https://github.com/RaphiMC/ViaLoader
- * Copyright (C) 2020-2024 RK_01/RaphiMC and contributors
+ * Copyright (C) 2020-2025 RK_01/RaphiMC and contributors
  *
  * This program is free software: you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
