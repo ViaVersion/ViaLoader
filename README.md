@@ -17,7 +17,7 @@ repositories {
 }
 
 dependencies {
-    implementation("net.raphimc:ViaLoader:x.x.x") // Get latest version from releases
+    implementation("com.viaversion:vialoader:x.x.x") // Get latest version from releases
 }
 ```
 
@@ -31,8 +31,8 @@ dependencies {
 
 <dependencies>
     <dependency>
-        <groupId>net.raphimc</groupId>
-        <artifactId>ViaLoader</artifactId>
+        <groupId>com.viaversion</groupId>
+        <artifactId>vialoader</artifactId>
         <version>x.x.x</version> <!-- Get latest version from releases -->
     </dependency>
 </dependencies>

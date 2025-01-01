@@ -9,7 +9,7 @@ base {
     compileJava.options.encoding = compileTestJava.options.encoding = javadoc.options.encoding = "UTF-8"
 
     group = project.maven_group ?: rootProject.maven_group
-    archivesName = project.maven_name ?: rootProject.maven_name
+    archivesName = project.name ?: rootProject.name
     version = project.maven_version ?: rootProject.maven_version
 }
 
@@ -113,6 +113,11 @@ publishing {
                 developers {
                     developer {
                         id = "RK_01"
+                    }
+                    developer {
+                        id = "FlorianMichael"
+                        name = "EnZaXD"
+                        email = "florian.michael07@gmail.com"
                     }
                 }
                 scm {
