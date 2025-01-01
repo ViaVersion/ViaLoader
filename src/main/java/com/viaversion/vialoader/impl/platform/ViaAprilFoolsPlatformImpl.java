@@ -20,9 +20,9 @@
  */
 package com.viaversion.vialoader.impl.platform;
 
-import com.viaversion.viaversion.api.Via;
-import net.raphimc.viaaprilfools.platform.ViaAprilFoolsPlatform;
+import com.viaversion.viaaprilfools.platform.ViaAprilFoolsPlatform;
 import com.viaversion.vialoader.util.JLoggerToSLF4J;
+import com.viaversion.viaversion.api.Via;
 import org.slf4j.LoggerFactory;
 
 import java.io.File;

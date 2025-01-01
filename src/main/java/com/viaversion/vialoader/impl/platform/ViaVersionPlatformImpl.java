@@ -20,6 +20,12 @@
  */
 package com.viaversion.vialoader.impl.platform;
 
+import com.viaversion.vialoader.ViaLoader;
+import com.viaversion.vialoader.commands.UserCommandSender;
+import com.viaversion.vialoader.impl.viaversion.VLApiBase;
+import com.viaversion.vialoader.impl.viaversion.VLViaConfig;
+import com.viaversion.vialoader.util.JLoggerToSLF4J;
+import com.viaversion.vialoader.util.VLTask;
 import com.viaversion.viaversion.api.Via;
 import com.viaversion.viaversion.api.ViaAPI;
 import com.viaversion.viaversion.api.command.ViaCommandSender;
@@ -29,12 +35,6 @@ import com.viaversion.viaversion.api.platform.ViaPlatform;
 import com.viaversion.viaversion.configuration.AbstractViaConfig;
 import com.viaversion.viaversion.libs.gson.JsonObject;
 import com.viaversion.viaversion.util.VersionInfo;
-import com.viaversion.vialoader.ViaLoader;
-import com.viaversion.vialoader.commands.UserCommandSender;
-import com.viaversion.vialoader.impl.viaversion.VLApiBase;
-import com.viaversion.vialoader.impl.viaversion.VLViaConfig;
-import com.viaversion.vialoader.util.JLoggerToSLF4J;
-import com.viaversion.vialoader.util.VLTask;
 import org.slf4j.LoggerFactory;
 
 import java.io.File;
@@ -118,11 +118,6 @@ public class ViaVersionPlatformImpl implements ViaPlatform<UserConnection> {
     @Override
     public boolean kickPlayer(UUID uuid, String s) {
         return false;
-    }
-
-    @Override
-    public boolean isPluginEnabled() {
-        return true;
     }
 
     @Override
