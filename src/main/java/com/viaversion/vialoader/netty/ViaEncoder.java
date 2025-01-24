@@ -40,17 +40,16 @@ public class ViaEncoder extends MessageToMessageEncoder<ByteBuf> {
     }
 
     @Override
-    protected void encode(ChannelHandlerContext ctx, ByteBuf byteBuf, List<Object> out) throws Exception {
-        if (!user.checkOutgoingPacket()) throw CancelEncoderException.generate(null);
-        if (!user.shouldTransformPacket()) {
-            out.add(byteBuf.retain());
+    protected void encode(ChannelHandlerContext ctx, ByteBuf in, List<Object> out) throws Exception {
+        if (!this.user.checkOutgoingPacket()) throw CancelEncoderException.generate(null);
+        if (!this.user.shouldTransformPacket()) {
+            out.add(in.retain());
             return;
         }
 
-        ByteBuf transformedBuf = ctx.alloc().buffer().writeBytes(byteBuf);
+        final ByteBuf transformedBuf = ctx.alloc().buffer().writeBytes(in);
         try {
-            user.transformOutgoing(transformedBuf, CancelEncoderException::generate);
-
+            this.user.transformOutgoing(transformedBuf, CancelEncoderException::generate);
             out.add(transformedBuf.retain());
         } finally {
             transformedBuf.release();
