@@ -25,6 +25,7 @@ import com.viaversion.vialoader.commands.UserCommandSender;
 import com.viaversion.vialoader.impl.viaversion.VLApiBase;
 import com.viaversion.vialoader.impl.viaversion.VLViaConfig;
 import com.viaversion.vialoader.util.JLoggerToSLF4J;
+import com.viaversion.vialoader.util.PacketTypeUtil;
 import com.viaversion.vialoader.util.VLTask;
 import com.viaversion.viaversion.api.Via;
 import com.viaversion.viaversion.api.ViaAPI;
@@ -32,8 +33,11 @@ import com.viaversion.viaversion.api.command.ViaCommandSender;
 import com.viaversion.viaversion.api.configuration.ViaVersionConfig;
 import com.viaversion.viaversion.api.connection.UserConnection;
 import com.viaversion.viaversion.api.platform.ViaPlatform;
+import com.viaversion.viaversion.api.protocol.packet.PacketWrapper;
+import com.viaversion.viaversion.api.type.Types;
 import com.viaversion.viaversion.configuration.AbstractViaConfig;
 import com.viaversion.viaversion.libs.gson.JsonObject;
+import com.viaversion.viaversion.protocols.base.InitialBaseProtocol;
 import com.viaversion.viaversion.util.VersionInfo;
 import org.slf4j.LoggerFactory;
 
@@ -118,6 +122,23 @@ public class ViaVersionPlatformImpl implements ViaPlatform<UserConnection> {
     @Override
     public boolean kickPlayer(UUID uuid, String s) {
         return false;
+    }
+
+    @Override
+    public void sendCustomPayload(UUID uuid, String channel, String message) {
+        UserConnection connection = Via.getManager().getConnectionManager().getConnectedClient(uuid);
+        if (connection == null) {
+            // The connection field will always be null on clientside platforms, get the first connection instead
+            connection = Via.getManager().getConnectionManager().getConnections().stream().findFirst().orElse(null);
+        }
+
+        if (connection != null) {
+            final PacketWrapper packet = PacketWrapper.create(PacketTypeUtil.getServerboundPacketType("CUSTOM_PAYLOAD", connection), connection);
+            packet.write(Types.STRING, channel);
+            packet.write(Types.REMAINING_BYTES, message.getBytes());
+
+            packet.sendToServer(InitialBaseProtocol.class);
+        }
     }
 
     @Override

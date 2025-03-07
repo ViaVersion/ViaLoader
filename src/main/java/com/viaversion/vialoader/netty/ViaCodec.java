@@ -34,30 +34,34 @@ import java.util.List;
 
 public class ViaCodec extends ByteToMessageCodec<ByteBuf> {
 
-    protected final UserConnection user;
+    protected final UserConnection connection;
 
-    public ViaCodec(final UserConnection user) {
-        this.user = user;
+    public ViaCodec(final UserConnection connection) {
+        this.connection = connection;
     }
 
     @Override
-    protected void encode(ChannelHandlerContext ctx, ByteBuf in, ByteBuf out) throws Exception {
-        if (!this.user.checkOutgoingPacket()) throw CancelEncoderException.generate(null);
+    protected void encode(ChannelHandlerContext ctx, ByteBuf in, ByteBuf out) {
+        if (!this.connection.checkOutgoingPacket()) {
+            throw CancelEncoderException.generate(null);
+        }
 
         out.writeBytes(in);
-        if (this.user.shouldTransformPacket()) {
-            this.user.transformOutgoing(out, CancelEncoderException::generate);
+        if (this.connection.shouldTransformPacket()) {
+            this.connection.transformOutgoing(out, CancelEncoderException::generate);
         }
     }
 
     @Override
     protected void decode(ChannelHandlerContext ctx, ByteBuf in, List<Object> out) throws Exception {
-        if (!this.user.checkIncomingPacket()) throw CancelDecoderException.generate(null);
+        if (!this.connection.checkIncomingPacket()) {
+            throw CancelDecoderException.generate(null);
+        }
 
         final ByteBuf transformedBuf = ctx.alloc().buffer().writeBytes(in);
         try {
-            if (this.user.shouldTransformPacket()) {
-                this.user.transformIncoming(transformedBuf, CancelDecoderException::generate);
+            if (this.connection.shouldTransformPacket()) {
+                this.connection.transformIncoming(transformedBuf, CancelDecoderException::generate);
             }
             out.add(transformedBuf.retain());
         } finally {
@@ -93,7 +97,7 @@ public class ViaCodec extends ByteToMessageCodec<ByteBuf> {
     public boolean isSharable() {
         // Netty doesn't allow codecs to be shared, but we need it to be shared because of the pipeline reordering.
         // The check if it is sharable is done in the constructor and can be bypassed by returning false during that check.
-        return this.user != null;
+        return this.connection != null;
     }
 
 }

@@ -33,23 +33,25 @@ import java.util.List;
 
 public class ViaEncoder extends MessageToMessageEncoder<ByteBuf> {
 
-    protected final UserConnection user;
+    protected final UserConnection connection;
 
-    public ViaEncoder(final UserConnection user) {
-        this.user = user;
+    public ViaEncoder(final UserConnection connection) {
+        this.connection = connection;
     }
 
     @Override
-    protected void encode(ChannelHandlerContext ctx, ByteBuf in, List<Object> out) throws Exception {
-        if (!this.user.checkOutgoingPacket()) throw CancelEncoderException.generate(null);
-        if (!this.user.shouldTransformPacket()) {
+    protected void encode(ChannelHandlerContext ctx, ByteBuf in, List<Object> out) {
+        if (!this.connection.checkOutgoingPacket()) {
+            throw CancelEncoderException.generate(null);
+        }
+        if (!this.connection.shouldTransformPacket()) {
             out.add(in.retain());
             return;
         }
 
         final ByteBuf transformedBuf = ctx.alloc().buffer().writeBytes(in);
         try {
-            this.user.transformOutgoing(transformedBuf, CancelEncoderException::generate);
+            this.connection.transformOutgoing(transformedBuf, CancelEncoderException::generate);
             out.add(transformedBuf.retain());
         } finally {
             transformedBuf.release();
@@ -73,6 +75,6 @@ public class ViaEncoder extends MessageToMessageEncoder<ByteBuf> {
     public boolean isSharable() {
         // Netty doesn't allow codecs to be shared, but we need it to be shared because of the pipeline reordering.
         // The check if it is sharable is done in the constructor and can be bypassed by returning false during that check.
-        return this.user != null;
+        return this.connection != null;
     }
 }
