@@ -36,7 +36,6 @@ import com.viaversion.viaversion.api.platform.ViaPlatform;
 import com.viaversion.viaversion.api.protocol.packet.PacketWrapper;
 import com.viaversion.viaversion.api.type.Types;
 import com.viaversion.viaversion.configuration.AbstractViaConfig;
-import com.viaversion.viaversion.libs.gson.JsonObject;
 import com.viaversion.viaversion.protocols.base.InitialBaseProtocol;
 import com.viaversion.viaversion.util.VersionInfo;
 import org.slf4j.LoggerFactory;
@@ -111,20 +110,6 @@ public class ViaVersionPlatformImpl implements ViaPlatform<UserConnection> {
     }
 
     @Override
-    public void sendMessage(UUID uuid, String msg) {
-        if (uuid == null) {
-            this.getLogger().info(msg);
-        } else {
-            this.getLogger().info("[" + uuid + "] " + msg);
-        }
-    }
-
-    @Override
-    public boolean kickPlayer(UUID uuid, String s) {
-        return false;
-    }
-
-    @Override
     public void sendCustomPayload(UUID uuid, String channel, String message) {
         UserConnection connection = Via.getManager().getConnectionManager().getConnectedClient(uuid);
         if (connection == null) {
@@ -169,15 +154,6 @@ public class ViaVersionPlatformImpl implements ViaPlatform<UserConnection> {
     @Override
     public File getDataFolder() {
         return this.dataFolder;
-    }
-
-    @Override
-    public void onReload() {
-    }
-
-    @Override
-    public JsonObject getDump() {
-        return new JsonObject();
     }
 
     protected AbstractViaConfig createConfig() {
