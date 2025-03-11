@@ -35,13 +35,13 @@ public class UserCommandSender implements ViaCommandSender {
     }
 
     @Override
-    public boolean hasPermission(String s) {
+    public boolean hasPermission(String permission) {
         return true;
     }
 
     @Override
-    public void sendMessage(String s) {
-        Via.getPlatform().sendMessage(this.getUUID(), s);
+    public void sendMessage(String msg) {
+        Via.getPlatform().sendMessage(this.getUUID(), msg);
     }
 
     @Override

@@ -21,7 +21,6 @@
 package com.viaversion.vialoader.impl.platform;
 
 import com.viaversion.vialoader.ViaLoader;
-import com.viaversion.vialoader.commands.UserCommandSender;
 import com.viaversion.vialoader.impl.viaversion.VLApiBase;
 import com.viaversion.vialoader.impl.viaversion.VLViaConfig;
 import com.viaversion.vialoader.util.JLoggerToSLF4J;
@@ -29,7 +28,6 @@ import com.viaversion.vialoader.util.PacketTypeUtil;
 import com.viaversion.vialoader.util.VLTask;
 import com.viaversion.viaversion.api.Via;
 import com.viaversion.viaversion.api.ViaAPI;
-import com.viaversion.viaversion.api.command.ViaCommandSender;
 import com.viaversion.viaversion.api.configuration.ViaVersionConfig;
 import com.viaversion.viaversion.api.connection.UserConnection;
 import com.viaversion.viaversion.api.platform.ViaPlatform;
@@ -105,11 +103,6 @@ public class ViaVersionPlatformImpl implements ViaPlatform<UserConnection> {
     }
 
     @Override
-    public ViaCommandSender[] getOnlinePlayers() {
-        return Via.getManager().getConnectionManager().getConnectedClients().values().stream().map(UserCommandSender::new).toArray(ViaCommandSender[]::new);
-    }
-
-    @Override
     public void sendCustomPayload(UUID uuid, String channel, String message) {
         UserConnection connection = Via.getManager().getConnectionManager().getConnectedClient(uuid);
         if (connection == null) {
@@ -118,16 +111,15 @@ public class ViaVersionPlatformImpl implements ViaPlatform<UserConnection> {
         }
 
         if (connection != null) {
-            final PacketWrapper packet = PacketWrapper.create(PacketTypeUtil.getServerboundPacketType("CUSTOM_PAYLOAD", connection), connection);
-            packet.write(Types.STRING, channel);
-            packet.write(Types.REMAINING_BYTES, message.getBytes());
-
-            packet.sendToServer(InitialBaseProtocol.class);
+            final PacketWrapper customPayload = PacketWrapper.create(PacketTypeUtil.getServerboundPacketType("CUSTOM_PAYLOAD", connection), connection);
+            customPayload.write(Types.STRING, channel);
+            customPayload.write(Types.REMAINING_BYTES, message.getBytes());
+            customPayload.sendToServer(InitialBaseProtocol.class);
         }
     }
 
     @Override
-    public boolean hasPlugin(String s) {
+    public boolean hasPlugin(String name) {
         return false; // Used for ViaPlatform#getUnsupportedSoftwareClasses
     }
 
