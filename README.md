@@ -119,7 +119,7 @@ Here is an example implementation:
 ```java
 public class CustomVLPipeline extends VLPipeline {
 
-    public CustomVLPipeline(UserConnection user) {
+    public CustomVLPipeline(UserConnection connection) {
         super(user);
     }
 
@@ -145,7 +145,7 @@ The same can be done for the `VLLegacyPipeline` with similar functions for the d
 
 Then you can add the Via* pipeline to your netty pipeline:
 ```java
-final UserConnection user = new UserConnectionImpl(channel, true/*clientside or serverside*/);
+final UserConnection connection = new UserConnectionImpl(channel, true/*clientside or serverside*/);
 new ProtocolPipelineImpl(user);
 
 channel.pipeline().addLast(new CustomVLPipeline(user));
@@ -155,7 +155,7 @@ Both `VLPipeline` and `VLLegacyPipeline` contain various functions allowing you 
 if you need a more complex/dynamic pipeline setup you can also manually add the Via* handlers to the pipeline.
 Here is an example implementation:
 ```java
-final UserConnection user = new UserConnectionImpl(channel, true/*clientside or serverside*/);
+final UserConnection connection = new UserConnectionImpl(channel, true/*clientside or serverside*/);
 new ProtocolPipelineImpl(user);
 
 //channel.pipeline().addBefore("packet_decoder", VLLegacyPipeline.VIA_DECODER_NAME, new ViaDecoder(user));

@@ -47,15 +47,15 @@ public abstract class VLLegacyPipeline extends ChannelInboundHandlerAdapter {
     public static final String VIABEDROCK_FRAME_ENCAPSULATION_HANDLER_NAME = "viabedrock-frame-encapsulation";
     public static final String VIABEDROCK_PACKET_ENCAPSULATION_HANDLER_NAME = "viabedrock-packet-encapsulation";
 
-    protected final UserConnection user;
+    protected final UserConnection connection;
     protected final ProtocolVersion version;
 
-    public VLLegacyPipeline(final UserConnection user) {
-        this(user, Via.getManager().getProviders().get(VersionProvider.class).getServerProtocol(user));
+    public VLLegacyPipeline(final UserConnection connection) {
+        this(connection, Via.getManager().getProviders().get(VersionProvider.class).getServerProtocol(connection));
     }
 
-    public VLLegacyPipeline(final UserConnection user, final ProtocolVersion version) {
-        this.user = user;
+    public VLLegacyPipeline(final UserConnection connection, final ProtocolVersion version) {
+        this.connection = connection;
         this.version = version;
     }
 
@@ -64,7 +64,7 @@ public abstract class VLLegacyPipeline extends ChannelInboundHandlerAdapter {
         ctx.pipeline().addBefore(this.packetDecoderName(), VIA_DECODER_NAME, this.createViaDecoder());
         ctx.pipeline().addBefore(this.packetEncoderName(), VIA_ENCODER_NAME, this.createViaEncoder());
 
-        if (this.user.isClientSide()) {
+        if (this.connection.isClientSide()) {
             final ProtocolVersion r1_6_4 = ProtocolVersion.getProtocol(VersionType.RELEASE_INITIAL, 78);
             if (ProtocolVersion.isRegistered(r1_6_4.getVersionType(), r1_6_4.getOriginalVersion()) && this.version.olderThanOrEqualTo(r1_6_4)) {
                 ctx.pipeline().addBefore(this.lengthSplitterName(), VIALEGACY_PRE_NETTY_LENGTH_PREPENDER_NAME, this.createViaLegacyPreNettyLengthPrepender());
@@ -101,19 +101,19 @@ public abstract class VLLegacyPipeline extends ChannelInboundHandlerAdapter {
     }
 
     protected ChannelHandler createViaDecoder() {
-        return new ViaDecoder(this.user);
+        return new ViaDecoder(this.connection);
     }
 
     protected ChannelHandler createViaEncoder() {
-        return new ViaEncoder(this.user);
+        return new ViaEncoder(this.connection);
     }
 
     protected ChannelHandler createViaLegacyPreNettyLengthPrepender() {
-        return new PreNettyLengthPrepender(this.user);
+        return new PreNettyLengthPrepender(this.connection);
     }
 
     protected ChannelHandler createViaLegacyPreNettyLengthRemover() {
-        return new PreNettyLengthRemover(this.user);
+        return new PreNettyLengthRemover(this.connection);
     }
 
     protected ChannelHandler createViaBedrockDisconnectHandler() {

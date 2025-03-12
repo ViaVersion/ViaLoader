@@ -45,15 +45,15 @@ public abstract class VLPipeline extends ChannelInboundHandlerAdapter {
     public static final String VIABEDROCK_FRAME_ENCAPSULATION_HANDLER_NAME = "viabedrock-frame-encapsulation";
     public static final String VIABEDROCK_PACKET_ENCAPSULATION_HANDLER_NAME = "viabedrock-packet-encapsulation";
 
-    protected final UserConnection user;
+    protected final UserConnection connection;
     protected final ProtocolVersion version;
 
-    public VLPipeline(final UserConnection user) {
-        this(user, Via.getManager().getProviders().get(VersionProvider.class).getServerProtocol(user));
+    public VLPipeline(final UserConnection connection) {
+        this(connection, Via.getManager().getProviders().get(VersionProvider.class).getServerProtocol(connection));
     }
 
-    public VLPipeline(final UserConnection user, final ProtocolVersion version) {
-        this.user = user;
+    public VLPipeline(final UserConnection connection, final ProtocolVersion version) {
+        this.connection = connection;
         this.version = version;
     }
 
@@ -61,7 +61,7 @@ public abstract class VLPipeline extends ChannelInboundHandlerAdapter {
     public void handlerAdded(ChannelHandlerContext ctx) {
         ctx.pipeline().addBefore(this.packetCodecName(), VIA_CODEC_NAME, this.createViaCodec());
 
-        if (this.user.isClientSide()) {
+        if (this.connection.isClientSide()) {
             final ProtocolVersion r1_6_4 = ProtocolVersion.getProtocol(VersionType.RELEASE_INITIAL, 78);
             if (ProtocolVersion.isRegistered(r1_6_4.getVersionType(), r1_6_4.getOriginalVersion()) && this.version.olderThanOrEqualTo(r1_6_4)) {
                 ctx.pipeline().addBefore(this.lengthCodecName(), VIALEGACY_PRE_NETTY_LENGTH_CODEC_NAME, this.createViaLegacyPreNettyLengthCodec());
@@ -88,11 +88,11 @@ public abstract class VLPipeline extends ChannelInboundHandlerAdapter {
     }
 
     protected ChannelHandler createViaCodec() {
-        return new ViaCodec(this.user);
+        return new ViaCodec(this.connection);
     }
 
     protected ChannelHandler createViaLegacyPreNettyLengthCodec() {
-        return new PreNettyLengthCodec(this.user);
+        return new PreNettyLengthCodec(this.connection);
     }
 
     protected ChannelHandler createViaBedrockDisconnectHandler() {
