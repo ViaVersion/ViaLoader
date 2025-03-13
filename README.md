@@ -120,7 +120,7 @@ Here is an example implementation:
 public class CustomVLPipeline extends VLPipeline {
 
     public CustomVLPipeline(UserConnection connection) {
-        super(user);
+        super(connection);
     }
 
     // Replace these with the names of your pipeline components
@@ -146,9 +146,9 @@ The same can be done for the `VLLegacyPipeline` with similar functions for the d
 Then you can add the Via* pipeline to your netty pipeline:
 ```java
 final UserConnection connection = new UserConnectionImpl(channel, true/*clientside or serverside*/);
-new ProtocolPipelineImpl(user);
+new ProtocolPipelineImpl(connection);
 
-channel.pipeline().addLast(new CustomVLPipeline(user));
+channel.pipeline().addLast(new CustomVLPipeline(connection));
 ```
 
 Both `VLPipeline` and `VLLegacyPipeline` contain various functions allowing you to modify/wrap the existing pipeline elements,
@@ -156,11 +156,11 @@ if you need a more complex/dynamic pipeline setup you can also manually add the 
 Here is an example implementation:
 ```java
 final UserConnection connection = new UserConnectionImpl(channel, true/*clientside or serverside*/);
-new ProtocolPipelineImpl(user);
+new ProtocolPipelineImpl(connection);
 
-//channel.pipeline().addBefore("packet_decoder", VLLegacyPipeline.VIA_DECODER_NAME, new ViaDecoder(user));
-//channel.pipeline().addBefore("packet_encoder", VLLegacyPipeline.VIA_ENCODER_NAME, new ViaEncoder(user));
-channel.pipeline().addBefore("packet_codec", VLPipeline.VIA_CODEC_NAME, new ViaCodec(user));
+//channel.pipeline().addBefore("packet_decoder", VLLegacyPipeline.VIA_DECODER_NAME, new ViaDecoder(connection));
+//channel.pipeline().addBefore("packet_encoder", VLLegacyPipeline.VIA_ENCODER_NAME, new ViaEncoder(connection));
+channel.pipeline().addBefore("packet_codec", VLPipeline.VIA_CODEC_NAME, new ViaCodec(connection));
 ```
 If you are using ViaLegacy, you should read its [README](https://github.com/ViaVersion/ViaLegacy?tab=readme-ov-file#vialegacy) to see what changes you need to make to the netty pipeline for it to work.
 
