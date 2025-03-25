@@ -58,7 +58,7 @@ dependencies {
     compileOnly "net.raphimc:ViaBedrock:0.0.15-SNAPSHOT"
     compileOnly "org.cloudburstmc.netty:netty-transport-raknet:1.0.0.CR3-SNAPSHOT"
 
-    api "com.google.guava:guava:33.4.5-jre"
+    api "com.google.guava:guava:33.4.6-jre"
     api "org.slf4j:slf4j-api:2.0.17"
 }
 
