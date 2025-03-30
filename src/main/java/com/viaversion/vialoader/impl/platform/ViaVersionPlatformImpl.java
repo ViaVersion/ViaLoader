@@ -32,6 +32,7 @@ import com.viaversion.viaversion.api.configuration.ViaVersionConfig;
 import com.viaversion.viaversion.api.connection.UserConnection;
 import com.viaversion.viaversion.api.platform.ViaPlatform;
 import com.viaversion.viaversion.api.protocol.packet.PacketWrapper;
+import com.viaversion.viaversion.api.protocol.packet.ServerboundPacketType;
 import com.viaversion.viaversion.api.type.Types;
 import com.viaversion.viaversion.configuration.AbstractViaConfig;
 import com.viaversion.viaversion.protocols.base.InitialBaseProtocol;
@@ -103,10 +104,15 @@ public class ViaVersionPlatformImpl implements ViaPlatform<UserConnection> {
 
     @Override
     public void sendCustomPayload(UserConnection connection, String channel, byte[] message) {
-        final PacketWrapper customPayload = PacketWrapper.create(PacketTypeUtil.getServerboundPacketType("CUSTOM_PAYLOAD", connection), connection);
+        final ServerboundPacketType packetType = PacketTypeUtil.getServerboundPacketType("CUSTOM_PAYLOAD", connection);
+        if (packetType == null) {
+            throw new IllegalStateException("Cannot send custom payload if client and server are on the same version or if the server version does not support it");
+        }
+
+        final PacketWrapper customPayload = PacketWrapper.create(packetType, connection);
         customPayload.write(Types.STRING, channel);
         customPayload.write(Types.REMAINING_BYTES, message);
-        customPayload.sendToServer(InitialBaseProtocol.class);
+        customPayload.scheduleSendToServer(InitialBaseProtocol.class);
     }
 
     @Override
