@@ -1,0 +1,37 @@
+plugins {
+    id "base.publishing-conventions"
+    id "via.viaversion-maven-publishing"
+}
+
+publishing {
+    publications {
+        mavenJava {
+            pom {
+                name = "ViaLoader"
+                description = "Implementation of a ViaVersion based protocol translator platform"
+                url = "https://github.com/ViaVersion/ViaLoader"
+                licenses {
+                    license {
+                        name = "GPL-3.0 License"
+                        url = "https://github.com/ViaVersion/ViaLoader/blob/main/LICENSE"
+                    }
+                }
+                developers {
+                    developer {
+                        id = "RK_01"
+                    }
+                    developer {
+                        id = "FlorianMichael"
+                        name = "EnZaXD"
+                        email = "florian.michael07@gmail.com"
+                    }
+                }
+                scm {
+                    connection = "scm:git:git://github.com/ViaVersion/ViaLoader.git"
+                    developerConnection = "scm:git:ssh://github.com/ViaVersion/ViaLoader.git"
+                    url = "https://github.com/ViaVersion/ViaLoader.git"
+                }
+            }
+        }
+    }
+}

@@ -1,20 +1,13 @@
 plugins {
     id "java-library"
-    id "maven-publish"
+    id "base.base-conventions"
+    id "base.fill-build-constants"
+    id "vialoader.publishing-conventions"
+    id "via.run-with-viaproxy-task"
     id "net.raphimc.class-token-replacer" version "1.1.4"
 }
 
-base {
-    java.toolchain.languageVersion = JavaLanguageVersion.of(17)
-    compileJava.options.encoding = compileTestJava.options.encoding = javadoc.options.encoding = "UTF-8"
-
-    group = project.maven_group ?: rootProject.maven_group
-    archivesName = project.name ?: rootProject.name
-    version = project.maven_version ?: rootProject.maven_version
-}
-
 repositories {
-    mavenCentral()
     maven {
         name = "ViaVersion"
         url = "https://repo.viaversion.com"
@@ -60,72 +53,4 @@ dependencies {
 
     api "com.google.guava:guava:33.4.8-jre"
     api "org.slf4j:slf4j-api:2.0.17"
-}
-
-sourceSets {
-    main {
-        classTokenReplacer {
-            property("\${version}", project.version)
-        }
-    }
-}
-
-java {
-    withSourcesJar()
-}
-
-jar {
-    from("LICENSE") {
-        rename { "${it}_${project.name ?: rootProject.name}" }
-    }
-}
-
-publishing {
-    repositories {
-        maven {
-            name = "Via"
-            url = "https://repo.viaversion.com/"
-
-            credentials(PasswordCredentials)
-            authentication {
-                basic(BasicAuthentication)
-            }
-        }
-    }
-    publications {
-        maven(MavenPublication) {
-            groupId = project.maven_group
-            artifactId = project.maven_name
-            version = project.maven_version
-
-            from components.java
-
-            pom {
-                name = "ViaLoader"
-                description = "Implementation of a ViaVersion based protocol translator platform"
-                url = "https://github.com/ViaVersion/ViaLoader"
-                licenses {
-                    license {
-                        name = "GPL-3.0 License"
-                        url = "https://github.com/ViaVersion/ViaLoader/blob/main/LICENSE"
-                    }
-                }
-                developers {
-                    developer {
-                        id = "RK_01"
-                    }
-                    developer {
-                        id = "FlorianMichael"
-                        name = "EnZaXD"
-                        email = "florian.michael07@gmail.com"
-                    }
-                }
-                scm {
-                    connection = "scm:git:git://github.com/ViaVersion/ViaLoader.git"
-                    developerConnection = "scm:git:ssh://github.com/ViaVersion/ViaLoader.git"
-                    url = "https://github.com/ViaVersion/ViaLoader.git"
-                }
-            }
-        }
-    }
 }
