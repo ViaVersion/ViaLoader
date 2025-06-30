@@ -35,7 +35,6 @@ import com.viaversion.viaversion.api.protocol.packet.PacketWrapper;
 import com.viaversion.viaversion.api.protocol.packet.ServerboundPacketType;
 import com.viaversion.viaversion.api.type.Types;
 import com.viaversion.viaversion.configuration.AbstractViaConfig;
-import com.viaversion.viaversion.protocols.base.InitialBaseProtocol;
 import com.viaversion.viaversion.util.VersionInfo;
 import org.slf4j.LoggerFactory;
 
@@ -112,7 +111,7 @@ public class ViaVersionPlatformImpl implements ViaPlatform<UserConnection> {
         final PacketWrapper customPayload = PacketWrapper.create(packetType, connection);
         customPayload.write(Types.STRING, channel);
         customPayload.write(Types.REMAINING_BYTES, message);
-        customPayload.scheduleSendToServer(InitialBaseProtocol.class);
+        customPayload.scheduleSendToServerRaw();
     }
 
     @Override
