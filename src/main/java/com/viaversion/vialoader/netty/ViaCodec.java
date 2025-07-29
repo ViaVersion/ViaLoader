@@ -54,7 +54,7 @@ public class ViaCodec extends ByteToMessageCodec<ByteBuf> {
 
     @Override
     protected void decode(ChannelHandlerContext ctx, ByteBuf in, List<Object> out) throws Exception {
-        if (!this.connection.checkIncomingPacket()) {
+        if (!this.connection.checkIncomingPacket(in.readableBytes())) {
             throw CancelDecoderException.generate(null);
         }
 

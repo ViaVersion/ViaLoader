@@ -40,7 +40,7 @@ public class ViaDecoder extends MessageToMessageDecoder<ByteBuf> {
 
     @Override
     protected void decode(ChannelHandlerContext ctx, ByteBuf in, List<Object> out) {
-        if (!this.connection.checkIncomingPacket()) {
+        if (!this.connection.checkIncomingPacket(in.readableBytes())) {
             throw CancelDecoderException.generate(null);
         }
         if (!this.connection.shouldTransformPacket()) {

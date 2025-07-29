@@ -43,7 +43,7 @@ repositories {
 }
 
 dependencies {
-    compileOnly "com.viaversion:viaversion-common:5.4.2"
+    compileOnly "com.viaversion:viaversion-common:5.5.0-SNAPSHOT"
     compileOnly "com.viaversion:viabackwards-common:5.4.2"
     compileOnly "com.viaversion:viarewind-common:4.0.9"
     compileOnly "net.raphimc:ViaLegacy:3.0.10"
