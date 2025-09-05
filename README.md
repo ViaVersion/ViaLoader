@@ -56,7 +56,7 @@ In case you want to include ViaBedrock, you have to add the Lenni0451 maven repo
 repositories {
     maven {
         name = "Lenni0451"
-        url = "https://maven.lenni0451.net/everything"
+        url = "https://maven.lenni0451.net/snapshots"
     }
 }
 ```
