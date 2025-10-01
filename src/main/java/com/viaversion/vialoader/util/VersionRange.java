@@ -35,22 +35,34 @@ public class VersionRange {
     private VersionRange(final ProtocolVersion min, final ProtocolVersion max) {
         this.min = min;
         this.max = max;
-        this.ranges = new ArrayList<>();
+        this.ranges = new ArrayList<>(3);
     }
 
     public static VersionRange andNewer(final ProtocolVersion version) {
+        Objects.requireNonNull(version, "Version cannot be null");
+
         return new VersionRange(version, null);
     }
 
     public static VersionRange single(final ProtocolVersion version) {
+        Objects.requireNonNull(version, "Version cannot be null");
+
         return new VersionRange(version, version);
     }
 
     public static VersionRange andOlder(final ProtocolVersion version) {
+        Objects.requireNonNull(version, "Version cannot be null");
+
         return new VersionRange(null, version);
     }
 
     public static VersionRange of(final ProtocolVersion min, final ProtocolVersion max) {
+        Objects.requireNonNull(min, "Min version cannot be null");
+        Objects.requireNonNull(max, "Max version cannot be null");
+        if (min.newerThan(max)) {
+            throw new IllegalArgumentException("Min version cannot be newer than max version");
+        }
+
         return new VersionRange(min, max);
     }
 
@@ -64,6 +76,8 @@ public class VersionRange {
     }
 
     public boolean contains(final ProtocolVersion version) {
+        Objects.requireNonNull(version, "Version cannot be null");
+
         for (VersionRange range : this.ranges) {
             if (range.contains(version)) return true;
         }
@@ -109,10 +123,10 @@ public class VersionRange {
         return Objects.hash(min, max, ranges);
     }
 
-    public static VersionRange fromString(String str) {
+    public static VersionRange fromString(final String str) {
         if ("*".equals(str)) return all();
         else if (str.contains(",")) {
-            String[] rangeParts = str.split(", ");
+            final String[] rangeParts = str.split(", ");
             VersionRange versionRange = null;
 
             for (String part : rangeParts) {
@@ -125,13 +139,13 @@ public class VersionRange {
         }
     }
 
-    private static VersionRange parseSinglePart(String part) {
+    private static VersionRange parseSinglePart(final String part) {
         if (part.startsWith("<= ")) return andOlder(ProtocolVersion.getClosest(part.substring(3)));
         else if (part.startsWith(">= ")) return andNewer(ProtocolVersion.getClosest(part.substring(3)));
         else if (part.contains(" - ")) {
-            String[] rangeParts = part.split(" - ");
-            ProtocolVersion min = ProtocolVersion.getClosest(rangeParts[0]);
-            ProtocolVersion max = ProtocolVersion.getClosest(rangeParts[1]);
+            final String[] rangeParts = part.split(" - ");
+            final ProtocolVersion min = ProtocolVersion.getClosest(rangeParts[0]);
+            final ProtocolVersion max = ProtocolVersion.getClosest(rangeParts[1]);
             return of(min, max);
         } else return single(ProtocolVersion.getClosest(part));
     }
