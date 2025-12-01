@@ -20,6 +20,8 @@
  */
 package com.viaversion.vialoader.netty;
 
+import com.viaversion.vialoader.netty.viabedrock.DisconnectHandler;
+import com.viaversion.vialoader.netty.viabedrock.RakNetMessageEncapsulationCodec;
 import com.viaversion.viaversion.api.Via;
 import com.viaversion.viaversion.api.connection.UserConnection;
 import com.viaversion.viaversion.api.protocol.version.ProtocolVersion;
@@ -32,8 +34,6 @@ import net.raphimc.viabedrock.netty.BatchLengthCodec;
 import net.raphimc.viabedrock.netty.PacketEncapsulationCodec;
 import net.raphimc.vialegacy.netty.PreNettyLengthPrepender;
 import net.raphimc.vialegacy.netty.PreNettyLengthRemover;
-import com.viaversion.vialoader.netty.viabedrock.DisconnectHandler;
-import com.viaversion.vialoader.netty.viabedrock.RakMessageEncapsulationCodec;
 
 public abstract class VLLegacyPipeline extends ChannelInboundHandlerAdapter {
 
@@ -82,7 +82,7 @@ public abstract class VLLegacyPipeline extends ChannelInboundHandlerAdapter {
     @Override
     public void userEventTriggered(ChannelHandlerContext ctx, Object evt) throws Exception {
         if (CompressionReorderEvent.INSTANCE.equals(evt)) {
-            final int decoderIndex = ctx.pipeline().names().indexOf(decompressName());
+            final int decoderIndex = ctx.pipeline().names().indexOf(this.decompressName());
             if (decoderIndex == -1) return;
 
             if (decoderIndex > ctx.pipeline().names().indexOf(VIA_DECODER_NAME)) {
@@ -92,8 +92,8 @@ public abstract class VLLegacyPipeline extends ChannelInboundHandlerAdapter {
                 ctx.pipeline().remove(decoder);
                 ctx.pipeline().remove(encoder);
 
-                ctx.pipeline().addAfter(decompressName(), VIA_DECODER_NAME, decoder);
-                ctx.pipeline().addAfter(compressName(), VIA_ENCODER_NAME, encoder);
+                ctx.pipeline().addAfter(this.decompressName(), VIA_DECODER_NAME, decoder);
+                ctx.pipeline().addAfter(this.compressName(), VIA_ENCODER_NAME, encoder);
             }
         }
 
@@ -121,7 +121,7 @@ public abstract class VLLegacyPipeline extends ChannelInboundHandlerAdapter {
     }
 
     protected ChannelHandler createViaBedrockFrameEncapsulationHandler() {
-        return new RakMessageEncapsulationCodec();
+        return new RakNetMessageEncapsulationCodec();
     }
 
     protected ChannelHandler createViaBedrockBatchLengthCodec() {

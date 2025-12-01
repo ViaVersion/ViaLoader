@@ -30,11 +30,11 @@ import org.cloudburstmc.netty.channel.raknet.RakPong;
 import java.net.InetSocketAddress;
 import java.util.List;
 
-public class PingEncapsulationCodec extends MessageToMessageCodec<RakPong, ByteBuf> {
+public class RakNetPingEncapsulationCodec extends MessageToMessageCodec<RakPong, ByteBuf> {
 
     private final InetSocketAddress remoteAddress;
 
-    public PingEncapsulationCodec(final InetSocketAddress remoteAddress) {
+    public RakNetPingEncapsulationCodec(final InetSocketAddress remoteAddress) {
         this.remoteAddress = remoteAddress;
     }
 

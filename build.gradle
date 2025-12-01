@@ -27,22 +27,6 @@ repositories {
         }
     }
     maven {
-        name = "OpenCollab Releases"
-        url = "https://repo.opencollab.dev/maven-releases"
-
-        content {
-            includeGroupByRegex "org\\.cloudburstmc(\\..+)?"
-        }
-    }
-    maven {
-        name = "OpenCollab Snapshots"
-        url = "https://repo.opencollab.dev/maven-snapshots"
-
-        content {
-            includeGroupByRegex "org\\.cloudburstmc(\\..+)?"
-        }
-    }
-    maven {
         name = "Minecraft Libraries"
         url = "https://libraries.minecraft.net"
 
@@ -67,7 +51,7 @@ dependencies {
     compileOnly "net.raphimc:ViaLegacy:3.0.11"
     compileOnly "com.viaversion:viaaprilfools-common:4.0.5"
     compileOnly "net.raphimc:ViaBedrock:0.0.24-SNAPSHOT"
-    compileOnly "org.cloudburstmc.netty:netty-transport-raknet:1.0.0.CR3-SNAPSHOT"
+    compileOnly "dev.kastle.netty:netty-transport-raknet:1.4.0"
 
     api "com.google.guava:guava:33.5.0-jre"
     api "org.slf4j:slf4j-api:2.0.17"

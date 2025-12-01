@@ -20,6 +20,8 @@
  */
 package com.viaversion.vialoader.netty;
 
+import com.viaversion.vialoader.netty.viabedrock.DisconnectHandler;
+import com.viaversion.vialoader.netty.viabedrock.RakNetMessageEncapsulationCodec;
 import com.viaversion.viaversion.api.Via;
 import com.viaversion.viaversion.api.connection.UserConnection;
 import com.viaversion.viaversion.api.protocol.version.ProtocolVersion;
@@ -32,8 +34,6 @@ import io.netty.channel.ChannelPipeline;
 import net.raphimc.viabedrock.netty.BatchLengthCodec;
 import net.raphimc.viabedrock.netty.PacketEncapsulationCodec;
 import net.raphimc.vialegacy.netty.PreNettyLengthCodec;
-import com.viaversion.vialoader.netty.viabedrock.DisconnectHandler;
-import com.viaversion.vialoader.netty.viabedrock.RakMessageEncapsulationCodec;
 
 public abstract class VLPipeline extends ChannelInboundHandlerAdapter {
 
@@ -100,7 +100,7 @@ public abstract class VLPipeline extends ChannelInboundHandlerAdapter {
     }
 
     protected ChannelHandler createViaBedrockFrameEncapsulationHandler() {
-        return new RakMessageEncapsulationCodec();
+        return new RakNetMessageEncapsulationCodec();
     }
 
     protected ChannelHandler createViaBedrockBatchLengthCodec() {

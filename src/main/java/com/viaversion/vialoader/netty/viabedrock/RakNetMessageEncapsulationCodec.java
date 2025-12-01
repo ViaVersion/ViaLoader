@@ -30,7 +30,7 @@ import org.cloudburstmc.netty.channel.raknet.packet.RakMessage;
 
 import java.util.List;
 
-public class RakMessageEncapsulationCodec extends MessageToMessageCodec<RakMessage, ByteBuf> {
+public class RakNetMessageEncapsulationCodec extends MessageToMessageCodec<RakMessage, ByteBuf> {
 
     private static final int FRAME_ID = 0xFE;
 
