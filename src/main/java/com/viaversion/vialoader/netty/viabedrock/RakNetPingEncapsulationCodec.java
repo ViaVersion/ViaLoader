@@ -30,6 +30,7 @@ import org.cloudburstmc.netty.channel.raknet.RakPong;
 import java.net.InetSocketAddress;
 import java.util.List;
 
+@Deprecated
 public class RakNetPingEncapsulationCodec extends MessageToMessageCodec<RakPong, ByteBuf> {
 
     private final InetSocketAddress remoteAddress;
@@ -60,6 +61,9 @@ public class RakNetPingEncapsulationCodec extends MessageToMessageCodec<RakPong,
         final ByteBuf buf = ctx.alloc().buffer();
         buf.writeByte(RakConstants.ID_UNCONNECTED_PONG);
         buf.writeLong(in.getPingTime());
+        buf.writeLong(in.getGuid());
+        buf.writeBytes(RakConstants.DEFAULT_UNCONNECTED_MAGIC);
+        buf.writeShort(in.getPongData().readableBytes());
         buf.writeBytes(in.getPongData());
         out.add(buf);
     }

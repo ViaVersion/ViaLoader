@@ -30,16 +30,16 @@ import org.cloudburstmc.netty.channel.raknet.packet.RakMessage;
 
 import java.util.List;
 
-public class RakNetMessageEncapsulationCodec extends MessageToMessageCodec<RakMessage, ByteBuf> {
+public class RakNetMessageCodec extends MessageToMessageCodec<RakMessage, ByteBuf> {
 
-    private static final int FRAME_ID = 0xFE;
+    private static final int MINECRAFT_MESSAGE_ID = 0xFE;
 
     @Override
-    protected void encode(ChannelHandlerContext ctx, ByteBuf msg, List<Object> out) {
+    protected void encode(ChannelHandlerContext ctx, ByteBuf in, List<Object> out) {
         final CompositeByteBuf buf = ctx.alloc().compositeBuffer(2);
         try {
-            buf.addComponent(true, ctx.alloc().ioBuffer(1).writeByte(FRAME_ID));
-            buf.addComponent(true, msg.retainedSlice());
+            buf.addComponent(true, ctx.alloc().ioBuffer(1).writeByte(MINECRAFT_MESSAGE_ID));
+            buf.addComponent(true, in.retainedSlice());
             out.add(new RakMessage(buf.retain()));
         } finally {
             buf.release();
@@ -47,20 +47,20 @@ public class RakNetMessageEncapsulationCodec extends MessageToMessageCodec<RakMe
     }
 
     @Override
-    protected void decode(ChannelHandlerContext ctx, RakMessage msg, List<Object> out) {
-        if (msg.channel() != 0 && msg.reliability() != RakReliability.RELIABLE_ORDERED) {
+    protected void decode(ChannelHandlerContext ctx, RakMessage in, List<Object> out) {
+        if (in.channel() != 0 && in.reliability() != RakReliability.RELIABLE_ORDERED) {
             return;
         }
-        final ByteBuf in = msg.content();
-        if (!in.isReadable()) {
+        final ByteBuf buf = in.content();
+        if (!buf.isReadable()) {
             return;
         }
-        final int id = in.readUnsignedByte();
-        if (id != FRAME_ID) { // Mojang client seems to ignore invalid frames
-            ViaBedrock.getPlatform().getLogger().warning("Received invalid RakNet frame id: " + id);
+        final int messageId = buf.readUnsignedByte();
+        if (messageId != MINECRAFT_MESSAGE_ID) { // Mojang client seems to ignore invalid messages
+            ViaBedrock.getPlatform().getLogger().warning("Received invalid RakNet message id: " + messageId);
             return;
         }
-        out.add(in.readRetainedSlice(in.readableBytes()));
+        out.add(buf.readRetainedSlice(buf.readableBytes()));
     }
 
 }

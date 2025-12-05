@@ -21,7 +21,7 @@
 package com.viaversion.vialoader.netty;
 
 import com.viaversion.vialoader.netty.viabedrock.DisconnectHandler;
-import com.viaversion.vialoader.netty.viabedrock.RakNetMessageEncapsulationCodec;
+import com.viaversion.vialoader.netty.viabedrock.RakNetMessageCodec;
 import com.viaversion.viaversion.api.Via;
 import com.viaversion.viaversion.api.connection.UserConnection;
 import com.viaversion.viaversion.api.protocol.version.ProtocolVersion;
@@ -32,7 +32,7 @@ import io.netty.channel.ChannelHandlerContext;
 import io.netty.channel.ChannelInboundHandlerAdapter;
 import io.netty.channel.ChannelPipeline;
 import net.raphimc.viabedrock.netty.BatchLengthCodec;
-import net.raphimc.viabedrock.netty.PacketEncapsulationCodec;
+import net.raphimc.viabedrock.netty.PacketCodec;
 import net.raphimc.vialegacy.netty.PreNettyLengthCodec;
 
 public abstract class VLPipeline extends ChannelInboundHandlerAdapter {
@@ -42,8 +42,8 @@ public abstract class VLPipeline extends ChannelInboundHandlerAdapter {
     public static final String VIALEGACY_PRE_NETTY_LENGTH_CODEC_NAME = "vialegacy-pre-netty-length-codec";
 
     public static final String VIABEDROCK_DISCONNECT_HANDLER_NAME = "viabedrock-disconnect-handler";
-    public static final String VIABEDROCK_FRAME_ENCAPSULATION_HANDLER_NAME = "viabedrock-frame-encapsulation";
-    public static final String VIABEDROCK_PACKET_ENCAPSULATION_HANDLER_NAME = "viabedrock-packet-encapsulation";
+    public static final String VIABEDROCK_RAKNET_MESSAGE_CODEC_NAME = "viabedrock-raknet-message-codec";
+    public static final String VIABEDROCK_PACKET_CODEC_NAME = "viabedrock-packet-codec";
 
     protected final UserConnection connection;
     protected final ProtocolVersion version;
@@ -67,9 +67,9 @@ public abstract class VLPipeline extends ChannelInboundHandlerAdapter {
                 ctx.pipeline().addBefore(this.lengthCodecName(), VIALEGACY_PRE_NETTY_LENGTH_CODEC_NAME, this.createViaLegacyPreNettyLengthCodec());
             } else if (this.version.getName().startsWith("Bedrock")) {
                 ctx.pipeline().addBefore(this.lengthCodecName(), VIABEDROCK_DISCONNECT_HANDLER_NAME, this.createViaBedrockDisconnectHandler());
-                ctx.pipeline().addBefore(this.lengthCodecName(), VIABEDROCK_FRAME_ENCAPSULATION_HANDLER_NAME, this.createViaBedrockFrameEncapsulationHandler());
+                ctx.pipeline().addBefore(this.lengthCodecName(), VIABEDROCK_RAKNET_MESSAGE_CODEC_NAME, this.createViaBedrockRakNetMessageCodec());
                 this.replaceLengthCodec(ctx, this.createViaBedrockBatchLengthCodec());
-                ctx.pipeline().addBefore(VIA_CODEC_NAME, VIABEDROCK_PACKET_ENCAPSULATION_HANDLER_NAME, this.createViaBedrockPacketEncapsulationHandler());
+                ctx.pipeline().addBefore(VIA_CODEC_NAME, VIABEDROCK_PACKET_CODEC_NAME, this.createViaBedrockPacketCodec());
             }
         }
     }
@@ -99,16 +99,16 @@ public abstract class VLPipeline extends ChannelInboundHandlerAdapter {
         return new DisconnectHandler();
     }
 
-    protected ChannelHandler createViaBedrockFrameEncapsulationHandler() {
-        return new RakNetMessageEncapsulationCodec();
+    protected ChannelHandler createViaBedrockRakNetMessageCodec() {
+        return new RakNetMessageCodec();
     }
 
     protected ChannelHandler createViaBedrockBatchLengthCodec() {
         return new BatchLengthCodec();
     }
 
-    protected ChannelHandler createViaBedrockPacketEncapsulationHandler() {
-        return new PacketEncapsulationCodec();
+    protected ChannelHandler createViaBedrockPacketCodec() {
+        return new PacketCodec();
     }
 
     protected void replaceLengthCodec(final ChannelHandlerContext ctx, final ChannelHandler handler) {
