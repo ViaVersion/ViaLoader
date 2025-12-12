@@ -102,7 +102,7 @@ Then you have to create a new instance of your loader class and pass it to the `
 
 To do this you can call the ``ViaLoader.init()`` method somewhere suitable in your project (You can do that async) with your desired argument values:
 ```java
-ViaLoader.init(null/*ViaPlatform*/, new CustomVLLoaderImpl(), null/*ViaInjector*/, null/*ViaCommandHandler*/, ViaBackwardsPlatformImpl::new, ViaRewindPlatforImpl::new, ViaLegacyPlatformImpl::new, ViaAprilFoolsPlatformImpl::new, ViaBedrockPlatformImpl::new);
+ViaLoader.init(null/*ViaPlatform*/, new CustomVLLoaderImpl(), null/*ViaInjector*/, null/*ViaCommandHandler*/, ViaBackwardsPlatformImpl::new, ViaRewindPlatformImpl::new, ViaLegacyPlatformImpl::new, ViaAprilFoolsPlatformImpl::new, ViaBedrockPlatformImpl::new);
 ```
 Make sure to have all platform impls you need added to the init call. Every platform added there needs to be in your dependencies.
 
