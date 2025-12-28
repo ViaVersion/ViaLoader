@@ -23,7 +23,7 @@ publishing {
                     developer {
                         id = "FlorianMichael"
                         name = "EnZaXD"
-                        email = "florian.michael07@gmail.com"
+                        email = "git@florianmichael.de"
                     }
                 }
                 scm {

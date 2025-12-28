@@ -2,7 +2,7 @@
  * This file is part of ViaLoader - https://github.com/ViaVersion/ViaLoader
  * Copyright (C) 2020-2025 the original authors
  *                         - RK_01/RaphiMC
- *                         - FlorianMichael/EnZaXD <florian.michael07@gmail.com>
+ *                         - FlorianMichael/EnZaXD <git@florianmichael.de>
  * Copyright (C) 2023-2025 ViaVersion and contributors
  *
  * This program is free software: you can redistribute it and/or modify
