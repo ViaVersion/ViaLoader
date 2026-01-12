@@ -51,7 +51,7 @@ dependencies {
     compileOnly "net.raphimc:ViaLegacy:3.0.12"
     compileOnly "com.viaversion:viaaprilfools-common:4.0.7"
     compileOnly "net.raphimc:ViaBedrock:0.0.25-SNAPSHOT"
-    compileOnly "dev.kastle.netty:netty-transport-raknet:1.5.2"
+    compileOnly "dev.kastle.netty:netty-transport-raknet:1.6.1"
 
     api "com.google.guava:guava:33.5.0-jre"
     api "org.slf4j:slf4j-api:2.0.17"
