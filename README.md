@@ -1,3 +1,12 @@
+# This project has been archived
+
+ViaLoader was created at a time when setting up ViaVersion and its related projects was complicated.
+Since then, ViaVersion has received multiple patches making it easier to load and use without having a
+wrapper library. Please check out the
+new [documentation](https://github.com/ViaVersion/ViaVersion/wiki/Creating-a-new-ViaVersion-platform) and the projects
+that used to depend on ViaLoader
+to see how you should update your project.
+
 # ViaLoader
 Easy to use ViaVersion, (and optional ViaBackwards, ViaRewind, ViaLegacy, ViaAprilFools and ViaBedrock) platform implementation.
 
